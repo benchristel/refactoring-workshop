@@ -27,7 +27,7 @@ them.
 
 - As a Python developer
 - I want to be able to call the Cabbages API via OC2RTA
-- So that I can obtain information about cabbages
+- So that I can automate tasks that need to know about cabbages
 
 - **Given** I have OC2RTA installed and on my `$PATH` as `oc`
 - **And** I have imported the OC2RTA library into my program with `import oc`
