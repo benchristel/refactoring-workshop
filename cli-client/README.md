@@ -20,14 +20,14 @@ questions.
 
 ### User Story
 
-As a Python developer
-I want to be able to call the Cabbages API via OC2RTA
-So that I can obtain information about cabbages
+- As a Python developer
+- I want to be able to call the Cabbages API via OC2RTA
+- So that I can obtain information about cabbages
 
-**Given** I have OC2RTA installed and on my `$PATH` as `oc`
-**And** I have imported the OC2RTA library into my program with `import oc`
-**When** I call the function `oc.cabbages()`
-**Then** I receive information about cabbages
+- **Given** I have OC2RTA installed and on my `$PATH` as `oc`
+- **And** I have imported the OC2RTA library into my program with `import oc`
+- **When** I call the function `oc.cabbages()`
+- **Then** I receive information about cabbages
 
 ### Implementation Notes
 
@@ -81,10 +81,10 @@ thought! If you authenticate with the API by providing a
 username and password, it shows you additional, secret
 cabbages!
 
-**Given** I have OC2RTA installed and on my `$PATH` as `oc`
-**And** I have imported the OC2RTA library into my program with `import oc`
-**When** I provide a username and password to the cabbages function
-**Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
+- **Given** I have OC2RTA installed and on my `$PATH` as `oc`
+- **And** I have imported the OC2RTA library into my program with `import oc`
+- **When** I provide a username and password to the cabbages function
+- **Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
 
 ### Implementation Notes
 
