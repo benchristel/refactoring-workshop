@@ -119,3 +119,11 @@ program's environment.
   language or operating system to make this story easier to
   implement, what would it be? What other problems might
   that change cause?
+- The suggestions in the implementation notes are
+  flawed. Why? How can you compensate?
+- How easy will it be for developers who use your library to
+  test code that calls it?
+- How confident are you that your code is correct? What
+  could you change to increase that confidence?
+- Describe two tradeoffs that you made while choosing a
+  course of implementation.
