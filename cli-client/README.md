@@ -146,6 +146,9 @@ program's environment.
   language or operating system to make this story easier to
   implement, what would it be? What other problems might
   that change cause?
+- What are some security issues with this method of
+  authentication? Is there anything you can do to mitigate
+  them?
 
 ## Authentication 2.0
 
