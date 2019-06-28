@@ -13,8 +13,13 @@ OC2RTA using Python. The library will allow programs written
 in Python to use OC2RTA features without directly shelling
 out, forking processes, etc.
 
+## About This Kata
+
 Each section below contains a user story and some follow-up
-questions.
+questions. Once you are "done" implementing the story you
+should answer the follow-up questions. If you don't like the
+answers you're giving, improve your code until you do like
+them.
 
 ## The Cabbages API
 
@@ -83,8 +88,9 @@ cabbages!
 
 - **Given** I have OC2RTA installed and on my `$PATH` as `oc`
 - **And** I have imported the OC2RTA library into my program with `import oc`
-- **When** I provide a username and password to the cabbages function
-- **Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
+- **And** I have a file named `~/.ocrc` that exports my username and password
+- **When** I call `oc.cabbages()`
+- **Then** my credentials are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
 
 ### Implementation Notes
 
@@ -113,14 +119,61 @@ program's environment.
   (Note that arguments that start with hyphens are treated
   as special flags by `oc`, e.g. `--password`)
 - What happens if a user's password contains quotes?
-- How can you test your code to make sure all these weird
-  edge cases are handled? Try it.
+- The `~/.ocrc` file can contain arbitrary shell code.
+  If the file contains more lines than just the username
+  and password exports, does your code account for that?
+- What happens if the crucial lines in the `~/.ocrc` file
+  are split with escaped newlines, e.g.
+
+  ```bash
+  export OC2RTA_PASSWORD=\
+  "someone's really long password"
+  ```
+
+- Is your code tested in a way that ensures all these weird
+  edge cases are handled?
+- How confident are you that there aren't *more* weird edge
+  cases you haven't considered?
+- Describe three ways of getting the username and password
+  out of the file. What are the pros and cons of each?
+- How easy will it be for developers who use your library to
+  test code that calls it?
+- How confident are you that your code is correct? What
+  could you change to increase that confidence?
+- Describe two tradeoffs that you made while choosing a
+  course of implementation.
 - If you could change one thing about the programming
   language or operating system to make this story easier to
   implement, what would it be? What other problems might
   that change cause?
-- The suggestions in the implementation notes are
-  flawed. Why? How can you compensate?
+
+## Authentication 2.0
+
+Your library now needs to work in an environment that doesn't
+have an `~/.ocrc` file (surprise!) The `cabbages()` function
+should optionally accept the username and password as
+parameters.
+
+- **When** I pass a username and password to the cabbages function
+- **Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
+
+- **When** I call `cabbages` without passing a username and password
+- **Then** it should get the credentials from the `~/.ocrc` file
+
+- **Given** There is no `~/.ocrc` file on my computer
+- **When** I call `cabbages` without passing a username and password
+- **Then** it should not pass the `--username` and `--password` flags to `oc`.
+
+### Follow-up questions
+
+- Will it be easy to add more parameters to the `cabbages`
+  function in the future? Will developers who call `cabbages`
+  have to update their code when new parameters are added?
+  Why or why not?
+- Are you correctly accounting for special characters in
+  the input (dollar, space, backticks, etc.)?
+- Is there any duplication in your code? If so, what
+  problems might it cause later?
 - How easy will it be for developers who use your library to
   test code that calls it?
 - How confident are you that your code is correct? What
