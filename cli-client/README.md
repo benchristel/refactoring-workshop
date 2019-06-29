@@ -79,12 +79,12 @@ course of implementation.
 
 ## Authentication
 
-### User Story
-
 It turns out there's more to the Cabbages API than you
 thought! If you authenticate with the API by providing a
 username and password, it shows you additional, secret
 cabbages!
+
+### User Story
 
 - **Given** I have OC2RTA installed and on my `$PATH` as `oc`
 - **And** I have imported the OC2RTA library into my program with `import oc`
@@ -165,6 +165,8 @@ have an `~/.ocrc` file (surprise!) The `cabbages()` function
 should optionally accept the username and password as
 parameters.
 
+### User Story
+
 - **When** I pass a username and password to the cabbages function
 - **Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
 
@@ -191,3 +193,112 @@ parameters.
   could you change to increase that confidence?
 - Describe two tradeoffs that you made while choosing a
   course of implementation.
+
+## More APIs
+
+Python developers are pleased that they can now access
+cabbages, but they want more! Your PM hands you the
+following list of nonsensical commands that your library
+must wrap, with a promise that many, many more are coming.
+
+| **OC Command** | **Flag** | **Flag Takes Argument?** | **Flag Required?** | **Example**
+| -------------- | -------- | ------------------------ | ------------------ | -----------
+| **`oc sprinklers`** | `--region` | yes | yes | `oc sprinklers -k --region ca`
+| | `-k` | no | no
+| | `-d` | no | no
+| **`oc set-sprinkler`** | `--on` | no | no | `oc set-sprinkler --on --id`
+| | `--off` | no | no
+| | `--id` | yes | yes
+| **`oc pull`** | `--insecure` | no | no | `oc pull --leaf 32f8a90`
+| | `--leaf` | yes | no
+
+You decide that you don't want to set yourself up for more
+work in the future than absolutely necessary. Can you
+implement your PM's request in a way that makes future
+stories in this vein trivially easy?
+
+Your implementation must satisfy the following:
+
+- There should be one function in the library per `oc`
+  command.
+- Each function should take parameters corresponding to the
+  `oc` flags.
+- You can assume that all arguments to the flags are strings
+- If the caller of a function doesn't pass a required flag
+ or argument, you should throw an error.
+- If your caller doesn't pass an optional argument, you
+  should not pass the corresponding flag to the `oc`
+  command.
+- Each command returns JSON on standard output, which you
+  should pass back to the caller of your library. The shape
+  of the JSON isn't documented anywhere, though.
+- If a username and password are available (in the `~/.ocrc`
+  file or passed to the function), they should be passed
+  along to `oc` as they were for the `cabbages` API.
+
+## Logging
+
+Developers like your library, but they would like to be able
+to have a log of the exact `oc` commands it executes. This
+will enable them to debug their programs more easily.
+
+### User Story
+
+- As a Python developer
+- I want to have a log of the shell commands executed by the
+  `oc` library
+- So that I can debug my programs more easily
+
+- **Given** I have configured logging (i.e. specified where
+  to write the logs)
+- **And** I have called functions in the `oc` module
+- **When** I look at the logfile
+- **Then** I see the exact shell commands that were
+  executed, formatted so I can copy-paste them into my
+  terminal and they will work.
+
+- **Given** I have *not* configured logging
+- **Then** no logs will be written.
+
+### Follow-up Questions
+
+- How much work do developers have to do to add logging to
+  their programs?
+- What happens if different parts of a program want to log
+  to different files?
+- What are the security risks to this approach? How could
+  you mitigate them?
+- How easy is it for developers to test code that calls your
+  library?
+- Did you add conditional statements to your code when
+  implementing this story? If so, can you refactor to
+  make them unnecessary?
+- How simple is your test setup/teardown? Can you run all
+  your tests in parallel?
+- Is writing to the log threadsafe? Why or why not?
+- Describe a tradeoff you made while implementing this
+  feature.
+
+## Password Redaction
+
+Users of software written using your library are worried
+about their passwords being logged. You now need to modify
+your logging code to strip passwords out of the logs.
+
+- As a user of software that calls `oc`
+- I do not want my password to be logged
+- So that it stays secret and my data is secure
+
+- **Given** I have configured logging
+- **And** I have called functions in the `oc` module,
+  providing a username and password (either through the
+  function arguments or a file)
+- **When** I look at the logs
+- **Then** I see a generic string like `xxxx` in place of my
+  password.
+
+### Follow-up Questions
+
+- Is there any duplication in your code?
+- Is there any way your redaction logic could inadvertently
+  *reveal* some users' passwords?
