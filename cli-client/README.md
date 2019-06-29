@@ -136,16 +136,24 @@ program's environment.
   cases you haven't considered?
 - Describe three ways of getting the username and password
   out of the file. What are the pros and cons of each?
+- How easy will it be for future maintainers of your library
+  to understand the implementation?
 - How easy will it be for developers who use your library to
   test code that calls it?
 - How confident are you that your code is correct? What
   could you change to increase that confidence?
+- Test frameworks often run tests in parallel to cut down
+  on test run times. Could all your tests run in parallel?
+  Why or why not?
 - Describe two tradeoffs that you made while choosing a
   course of implementation.
 - If you could change one thing about the programming
   language or operating system to make this story easier to
   implement, what would it be? What other problems might
   that change cause?
+- The story and notes hint at the possibility
+  of an alternative implementation that might be much
+  easier, if you could confirm that it worked. What is it?
 - What are some security issues with this method of
   authentication? Is there anything you can do to mitigate
   them?
