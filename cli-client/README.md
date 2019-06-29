@@ -54,9 +54,9 @@ You are free to decide how to structure the data you return
 to the caller. Use your best judgement.
 
 To prevent over-straining the API servers, company policy
-dictates that developer workstations not have access to
-the cabbages API. You will therefore not have the opportunity
-to test your code on real cabbages before its first release.
+dictates that your workstation not have access to the
+cabbages API. You will therefore not have the opportunity to
+test your code on real cabbages before its first release.
 Adjust your testing strategy appropriately.
 
 ### Follow-up questions
@@ -76,6 +76,10 @@ self-documenting is your code, for these developers? Can
 tests help your codebase be more self-documenting?
 - Describe two tradeoffs that you made while choosing a
 course of implementation.
+- Are there any untested parts of your code? Is it worth
+  testing them?
+- Do you have any tests that aren't worth their likely
+  maintenance costs?
 
 ## Authentication
 
@@ -265,9 +269,12 @@ will enable them to debug their programs more easily.
 - How much work do developers have to do to add logging to
   their programs?
 - What happens if different parts of a program want to log
-  to different files?
-- What are the security risks to this approach? How could
-  you mitigate them?
+  to different files? How could you change your API to
+  accommodate this, while maintaining backwards
+  compatibility? How can you make it easy to later remove
+  the old API?
+- What are the security risks to logging? How could you
+- mitigate them?
 - How easy is it for developers to test code that calls your
   library?
 - Did you add conditional statements to your code when
@@ -278,6 +285,8 @@ will enable them to debug their programs more easily.
 - Is writing to the log threadsafe? Why or why not?
 - Describe a tradeoff you made while implementing this
   feature.
+- Describe an assumption you made about the developers who
+  will use your library.
 
 ## Password Redaction
 
@@ -302,3 +311,33 @@ your logging code to strip passwords out of the logs.
 - Is there any duplication in your code?
 - Is there any way your redaction logic could inadvertently
   *reveal* some users' passwords?
+
+## Logging to STDOUT
+
+Developers are asking for a more flexible logging solution.
+They want to see `oc` commands logged to stdout so they can
+more easily debug failures in their Concourse pipelines.
+
+They have additionally asked for password redaction to be
+turned OFF when logging to STDOUT.
+
+### User Story
+
+- **Given** I have configured logs to go to STDOUT
+- **When** I call a function in the `oc` module
+- **Then** I see the command printed to STDOUT
+- **And** if I provided a password, it appears in the output.
+
+### Follow-up Questions
+
+- Unix treats STDOUT similarly to an ordinary writable file;
+  e.g. you write to it using a file descriptor. How can this
+  feature of Unix help you implement this story?
+- How much confidence do your tests give you that this
+  feature is working?
+- Could this change possibly break any clients of your
+  logging API?
+- If you could go back in time and redesign your original
+  logging API, what would you change?
+- Are the various responsibilities of your library cleanly
+  separated? Does each piece have only one reason to change?
