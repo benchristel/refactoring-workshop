@@ -25,7 +25,7 @@ them.
 
 ### User Story
 
-As a Python developer<br/>
+As a Python app developer<br/>
 I want to be able to call the Cabbages API via OC2RTA<br/>
 So that I can automate tasks that need to know about cabbages
 
@@ -62,20 +62,21 @@ Adjust your testing strategy appropriately.
 ### Follow-up questions
 
 - How much confidence do your tests (if any) give you that
-your code is actually correct? Can you do anything to
-increase that confidence?
-- If you could change one thing about the requirements of this
-story to make it easier to implement, what would it be?
+  your code is actually correct? Can you do anything to
+  increase that confidence?
+- What are some ways the cabbages() function could fail?
+  Do you have tests for those error cases?
+- How are errors reported? Will your error messages help
+  users of your library debug their code?
 - How easy will it be to adjust your code if more cabbage
-properties are added in the future?
-- How easy will it be for developers who use your library to
-test code that calls it?
-- Recall that developers do not have access to the Cabbages
-API and are not likely to be familiar with its details. How
-self-documenting is your code, for these developers? Can
-tests help your codebase be more self-documenting?
+  properties are added in the future?
+- How easy will it be for app developers who use your
+  library to test code that calls it?
+- Does your code help app developers understand the behavior
+  of the cabbages API? Can tests help your codebase be more
+  self-documenting?
 - Describe two tradeoffs that you made while choosing a
-course of implementation.
+  course of implementation.
 - Are there any untested parts of your code? Is it worth
   testing them?
 - Do you have any tests that aren't worth their likely
@@ -142,8 +143,8 @@ program's environment.
   out of the file. What are the pros and cons of each?
 - How easy will it be for future maintainers of your library
   to understand the implementation?
-- How easy will it be for developers who use your library to
-  test code that calls it?
+- How easy will it be for app developers who use your
+  library to test code that calls it?
 - How confident are you that your code is correct? What
   could you change to increase that confidence?
 - Test frameworks often run tests in parallel to cut down
@@ -184,15 +185,15 @@ parameters.
 ### Follow-up questions
 
 - Will it be easy to add more parameters to the `cabbages`
-  function in the future? Will developers who call `cabbages`
-  have to update their code when new parameters are added?
-  Why or why not?
+  function in the future? Will app developers who call
+  `cabbages` have to update their code when new parameters
+  are added? Why or why not?
 - Are you correctly accounting for special characters in
   the input (dollar, space, backticks, etc.)?
 - Is there any duplication in your code? If so, what
   problems might it cause later?
-- How easy will it be for developers who use your library to
-  test code that calls it?
+- How easy will it be for app developers to test code that
+  calls your library?
 - How confident are you that your code is correct? What
   could you change to increase that confidence?
 - Describe two tradeoffs that you made while choosing a
@@ -200,7 +201,7 @@ parameters.
 
 ## More APIs
 
-Python developers are pleased that they can now access
+App developers are pleased that they can now access
 cabbages, but they want more! Your PM hands you the
 following list of nonsensical commands that your library
 must wrap, with a promise that many, many more are coming.
@@ -242,13 +243,14 @@ Your implementation must satisfy the following:
 
 ## Logging
 
-Developers like your library, but they would like to be able
-to have a log of the exact `oc` commands it executes. This
-will enable them to debug their programs more easily.
+The app developers like your library, but they would like to
+be able to have a log of the exact `oc` commands it
+executes. This will enable them to debug their programs more
+easily.
 
 ### User Story
 
-As a Python developer<br/>
+As a Python app developer<br/>
 I want to have a log of the shell commands executed by the
 `oc` library<br/>
 So that I can debug my programs more easily
@@ -266,8 +268,8 @@ terminal and they will work.
 
 ### Follow-up Questions
 
-- How much work do developers have to do to add logging to
-  their programs?
+- How much work do app developers have to do to add logging
+  to their programs?
 - What happens if different parts of a program want to log
   to different files? How could you change your API to
   accommodate this, while maintaining backwards
@@ -275,8 +277,8 @@ terminal and they will work.
   the old API?
 - What are the security risks to logging? How could you
 - mitigate them?
-- How easy is it for developers to test code that calls your
-  library?
+- How easy is it for app developers to test code that calls
+  your library?
 - Did you add conditional statements to your code when
   implementing this story? If so, can you refactor to
   make them unnecessary?
@@ -314,9 +316,10 @@ password.
 
 ## Logging to STDOUT
 
-Developers are asking for a more flexible logging solution.
-They want to see `oc` commands logged to stdout so they can
-more easily debug failures in their Concourse pipelines.
+App developers are asking for a more flexible logging
+solution. They want to see `oc` commands logged to stdout so
+they can more easily debug failures in their Concourse
+pipelines.
 
 They have additionally asked for password redaction to be
 turned OFF when logging to STDOUT.
