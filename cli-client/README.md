@@ -25,14 +25,14 @@ them.
 
 ### User Story
 
-- As a Python developer
-- I want to be able to call the Cabbages API via OC2RTA
-- So that I can automate tasks that need to know about cabbages
+As a Python developer<br/>
+I want to be able to call the Cabbages API via OC2RTA<br/>
+So that I can automate tasks that need to know about cabbages
 
-- **Given** I have OC2RTA installed and on my `$PATH` as `oc`
-- **And** I have imported the OC2RTA library into my program with `import oc`
-- **When** I call the function `oc.cabbages()`
-- **Then** I receive information about cabbages
+**Given** I have OC2RTA installed and on my `$PATH` as `oc`<br/>
+**And** I have imported the OC2RTA library into my program with `import oc`<br/>
+**When** I call the function `oc.cabbages()`<br/>
+**Then** I receive information about cabbages
 
 ### Implementation Notes
 
@@ -90,11 +90,11 @@ cabbages!
 
 ### User Story
 
-- **Given** I have OC2RTA installed and on my `$PATH` as `oc`
-- **And** I have imported the OC2RTA library into my program with `import oc`
-- **And** I have a file named `~/.ocrc` that exports my username and password
-- **When** I call `oc.cabbages()`
-- **Then** my credentials are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
+**Given** I have OC2RTA installed and on my `$PATH` as `oc`<br/>
+**And** I have imported the OC2RTA library into my program with `import oc`<br/>
+**And** I have a file named `~/.ocrc` that exports my username and password<br/>
+**When** I call `oc.cabbages()`<br/>
+**Then** my credentials are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
 
 ### Implementation Notes
 
@@ -171,15 +171,15 @@ parameters.
 
 ### User Story
 
-- **When** I pass a username and password to the cabbages function
-- **Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`
+**When** I pass a username and password to the cabbages function<br/>
+**Then** they are passed along to `oc`, like: `oc cabbages --username alice --password t0ps3cret`<br/>
 
-- **When** I call `cabbages` without passing a username and password
-- **Then** it should get the credentials from the `~/.ocrc` file
+**When** I call `cabbages` without passing a username and password<br/>
+**Then** it should get the credentials from the `~/.ocrc` file<br/>
 
-- **Given** There is no `~/.ocrc` file on my computer
-- **When** I call `cabbages` without passing a username and password
-- **Then** it should not pass the `--username` and `--password` flags to `oc`.
+**Given** There is no `~/.ocrc` file on my computer<br/>
+**When** I call `cabbages` without passing a username and password<br/>
+**Then** it should not pass the `--username` and `--password` flags to `oc`.
 
 ### Follow-up questions
 
@@ -248,21 +248,21 @@ will enable them to debug their programs more easily.
 
 ### User Story
 
-- As a Python developer
-- I want to have a log of the shell commands executed by the
-  `oc` library
-- So that I can debug my programs more easily
+As a Python developer<br/>
+I want to have a log of the shell commands executed by the
+`oc` library<br/>
+So that I can debug my programs more easily
 
-- **Given** I have configured logging (i.e. specified where
-  to write the logs)
-- **And** I have called functions in the `oc` module
-- **When** I look at the logfile
-- **Then** I see the exact shell commands that were
-  executed, formatted so I can copy-paste them into my
-  terminal and they will work.
+**Given** I have configured logging (i.e. specified where
+to write the logs)<br/>
+**And** I have called functions in the `oc` module<br/>
+**When** I look at the logfile<br/>
+**Then** I see the exact shell commands that were
+executed, formatted so I can copy-paste them into my
+terminal and they will work.
 
-- **Given** I have *not* configured logging
-- **Then** no logs will be written.
+**Given** I have *not* configured logging<br/>
+**Then** no logs will be written.
 
 ### Follow-up Questions
 
@@ -294,17 +294,17 @@ Users of software written using your library are worried
 about their passwords being logged. You now need to modify
 your logging code to strip passwords out of the logs.
 
-- As a user of software that calls `oc`
-- I do not want my password to be logged
-- So that it stays secret and my data is secure
+As a user of software that calls `oc`<br/>
+I do not want my password to be logged<br/>
+So that it stays secret and my data is secure
 
-- **Given** I have configured logging
-- **And** I have called functions in the `oc` module,
-  providing a username and password (either through the
-  function arguments or a file)
-- **When** I look at the logs
-- **Then** I see a generic string like `xxxx` in place of my
-  password.
+**Given** I have configured logging<br/>
+**And** I have called functions in the `oc` module,
+providing a username and password (either through the
+function arguments or a file)<br/>
+**When** I look at the logs<br/>
+**Then** I see a generic string like `xxxx` in place of my
+password.
 
 ### Follow-up Questions
 
@@ -323,10 +323,10 @@ turned OFF when logging to STDOUT.
 
 ### User Story
 
-- **Given** I have configured logs to go to STDOUT
-- **When** I call a function in the `oc` module
-- **Then** I see the command printed to STDOUT
-- **And** if I provided a password, it appears in the output.
+**Given** I have configured logs to go to STDOUT<br/>
+**When** I call a function in the `oc` module<br/>
+**Then** I see the command printed to STDOUT<br/>
+**And** if I provided a password, it appears in the output.
 
 ### Follow-up Questions
 
