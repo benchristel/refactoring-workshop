@@ -81,6 +81,10 @@ Adjust your testing strategy appropriately.
   testing them?
 - Do you have any tests that aren't worth their likely
   maintenance costs?
+- Imagine that this is a real assignment you've been given
+  at a real company. What is wasteful or inefficient about
+  this project? What are some organization-level changes you
+  might try to effect to reduce the waste?
 
 ## Authentication
 
