@@ -216,7 +216,7 @@ must wrap, with a promise that many, many more are coming.
 | **`oc sprinklers`** | `--region` | yes | yes | `oc sprinklers -k --region ca`
 | | `-k` | no | no
 | | `-d` | no | no
-| **`oc set-sprinkler`** | `--on` | no | no | `oc set-sprinkler --on --id`
+| **`oc set-sprinkler`** | `--on` | no | no | `oc set-sprinkler --on --id 42`
 | | `--off` | no | no
 | | `--id` | yes | yes
 | **`oc pull`** | `--insecure` | no | no | `oc pull --leaf 32f8a90`
