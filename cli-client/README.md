@@ -151,9 +151,10 @@ program's environment.
   library to test code that calls it?
 - How confident are you that your code is correct? What
   could you change to increase that confidence?
-- Test frameworks often run tests in parallel to cut down
-  on test run times. Could all your tests run in parallel?
-  Why or why not?
+- Test frameworks often parallelize work to cut down on run
+  times. Run your tests several times with the
+  `test_parallel.sh` script. Do you see any failures? Why or
+  why not?
 - Describe two tradeoffs that you made while choosing a
   course of implementation.
 - If you could change one thing about the programming
