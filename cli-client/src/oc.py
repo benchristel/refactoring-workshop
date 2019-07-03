@@ -28,15 +28,25 @@ class Client():
         return parse_json(stdout_of(self.cabbages_command()))
 
     def cabbages_command(self):
-        return ["oc", "cabbages"] + self.auth_args()
+        return ["oc", "cabbages"] + self.creds().oc_args()
 
-    def auth_args(self):
+    def creds(self):
         try:
             with open(self.ocrc_path, 'r') as f:
-                username, password = ocrc.get_credentials_exported_by(f.read())
-            return ["--username", username, "--password", password]
+                return Credentials(f.read())
         except IOError:
-            return []
+            return NullCredentials()
+
+class NullCredentials:
+    def oc_args(self):
+        return []
+
+class Credentials:
+    def __init__(self, script):
+        self.username, self.password = ocrc.get_credentials_exported_by(script)
+
+    def oc_args(self):
+        return ['--username', self.username, '--password', self.password]
 
 def parse_json(str):
     return json.loads(str)
