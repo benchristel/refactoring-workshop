@@ -33,14 +33,14 @@ class Client():
         return ["oc", "cabbages"] + self.creds().oc_args()
 
     def creds(self):
-        if self.username == None or self.password == None:
+        if self.username != None and self.password != None:
+            return CredentialsFromArgs(self.username, self.password)
+        else:
             try:
                 with open(self.ocrc_path, 'r') as f:
                     return CredentialsFromFile(f.read())
             except IOError:
                 return NullCredentials()
-        else:
-            return CredentialsFromArgs(self.username, self.password)
 
 class NullCredentials:
     def oc_args(self):
