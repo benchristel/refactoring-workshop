@@ -35,12 +35,10 @@ class Client():
     def creds(self):
         if self.username != None and self.password != None:
             return CredentialsFromArgs(self.username, self.password)
+        elif len(self.ocrc_path) > 0:
+            return CredentialsFromFile(self.ocrc_path)
         else:
-            try:
-                with open(self.ocrc_path, 'r') as f:
-                    return CredentialsFromFile(f.read())
-            except IOError:
-                return NullCredentials()
+            return NullCredentials()
 
 class NullCredentials:
     def oc_args(self):
@@ -55,12 +53,23 @@ class CredentialsFromArgs:
         return ['--username', self.username, '--password', self.password]
 
 class CredentialsFromFile:
-    def __init__(self, script):
-        username, password = ocrc.get_credentials_exported_by(script)
-        self.delegate = CredentialsFromArgs(username, password)
+    def __init__(self, path):
+        self.path = path
+        self._delegate = None
 
     def oc_args(self):
-        return self.delegate.oc_args()
+        return self.delegate().oc_args()
+
+    def delegate(self):
+        if self._delegate is None:
+            try:
+                with open(self.path, 'r') as f:
+                    username, password = ocrc.get_credentials_exported_by(f.read())
+                self._delegate = CredentialsFromArgs(username, password)
+            except IOError:
+                self._delegate = NullCredentials()
+
+        return self._delegate
 
 def parse_json(str):
     return json.loads(str)
