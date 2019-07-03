@@ -167,6 +167,10 @@ program's environment.
 - What are some security issues with this method of
   authentication? Is there anything you can do to mitigate
   them?
+- Assume the `oc` CLI supports the syntax `--username=foo
+  --password=bar` for specifying arguments. Which of the
+  edge cases described above could you address by using this
+  syntax?
 
 ## Authentication 2.0
 
@@ -209,11 +213,12 @@ parameters.
 Your next task is to wrap the `oc` CLI for watering crops.
 The command `oc sprinkle` turns sprinklers on or off.
 
-The documentation provides two examples of usage:
+The documentation provides three examples of usage:
 
 ```
 oc sprinkle --id 123 --on
 oc sprinkle --id 123 --off
+oc sprinkle --id 123 --on --username foo --password bar
 ```
 
 It doesn't specify what happens if both `--on` and `--off`
@@ -260,6 +265,9 @@ terminal and they will work.
 - mitigate them?
 - How easy is it for app developers to test code that calls
   your library?
+- How did you ensure that commands written to the log are
+  formatted as correct, executable shell code? How confident
+  are you that this will work for all inputs?
 - Did you add conditional statements to your code when
   implementing this story? If so, can you refactor to
   make them unnecessary?
