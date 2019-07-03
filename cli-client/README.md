@@ -204,47 +204,23 @@ parameters.
 - Describe two tradeoffs that you made while choosing a
   course of implementation.
 
-## More APIs
+## The Sprinkler API
 
-App developers are pleased that they can now access
-cabbages, but they want more! Your PM hands you the
-following list of nonsensical commands that your library
-must wrap, with a promise that many, many more are coming.
+Your next task is to wrap the `oc` CLI for watering crops.
+The command `oc sprinkle` turns sprinklers on or off.
 
-| **OC Command** | **Flag** | **Flag Takes Argument?** | **Flag Required?** | **Example**
-| -------------- | -------- | ------------------------ | ------------------ | -----------
-| **`oc sprinklers`** | `--region` | yes | yes | `oc sprinklers -k --region ca`
-| | `-k` | no | no
-| | `-d` | no | no
-| **`oc set-sprinkler`** | `--on` | no | no | `oc set-sprinkler --on --id 42`
-| | `--off` | no | no
-| | `--id` | yes | yes
-| **`oc pull`** | `--insecure` | no | no | `oc pull --leaf 32f8a90`
-| | `--leaf` | yes | no
+The documentation provides two examples of usage:
 
-You decide that you don't want to set yourself up for more
-work in the future than absolutely necessary. Can you
-implement your PM's request in a way that makes future
-stories in this vein trivially easy?
+```
+oc sprinkle --id 123 --on
+oc sprinkle --id 123 --off
+```
 
-Your implementation must satisfy the following:
+It doesn't specify what happens if both `--on` and `--off`
+are passed at once. Best not to think about it, I suppose.
 
-- There should be one function in the library per `oc`
-  command.
-- Each function should take parameters corresponding to the
-  `oc` flags.
-- You can assume that all arguments to the flags are strings
-- If the caller of a function doesn't pass a required flag
- or argument, you should throw an error.
-- If your caller doesn't pass an optional argument, you
-  should not pass the corresponding flag to the `oc`
-  command.
-- Each command returns JSON on standard output, which you
-  should pass back to the caller of your library. The shape
-  of the JSON isn't documented anywhere, though.
-- If a username and password are available (in the `~/.ocrc`
-  file or passed to the function), they should be passed
-  along to `oc` as they were for the `cabbages` API.
+You can wrap this in any Python interface you like, but
+please try to keep it consistent with the Cabbages API.
 
 ## Logging
 
