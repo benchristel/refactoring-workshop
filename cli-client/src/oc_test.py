@@ -8,16 +8,24 @@ def test_json():
 def test_calling_a_command_and_getting_stdout():
     assert oc.stdout_of(['echo', 'hi']) == 'hi\n'
 
-def test_credentials_passed_as_args():
-    assert (oc.Client(username="bob", password="foo").creds().oc_args()
-        == ['--username', 'bob', '--password', 'foo'])
+def test_client_can_receive_credentials_as_args():
+    assert (oc.Client(username="bob", password="foo").creds()
+        == oc.CredentialsFromArgs(username='bob', password='foo'))
 
-def test_credentials_parsed_from_file():
-    assert (oc.Client(ocrc_path="fakes/ocrc").creds().oc_args()
-        == ['--username', 'elias', '--password', '`a$1""!`'])
+def test_client_can_request_credentials_from_file():
+    assert (oc.Client(ocrc_path="foo/bar").creds()
+        == oc.CredentialsFromFile(path="foo/bar"))
+
+def test_client_prefers_args_over_file_for_creds():
+    client = oc.Client(
+        username="bob",
+        password="foo",
+        ocrc_path="foo/bar")
+
+    assert (client.creds() == oc.CredentialsFromArgs('bob', 'foo'))
 
 def test_no_credentials():
-    assert oc.Client().creds().oc_args() == []
+    assert oc.Client().creds() == oc.NullCredentials()
 
 def test_integration():
     assert (oc.Client(ocrc_path="fakes/ocrc").cabbages()

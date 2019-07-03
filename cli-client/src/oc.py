@@ -40,11 +40,21 @@ class Client():
         else:
             return NullCredentials()
 
-class NullCredentials:
+class Value:
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+class NullCredentials(Value):
     def oc_args(self):
         return []
 
-class CredentialsFromArgs:
+class CredentialsFromArgs(Value):
     def __init__(self, username, password):
         self.username = username
         self.password = password
@@ -52,7 +62,7 @@ class CredentialsFromArgs:
     def oc_args(self):
         return ['--username', self.username, '--password', self.password]
 
-class CredentialsFromFile:
+class CredentialsFromFile(Value):
     def __init__(self, path):
         self.path = path
         self._delegate = None
