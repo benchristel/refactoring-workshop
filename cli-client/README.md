@@ -224,8 +224,19 @@ oc sprinkle --id 123 --on --username foo --password bar
 It doesn't specify what happens if both `--on` and `--off`
 are passed at once. Best not to think about it, I suppose.
 
+The `sprinkle` command does not output anything to stdout,
+but does return an exit code of `1` on failure, and `0` on
+success. If it fails, it will log an unstructured,
+human-readable message to stderr.
+
 You can wrap this in any Python interface you like, but
 please try to keep it consistent with the Cabbages API.
+
+### Follow-up questions
+
+- How did you choose to communicate failure to the caller of
+  your library?
+- Is there any duplication in your code?
 
 ## Logging
 
