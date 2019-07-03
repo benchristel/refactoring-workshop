@@ -1,2 +1,6 @@
-#!/usr/bin/env sh
-echo '{}'
+#!/usr/bin/env python
+
+import json
+import sys
+
+print json.dumps(dict(args=sys.argv[1:]))
