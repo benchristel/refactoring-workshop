@@ -1,5 +1,6 @@
 import oc
 import types
+import StringIO
 
 def test_json():
     assert oc.parse_json('{"foo": "bar"}') == dict(foo='bar')
@@ -41,3 +42,11 @@ def test_integration_when_no_credentials():
 def test_integration_when_credentials_passed_as_args():
     assert (oc.Client(username="a", password="b").cabbages()
         == dict(args=['cabbages', '--username', 'a', '--password', 'b']))
+
+def test_logging():
+    log = StringIO.StringIO()
+    client = oc.Client(log=log)
+    assert log.getvalue() == ''
+    client.cabbages()
+    client.cabbages()
+    assert log.getvalue() == 'oc cabbages\noc cabbages\n'

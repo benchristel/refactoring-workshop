@@ -5,11 +5,16 @@ import ocrc
 def cabbages(username=None, password=None):
     return Client(ocrc_path="~/.ocrc", username=username, password=password).cabbages()
 
+class NullIO:
+    def write(self, s):
+        return None
+
 class Client():
-    def __init__(self, ocrc_path='', username=None, password=None):
+    def __init__(self, ocrc_path='', username=None, password=None, log=NullIO()):
         self.username = username
         self.password = password
         self.ocrc_path = ocrc_path
+        self.log = log
 
     def cabbages(self):
         """
@@ -27,7 +32,9 @@ class Client():
         But really, it just returns whatever JSON the API
         returns, parsed into a Python dict.
         """
-        return parse_json(stdout_of(self.cabbages_command()))
+        cmd = self.cabbages_command()
+        self.log.write(' '.join(cmd) + '\n')
+        return parse_json(stdout_of(cmd))
 
     def cabbages_command(self):
         return ["oc", "cabbages"] + self.creds().oc_args()
