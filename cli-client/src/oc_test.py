@@ -39,6 +39,12 @@ def test_getting_password_with_newline():
 "
     """) == ['alice', '\n']
 
+def test_getting_password_with_dashes():
+    assert oc.get_credentials_exported_by("""
+    export OC2RTA_USERNAME=alice
+    export OC2RTA_PASSWORD="--not-a-flag"
+    """) == ['alice', '--not-a-flag']
+
 def test_getting_username_and_password_from_a_script_that_echoes_things():
     assert oc.get_credentials_exported_by("""
     echo "mess you up"
