@@ -42,3 +42,6 @@ def test_getting_username_and_password_from_a_script_with_no_newline_at_the_end(
     assert ocrc.get_credentials_exported_by("""
     export OC2RTA_USERNAME=alice
     export OC2RTA_PASSWORD=password""") == ['alice', 'password']
+
+def test_failing_to_get_username_and_password_when_script_doesnt_define_them():
+    assert ocrc.get_credentials_exported_by('') == ['', '']
