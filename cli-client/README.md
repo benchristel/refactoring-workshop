@@ -118,6 +118,10 @@ You cannot assume, however, that the `OC2RTA_USERNAME` and
 `OC2RTA_PASSWORD` variables are already present in your
 program's environment.
 
+Take a moment to implement this feature before reading the
+follow-up questions. Once you are happy with your code
+and tests, then take a peak.
+
 ### Follow-up questions
 
 - What happens if a user's password contains spaces?
