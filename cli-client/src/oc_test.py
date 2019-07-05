@@ -1,6 +1,7 @@
 import oc
 import types
 import StringIO
+import subprocess
 
 def test_json():
     assert oc.parse_json('{"foo": "bar"}') == dict(foo='bar')
@@ -8,6 +9,14 @@ def test_json():
 
 def test_calling_a_command_and_getting_stdout():
     assert oc.stdout_of(['echo', 'hi']) == 'hi\n'
+
+def test_calling_a_command_and_getting_stderr():
+    try:
+        subprocess.check_output('echo hi >&2; false', stderr=subprocess.STDOUT, shell=True)
+    except subprocess.CalledProcessError as _e:
+        e = _e
+    assert e.returncode == 1
+    assert e.output == 'hi\n'
 
 def test_client_can_receive_credentials_as_args():
     assert (oc.Client(username="bob", password="foo").creds()
@@ -32,8 +41,12 @@ def test_integration():
     assert (oc.Client(ocrc_path="fakes/ocrc").cabbages()
         == dict(args=['cabbages', '--username', 'elias', '--password', '`a$1""!`']))
 
-def test_integration_through_global_function():
+def test_integration_through_global_cabbages_function():
     assert oc.cabbages()['args'][0] == 'cabbages'
+
+def test_integration_through_global_sprinkle_function():
+    # should not throw an exception
+    oc.sprinkle(id=123, on=True)
 
 def test_integration_when_no_credentials():
     assert (oc.Client(ocrc_path="i-do-not-exist").cabbages()

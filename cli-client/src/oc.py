@@ -5,6 +5,9 @@ import ocrc
 def cabbages(username=None, password=None):
     return Client(ocrc_path="~/.ocrc", username=username, password=password).cabbages()
 
+def sprinkle(id, on):
+    return Client(ocrc_path="~/.ocrc").sprinkle()
+
 class NullIO:
     def write(self, s):
         return None
@@ -36,8 +39,16 @@ class Client():
         self.log.write(' '.join(cmd) + '\n')
         return parse_json(stdout_of(cmd))
 
+    def sprinkle(self):
+        cmd = self.sprinkle_command()
+        self.log.write(' '.join(cmd) + '\n')
+        run(cmd)
+
     def cabbages_command(self):
         return ["oc", "cabbages"] + self.creds().oc_args()
+
+    def sprinkle_command(self):
+        return ["oc", "sprinkle"]
 
     def creds(self):
         if self.username != None and self.password != None:
@@ -46,6 +57,9 @@ class Client():
             return CredentialsFromFile(self.ocrc_path)
         else:
             return NullCredentials()
+
+    def log(self, cmd):
+        self.log.write(' '.join(cmd) + '\n')
 
 class Value:
     def __eq__(self, other):
@@ -92,4 +106,7 @@ def parse_json(str):
     return json.loads(str)
 
 def stdout_of(cmd):
+    return subprocess.check_output(cmd)
+
+def run(cmd):
     return subprocess.check_output(cmd)
