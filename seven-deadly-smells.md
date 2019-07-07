@@ -251,7 +251,7 @@ and which are not.
 def send_late_payment_reminders
   users = Database.query(ListUsersQuery.new)
   now = Time.now
-  users.filter { |user| user.payment_late?(now) }
+  users.select { |user| user.payment_late?(now) }
     .each { |email| SMTP.send!(LatePaymentEmail.new(user)) }
 end
 ```
