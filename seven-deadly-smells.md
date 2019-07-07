@@ -539,21 +539,51 @@ for car in cars
 end
 ```
 
-There's a missing abstraction here, which conceptually has
-the form:
+Things get more complicated once we add control flow statements
+like `return`, `continue`, and `break`. Here's an idiom for
+getting the first item of a list that matches a predicate:
 
 ```ruby
-for THING in THINGS
-  DO SOMETHING if CONDITION
+for slice in bread
+  return slice if slice.toasted?
 end
 ```
 
-The problem with using a `for` loop to express this idiom is
-that the `for` loop is used in so many *other* idioms that
-the purpose of this code is difficult to identify at a
-glance. Additionally, loops are attractors for code: they
-tend to get more complicated over time. A loop with one
-responsibility today will soon have more.
+...and one for checking whether any item of a list matches
+a predicate:
+
+```ruby
+for slice in bread
+  return true if slice.toasted?
+end
+```
+
+Of course, these only work if the return value of the method
+is supposed to be the result of the loop. In a more general
+case, we'd see:
+
+```ruby
+first = nil
+for slice in bread
+  first = slice if slice.toasted?
+  break
+end
+```
+
+```ruby
+found = false
+for slice in bread
+  found = true if slice.toasted?
+  break
+end
+```
+
+The problem with using a `for` loop to express these idioms
+is that the `for` loop is used in so *many* different idioms
+that it's hard to glance at a for loop and know what it
+does. Additionally, loops are attractors for code: they tend
+to get more complicated over time. A loop with one
+responsibility today will likely accrete more.
 
 ## The Fix
 
@@ -571,6 +601,20 @@ cars.select(&:unlocked).each { |car| service.send_alert(car) }
 The calls to `select` and `each` make our intent
 immediately clear: we're *selecting* a subset of the array
 elements and then doing something with *each* of them.
+
+What about finding the first item in a list matching a
+predicate? Ruby has a `find` method, but if it didn't, you
+could implement it yourself:
+
+```ruby
+bread.lazy.select(&:toasted?).first
+```
+
+Here, the `lazy` method returns a lazy sequence that will
+iterate over the underlying array only as far as it needs to
+to satisfy the downstream methods in the chain. The lazy
+loop will actually terminate once it finds the first toasted
+slice.
 
 # Duplicated Boilerplate
 
