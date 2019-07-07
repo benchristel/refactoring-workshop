@@ -220,6 +220,19 @@ def construct_email(data)
 end
 ```
 
+The call graph, visualized as a tree, looks something like
+this:
+
+```
+      A
+     / \
+    B   C
+   / \
+  D   E
+ / \
+F   G
+```
+
 ## The Fix
 
 The fix is superficially simple: inline all the methods and
@@ -229,11 +242,15 @@ won't return:
 
 - Clearly separate codepaths that build or transform data
   values from codepaths that make system calls (e.g. reading
-  from a database or sending messages to a server).
+  from a database or sending messages to a server). For more
+  information, see [my blog post on testable design](https://benchristel.github.io/blog/2018/06/08/principles-of-testable-design/#1-separate-data-transformation-from-side-effects) or
+  Gary Bernhardt's talk ["Boundaries"](https://www.destroyallsoftware.com/talks/boundaries).
 - Clearly divide application-agnostic "library" code from
   code that knows about the details of your application and
   business logic. Business-logic code may depend on "library"
-  code but not the other way around.
+  code but not the other way around. Push as much
+  logic as you can into the application-agnostic parts of
+  your code.
 - Keep the codepaths that make system calls especially shallow.
   Your top-level method should probably be calling library
   APIs directly.
@@ -241,11 +258,11 @@ won't return:
 Here's the refactored version of the example above—the
 top-level method, anyway. Note that this method is doing its
 work more directly than the top-level method in the smelly
-example, and knows about more things. However, it's easy to
-read, and the details of each step of the processing are
-delegated to other classes. There are no mysteries in the
-delegation: it's clear which responsibilities are delegated
-and which are not.
+example, and depends directly on more things. However, it's
+easy to read, and the details of each step of the processing
+are delegated to other classes. There are no mysteries in
+the delegation: it's clear which responsibilities are
+delegated and which are not.
 
 ```ruby
 def send_late_payment_reminders
@@ -254,6 +271,16 @@ def send_late_payment_reminders
   users.select { |user| user.payment_late?(now) }
     .each { |email| SMTP.send!(LatePaymentEmail.new(user)) }
 end
+```
+
+Aim for call graphs that look like this: wide and shallow.
+
+```
+  _____A_____
+ /    / \    \
+B    C   D    E
+        / \
+       F   G
 ```
 
 # Switch on Type
