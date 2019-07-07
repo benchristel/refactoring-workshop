@@ -118,25 +118,144 @@ It's fine to have mutable objects, but the mutability
 should be part of the core responsibility of the class, not
 a hidden gotcha that will surprise other developers.
 
-# Duplicated State
+# Redundant State
 
 ## The Smell
 
-TODO
+Here's a Ruby class that downloads a file from the given URL
+and lets you check up on the download progress:
+
+```ruby
+class Downloader
+  def initialize(url)
+    @url = url
+    @percent_downloaded = 0.0
+    @percent_remaining = 100.0
+  end
+
+  def percent_downloaded
+    @percent_downloaded
+  end
+
+  def percent_remaining
+    @percent_remaining
+  end
+
+  def start!
+    # actually download stuff, and update the instance
+    # variables in a background thread.
+    # ...
+  end
+end
+```
+
+The instance variables `@percent_downloaded` and `@percent_remaining`
+should always change together. `@percent_remaining` should
+always be `100 - @percent_downloaded`.
+
+What happens if one of these variables gets updated but
+not the other? `Downloader` will give absurd results when
+asked about the download progress. I'd rather not risk that.
 
 ## The Fix
 
-TODO
+We know `percent_remaining` will always be `100 - @percent_downloaded`,
+so let's express that constraint in code:
 
-# Deep Hierarchy
+```ruby
+def percent_downloaded
+  @percent_downloaded
+end
+
+def percent_remaining
+  100 - @percent_downloaded
+end
+```
+
+In general, it's better to store as little data as possible
+and compute values on the fly rather than store multiple
+sources of truth.
+
+In more complex cases, you might worry about the performance
+cost of recomputing values all the time. Keep in mind that
+[computers are fast](https://computers-are-fast.github.io/).
+
+# Deep Call Hierarchy
 
 ## The Smell
 
-TODO
+The Deep Call Hierarchy smell often manifests after repeated
+application of the Extract Method refactoring. When this
+smell is present, you see a bunch of small methods, each of
+which does some work and delegates the rest to another
+method. It doesn't take long before this delegation gets
+very hard to follow. If you've ever felt the need to draw
+out the call graph of a section of code on paper, you
+probably had a Deep Hierarchy on your hands.
+
+The Ruby methods below are involved in a Deep Hierarchy:
+
+```ruby
+def send_late_payment_reminders
+  data = load_users()
+  process(data)
+end
+
+def process(users)
+  users.each do |user|
+    p = LatePaymentProcessor.new(user)
+    if p.needs_email_alert?
+      send_email(user)
+    end
+  end
+end
+
+def send_email(data)
+  email = construct_email(data)
+  SMTP.send!(email)
+end
+
+def construct_email(data)
+  # ...
+end
+```
 
 ## The Fix
 
-TODO
+The fix is superficially simple: inline all the methods and
+extract new ones that are easier to understand. Use the
+following guidelines to ensure that the Deep Hierarchy smell
+won't return:
+
+- Clearly separate codepaths that build or transform data
+  values from codepaths that make system calls (e.g. reading
+  from a database or sending messages to a server).
+- Clearly divide application-agnostic "library" code from
+  code that knows about the details of your application and
+  business logic. Business-logic code may depend on "library"
+  code but not the other way around.
+- Keep the codepaths that make system calls especially shallow.
+  Your top-level method should probably be calling library
+  APIs directly.
+
+Here's the refactored version of the example above—the
+top-level method, anyway. Note that this method is doing its
+work more directly than the top-level method in the smelly
+example, and knows about more things. However, it's easy to
+read, and the details of each step of the processing are
+delegated to other classes. There are no mysteries in the
+delegation: it's clear which responsibilities are delegated
+and which are not.
+
+```ruby
+def send_late_payment_reminders
+  users = Database.query(ListUsersQuery.new)
+  now = Time.now
+  users.filter { |user| user.payment_late?(now) }
+    .map { |user| LatePaymentEmail.new(user) }
+    .each { |email| SMTP.send!(email) }
+end
+```
 
 # Switch on Type
 
