@@ -79,12 +79,60 @@ the middle of the method. We have to read the whole method,
 hunting for occurrences of `result`, before we can
 even begin to understand what its final value will be.
 
+Here's a more complete (though contrived) example where
+we're summarizing a list of numbers:
+
+```ruby
+sum_evens = 0
+sum_odds = 0
+num_evens = 0
+num_odds = 0
+for n in numbers
+  if n.even?
+    sum_evens += n
+    num_evens += 1
+  else
+    sum_odds += n
+    num_odds += 1
+  end
+end
+```
+
+It's hard to see at a glance that this code is correct. We
+basically have to read the whole loop to see what it's
+doing. As this code evolves it's likely to get more
+complicated. This loop is an attractive place for developers
+who are inexperienced or new to the codebase to add new
+code that deals with numbers from this list.
+
 ## The Fix
 
 The solution is simple, at least in Java and JavaScript:
-declare all variables `final` or `const`. Any mutable
-variables should have a clear reason to mutate: for
-instance, the index variable in a `for` loop.
+declare all local variables in side-effect-free code
+`final` or `const`. Any mutable variables should represent
+values that truly change over time (e.g. the count of events
+sent from the server, or the temperature read from a
+sensor).
+
+Such "inherently mutable" variables *always* have a
+scope that is larger than a single function, because
+function-scoped variables are temporary by nature. They
+vanish when the call stack pops, so there is no way they can
+change over timescales that are meaningful to the user of
+the program. Inherently mutable variables, by contrast, are
+most often instance variables of an object, though sometimes
+they are local variables in a side-effecting procedure (e.g.
+a REPL).
+
+Here is a refactored version of the `numbers` loop:
+
+```ruby
+evens, odds = numbers.partition(&:even?)
+sum_evens = sum(evens)
+sum_odds = sum(odds)
+num_evens = evens.count
+num_odds = odds.count
+```
 
 If you need to build up a result from a sequence of several
 computations, there are cleaner alternatives to mutation:
