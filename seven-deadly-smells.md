@@ -381,11 +381,88 @@ hierarchies are much easier to understand than deep ones.
 
 ## The Smell
 
-TODO
+A distinction between something and nothing is the cause of
+many of the asymmetries in our programs. If a value is
+present, we do one thing. If it's not present, we usually do
+nothing.
 
-## The Fix
+It's dangerous to have null (or `nil`, or `None`) values
+floating around a program. The reason is simple: `null`
+values do not behave like the type of thing they stand in
+for. If a variable might be null, you can't simply *use* it,
+you have to check if it's null first to know that its value
+will really act like the type of thing it's declared to be.
+I can't count the number of times I've seen Java web
+services awkwardly crash with a NullPointerException that
+really should have been avoidable.
 
-TODO
+Here's an example of some code with a null check, from a
+Ruby library that calls a CLI tool:
+
+```ruby
+def with_auth(args, credentials = nil)
+  if credentials.nil?
+    args
+  else
+    args + ['--username', credentials.username, '--password', credentials.password]
+  end
+end
+```
+
+This code actually exhibits two smells: not only is there
+a null check, but the line that constructs the username and
+password arguments is an example of _Feature Envy_.
+
+# The Fix
+
+If we remove the feature envy, the null check smell becomes
+more obvious:
+
+```ruby
+def with_auth(args, credentials = nil)
+  if credentials.nil?
+    args
+  else
+    args + credentials.to_args
+  end
+end
+```
+
+It also becomes possible to fix the null check smell. Now
+our credentials object has a `to_args` method:
+
+```ruby
+class Credentials
+  # ...
+
+  def to_args
+    ['--username', self.username, '--password', self.password]
+  end
+end
+```
+
+We can use the _Null Object_ pattern to envision a type of
+Credentials that represents the *absence* of a username
+and password. The `to_args` method of such a type would look
+like this:
+
+```ruby
+class NullCredentials
+  def to_args
+    []
+  end
+end
+```
+
+Now we can do this:
+
+```ruby
+def with_auth(args, credentials = NullCredentials.new)
+  args + credentials.to_args
+end
+```
+
+and like magic, the null check is gone!
 
 # Duplicated Control Flow
 
