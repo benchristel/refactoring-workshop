@@ -438,10 +438,10 @@ It's dangerous to have null (or `nil`, or `None`) values
 floating around a program. The reason is simple: `null`
 values do not behave like the type of thing they stand in
 for. If a variable might be null, you can't simply *use* it,
-you have to check if it's null first to know that its value
+you have to check if it's null first to know if its value
 will really act like the type of thing it's declared to be.
-I can't count the number of times I've seen Java web
-services awkwardly crash with a NullPointerException that
+I can't count the number of times I've seen Java-backed
+websites awkwardly crash with a NullPointerException that
 really should have been avoidable.
 
 Here's an example of some code with a null check, from a
@@ -511,6 +511,14 @@ end
 ```
 
 and like magic, the null check is gone!
+
+The methods of a Null Object usually return "zero values" or
+_fixed points_ that have no effect when used with common
+operations like addition, multiplication, or concatenation.
+Examples of fixed point values are `0` (the fixed point for
+addition), `1` (the fixed point for multiplication), and
+`""` and `[]` (the fixed points for string and array
+concatenation).
 
 # Duplicated Control Flow
 
