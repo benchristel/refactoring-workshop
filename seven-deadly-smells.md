@@ -432,7 +432,9 @@ hierarchies are much easier to understand than deep ones.
 A distinction between something and nothing is the cause of
 many of the asymmetries in our programs. If a value is
 present, we do one thing. If it's not present, we usually do
-nothing.
+nothing. The absence of a value is typically represented
+by a null pointer, or (in OO languages like Ruby) a `nil`
+object.
 
 It's dangerous to have null (or `nil`, or `None`) values
 floating around a program. The reason is simple: `null`
