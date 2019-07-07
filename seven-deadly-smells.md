@@ -269,6 +269,15 @@ TODO
 
 # Null Check
 
+> Complexity (in the bad sense) consists of distinctions
+> which unnecessarily complicate a structure. To get
+> simplicity, on the other hand, we need a process which
+> questions every distinction. Any distinction which is not
+> necessary is removed. To remove a distinction we replace
+> it by a symmetry.
+>
+> —Christopher Alexander, _The Process of Creating Life_, p. 469
+
 ## The Smell
 
 TODO
