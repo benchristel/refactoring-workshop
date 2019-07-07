@@ -252,8 +252,7 @@ def send_late_payment_reminders
   users = Database.query(ListUsersQuery.new)
   now = Time.now
   users.filter { |user| user.payment_late?(now) }
-    .map { |user| LatePaymentEmail.new(user) }
-    .each { |email| SMTP.send!(email) }
+    .each { |email| SMTP.send!(LatePaymentEmail.new(user)) }
 end
 ```
 
