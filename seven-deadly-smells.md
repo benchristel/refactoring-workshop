@@ -287,11 +287,86 @@ B    C   D    E
 
 ## The Smell
 
-TODO
+If you see parallel `if` or `case` statements with several
+branches, switching on a variable named `type` or anything
+like it, that's a strong smell that you should apply the
+_Replace Conditional With Polymorphism_ refactoring.
+
+```ruby
+def start_vm(cloud, vm_size)
+  if cloud == 'aws'
+    # ... launch an AWS VM ...
+  elsif cloud == 'gcp'
+    # ... launch a GCP VM ...
+  elsif cloud == 'azure'
+    # ... launch an Azure VM ...
+  else
+    raise "unrecognized cloud provider: #{cloud}"
+  end
+end
+
+def shutdown_vm(cloud, id)
+  if cloud == 'aws'
+    # ... stop an AWS VM ...
+  elsif cloud == 'gcp'
+    # ... stop a GCP VM ...
+  elsif cloud == 'azure'
+    # ... stop an Azure VM ...
+  else
+    raise "unrecognized cloud provider: #{cloud}"
+  end
+end
+```
 
 ## The Fix
 
-TODO
+Extract a class for each type of thing you're handling in
+the conditional. Each class implements the same interface,
+so you can treat objects of that class interchangeably.
+
+```ruby
+class AWS
+  def start_vm(vm_size)
+    # ...
+  end
+
+  def shutdown_vm(id)
+    # ...
+  end
+end
+
+class GCP
+  def start_vm(vm_size)
+    # ...
+  end
+
+  def shutdown_vm(id)
+    # ...
+  end
+end
+
+class Azure
+  def start_vm(vm_size)
+    # ...
+  end
+
+  def shutdown_vm(id)
+    # ...
+  end
+end
+```
+
+Now, instead of repeatedly switching on a `type` variable,
+you only need one conditional that decides which class to
+instantiate. The code that calls `start_vm` and `shutdown_vm`
+can be passed an instance of whatever class. That code knows
+that it has an instance of a cloud-provider-like thing, but
+it doesn't need to know which cloud it's actually talking to
+at any given moment.
+
+Avoid the temptation to create complicated inheritance
+hierarchies with this refactoring. Remember: shallow
+hierarchies are much easier to understand than deep ones.
 
 # Null Check
 
