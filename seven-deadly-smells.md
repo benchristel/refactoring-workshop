@@ -40,8 +40,8 @@ signs that something is wrong?
 I believe we can. Below I present seven code smells, some
 of which clarify items on Jeff's list, and some of which
 are wholly new. These smells do not have "mirror images",
-so the refactorings they exhort are nearly always a good
-idea.
+so when you see a way to remove them from your code, you
+should.
 
 The smells are in priority order, from worst and easiest
 to fix to least harmful and hardest to fix.
