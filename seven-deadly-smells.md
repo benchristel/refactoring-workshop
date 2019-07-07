@@ -524,11 +524,53 @@ concatenation).
 
 ## The Smell
 
-TODO
+Structured programming has given rise to many common idioms,
+which are often repeated throughout a program.
+
+```ruby
+for slice in bread
+  puts "toast" if slice.toasted?
+end
+
+# ...
+
+for car in cars
+  service.send_alert(car) if car.unlocked?
+end
+```
+
+There's a missing abstraction here, which conceptually has
+the form:
+
+```ruby
+for THING in THINGS
+  DO SOMETHING if CONDITION
+end
+```
+
+The problem with using a `for` loop to express this idiom is
+that the `for` loop is used in so many *other* idioms that
+the purpose of this code is difficult to identify at a
+glance. Additionally, loops are attractors for code: they
+tend to get more complicated over time. A loop with one
+responsibility today will soon have more.
 
 ## The Fix
 
-TODO
+We can use functional idioms to separate the concerns of
+filtering and side-effecting and thus clarify our intent:
+
+```ruby
+bread.select(&:toasted?).each { puts 'toast' }
+
+# ...
+
+cars.select(&:unlocked).each { |car| service.send_alert(car) }
+```
+
+The calls to `select` and `each` make our intent
+immediately clear: we're *selecting* a subset of the array
+elements and then doing something with *each* of them.
 
 # Duplicated Boilerplate
 
