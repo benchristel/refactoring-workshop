@@ -514,12 +514,13 @@ end
 
 and like magic, the null check is gone!
 
-The methods of a Null Object usually return "zero values" or
-_fixed points_ that have no effect when used with common
+The methods of a Null Object usually return [_identity
+values_](https://en.wikipedia.org/wiki/Identity_element)—that
+is, values that have no effect when used with common
 operations like addition, multiplication, or concatenation.
-Examples of fixed point values are `0` (the fixed point for
-addition), `1` (the fixed point for multiplication), and
-`""` and `[]` (the fixed points for string and array
+Examples of identity values are `0` (for
+addition), `1` (multiplication), and
+`""` and `[]` (string and array
 concatenation).
 
 # Duplicated Control Flow
