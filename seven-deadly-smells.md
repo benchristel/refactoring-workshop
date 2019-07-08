@@ -7,7 +7,7 @@ typically means that the code *may* be difficult or risky to
 change later.
 
 If you've never heard of code smells, take a few minutes to
-read Jeff Atwood's [blog post](https://blog.codinghorror.com/code-smells/) listing about 30 of them. [The Wikipedia article on code smells](https://en.wikipedia.org/wiki/Code_smell) also has a few that aren't on Jeff's list.
+read Jeff Atwood's [blog post](https://blog.codinghorror.com/code-smells/) listing about 30 of them. [The C2 Wiki article on code smells](http://wiki.c2.com/?CodeSmell) also has a few that aren't on Jeff's list.
 
 I like the concept of code smells because it gives us
 programmers a shared set of terms for talking about
