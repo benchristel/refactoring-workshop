@@ -43,8 +43,9 @@ are wholly new. These smells do not have "mirror images",
 so when you see a way to remove them from your code, you
 should.
 
-The smells are in priority order, from worst and easiest
-to fix to least harmful and hardest to fix.
+I've made an effort to put the smells in priority order,
+from worst and easiest to fix to least harmful and hardest
+to fix. However, the current order is wrong.
 
 # Casual Mutation
 
