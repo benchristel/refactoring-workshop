@@ -109,11 +109,10 @@ code that deals with numbers from this list.
 ## The Fix
 
 The solution is simple, at least in Java and JavaScript:
-declare all local variables in side-effect-free code
-`final` or `const`. Any mutable variables should represent
-values that truly change over time (e.g. the count of events
-sent from the server, or the temperature read from a
-sensor).
+declare all local variables in side-effect-free code `final`
+or `const`. Any mutable variables should represent concepts
+that truly change over time (e.g. the count of events sent
+from the server, or the temperature read from a sensor).
 
 Such "inherently mutable" variables *always* have a
 scope that is larger than a single function, because
