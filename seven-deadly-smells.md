@@ -1,7 +1,7 @@
 # The Seven Deadly Smells
 
 Refactoring works best when guided by a knowledge of _code
-smells_. Code smells are harmful patterns that often accrete
+smells_. Code smells are anti-patterns that often accrete
 in code as it changes. The presence of a code smell
 typically means that the code *may* be difficult or risky to
 change later.
