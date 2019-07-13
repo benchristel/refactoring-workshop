@@ -39,6 +39,9 @@ harder and harder to add. Can you clean up the code smells?
 5. Which functions directly or indirectly depend on global
    state?
 6. Which functions modify global state?
+7. Which functions are pure? A pure function is one whose
+   only inputs are its arguments and whose only output is
+   its return value.
 
 ## The Kata
 
