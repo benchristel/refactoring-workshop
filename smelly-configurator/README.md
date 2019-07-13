@@ -12,6 +12,34 @@ months your team has been maintaining it, with no consistent
 architecture or design strategy. New features are becoming
 harder and harder to add. Can you clean up the code smells?
 
+## Active Reading
+
+1. Skim through the code, aiming to answer the following
+   questions:
+   - What does the code do, in general terms?
+   - What is the interface to this code? What are the
+     inputs, outputs, and public methods?
+   - What concepts does the code know about?
+2. Draw a directed graph representing the call graph of the
+   functions. That is, if function A directly calls function
+   B, draw this:
+
+   ```
+   A --> B
+   ```
+
+   What do you notice about the shape of the call graph?
+3. Which functions are application-specific and which are
+   application-agnostic (i.e. general-purpose)?
+4. Which functions directly or indirectly make system calls?
+   Actions that involve system calls include reading and
+   writing files, forking processes, getting the current
+   time, talking to other computers on the network, and
+   generating random numbers.
+5. Which functions directly or indirectly depend on global
+   state?
+6. Which functions modify global state?
+
 ## The Kata
 
 This kata is not about implementing new functionality;
