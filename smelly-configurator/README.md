@@ -23,7 +23,7 @@ harder and harder to add. Can you clean up the code smells?
      private?
    - What concepts does the code know about?
 2. Draw a directed graph representing the call graph of the
-   functions. That is, if function A directly calls function
+   methods. That is, if method A directly calls method
    B, draw this:
 
    ```
@@ -31,22 +31,22 @@ harder and harder to add. Can you clean up the code smells?
    ```
 
    What do you notice about the shape of the call graph?
-3. Which functions are application-specific and which are
+3. Which methods are application-specific and which are
    application-agnostic (i.e. general-purpose)?
-4. Which functions directly or indirectly make system calls?
+4. Which methods directly or indirectly make system calls?
    Actions that involve system calls include reading and
    writing files, forking processes, getting the current
    time, talking to other computers on the network, and
    generating random numbers.
 5. Look back at your call graph drawing. What is the length
-   of the longest path between a public function and a
+   of the longest path between a public method and a
    system call?
-5. Which functions directly or indirectly depend on global
+5. Which methods directly or indirectly depend on global
    state?
-6. Which functions modify global state?
-7. Which functions are pure? A pure function is one whose
-   only inputs are its arguments and whose only output is
-   its return value.
+6. Which methods modify global state?
+7. Which methods are are *pure functions*? A pure function
+   is one whose only inputs are its arguments and whose only
+   output is its return value.
 
 ## The Kata
 
