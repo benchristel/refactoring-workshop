@@ -14,7 +14,7 @@ harder and harder to add. Can you clean up the code smells?
 
 ## Active Reading
 
-1. Skim through the code, aiming to answer the following
+1. Skim through `autoclop.rb`, aiming to answer the following
    questions:
    - What does the code do, in general terms?
    - What is the interface to this code? What are the
