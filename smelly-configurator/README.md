@@ -19,6 +19,8 @@ harder and harder to add. Can you clean up the code smells?
    - What does the code do, in general terms?
    - What is the interface to this code? What are the
      inputs, outputs, and public methods?
+   - Which methods looks like they are intended to be
+     private?
    - What concepts does the code know about?
 2. Draw a directed graph representing the call graph of the
    functions. That is, if function A directly calls function
@@ -36,6 +38,9 @@ harder and harder to add. Can you clean up the code smells?
    writing files, forking processes, getting the current
    time, talking to other computers on the network, and
    generating random numbers.
+5. Look back at your call graph drawing. What is the length
+   of the longest path between a public function and a
+   system call?
 5. Which functions directly or indirectly depend on global
    state?
 6. Which functions modify global state?
