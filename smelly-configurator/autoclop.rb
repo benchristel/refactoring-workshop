@@ -18,13 +18,13 @@ class ClopCommand < Struct.new(:os, :config)
   def to_s
     if config.nil? || config.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+      default_command
     else
       cfg = YAML.safe_load(File.read(config))
 
       if cfg.nil?
         Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
-        clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+        default_command
       else
         libargs =
           if cfg['libs']
@@ -43,6 +43,10 @@ class ClopCommand < Struct.new(:os, :config)
   end
 
   private
+
+  def default_command
+    clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+  end
 
   def clop_command(python_version, optimization, libargs)
     "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}"
