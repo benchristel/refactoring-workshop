@@ -51,8 +51,8 @@ def invoke_clop_default(message_type=nil)
   invoke_clop(py, 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
 end
 
-def invoke_clop(python_version, optimization = 'O1', libargs = '')
-  libargs = ' ' + libargs unless libargs.empty?
+def invoke_clop(python_version, optimization, libargs)
+  libargs = ' ' + libargs
   ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization}#{libargs}"
   if !ok
     raise "clop failed. Please inspect the output above to determine what went wrong."
