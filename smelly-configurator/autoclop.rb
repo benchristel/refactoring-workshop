@@ -35,7 +35,7 @@ class Config < Struct.new(:cfg, :user)
   end
 
   def opt
-    cfg['opt']
+    cfg['opt'] || 'O2'
   end
 
   private
@@ -53,9 +53,17 @@ class Config < Struct.new(:cfg, :user)
   end
 end
 
-class NullConfig
+class NullConfig < Struct.new(:user)
   def python_version(os)
     os =~ /Red Hat 8/ ? 3 : 2
+  end
+
+  def opt
+    'O2'
+  end
+
+  def libargs
+    ["-L/home/#{user}/.cbiscuit/lib"]
   end
 end
 
@@ -63,17 +71,17 @@ def autoclop(os, config_path, user)
   cmd =
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      cfg = NullConfig.new
-      clop_command(cfg.python_version(os), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
+      cfg = NullConfig.new(user)
+      clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
     else
       cfg = Config.load(config_path, user)
 
       if cfg.invalid?
         Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
-        cfg = NullConfig.new
-        clop_command(cfg.python_version(os), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
+        cfg = NullConfig.new(user)
+        clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
       else
-        clop_command(cfg.python_version(os), cfg.opt || 'O2', cfg.libargs)
+        clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
       end
     end
 
