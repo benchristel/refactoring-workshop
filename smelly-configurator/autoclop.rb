@@ -9,7 +9,8 @@ end
 def autoclop(os, config)
   if config.nil? || config.empty?
     Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-    ok = Kernel.system clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+    cmd = clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+    ok = Kernel.system cmd
     if !ok
       raise "clop failed. Please inspect the output above to determine what went wrong."
     end
@@ -18,7 +19,8 @@ def autoclop(os, config)
 
     if cfg.nil?
       Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
-      ok = Kernel.system clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+      cmd = clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+      ok = Kernel.system cmd
       if !ok
         raise "clop failed. Please inspect the output above to determine what went wrong."
       end
@@ -34,7 +36,8 @@ def autoclop(os, config)
           "-L/home/#{ENV['USER']}/.cbiscuit/lib"
         end
 
-      ok = Kernel.system clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
+      cmd = clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
+      ok = Kernel.system cmd
       if !ok
         raise "clop failed. Please inspect the output above to determine what went wrong."
       end
