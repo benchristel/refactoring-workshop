@@ -19,8 +19,6 @@ def autoclop
     return invoke_clop_default
   end
 
-  python_version = python_version($os, cfg)
-
   libargs =
     if cfg['libs']
       cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
@@ -32,12 +30,11 @@ def autoclop
       "-L/home/#{ENV['USER']}/.cbiscuit/lib"
     end
 
-  invoke_clop(python_version, cfg['opt'] || 'O2', libargs)
+  invoke_clop(python_version($os, cfg), cfg['opt'] || 'O2', libargs)
 end
 
 def invoke_clop_default
-  py = python_version($os, {})
-  invoke_clop(py, 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+  invoke_clop(python_version($os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
 end
 
 def invoke_clop(python_version, optimization, libargs)
