@@ -13,14 +13,16 @@ def autoclop
   python_version = python_version($os, cfg)
   optimization = cfg['opt'] if cfg['opt']
 
-  if cfg['libs']
-    libargs = cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
-  elsif cfg['libdir']
-    libargs = "-L#{esc cfg['libdir']}"
-  elsif cfg['libdirs']
-    libargs = cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
-  end
-  libargs ||= "-L/home/#{ENV['USER']}/.cbiscuit/lib"
+  libargs =
+    if cfg['libs']
+      cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
+    elsif cfg['libdir']
+      "-L#{esc cfg['libdir']}"
+    elsif cfg['libdirs']
+      cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
+    else
+      "-L/home/#{ENV['USER']}/.cbiscuit/lib"
+    end
 
   invoke_clop(python_version, optimization || 'O2', libargs || '')
 end
