@@ -27,23 +27,21 @@ class ClopCommand < Struct.new(:os, :config)
   def to_s
     if config.nil? || config.empty?
       default_command
+    elsif cfg.nil?
+      default_command
     else
-      if cfg.nil?
-        default_command
-      else
-        libargs =
-          if cfg['libs']
-            cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
-          elsif cfg['libdir']
-            "-L#{esc cfg['libdir']}"
-          elsif cfg['libdirs']
-            cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
-          else
-            "-L/home/#{ENV['USER']}/.cbiscuit/lib"
-          end
+      libargs =
+        if cfg['libs']
+          cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
+        elsif cfg['libdir']
+          "-L#{esc cfg['libdir']}"
+        elsif cfg['libdirs']
+          cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
+        else
+          "-L/home/#{ENV['USER']}/.cbiscuit/lib"
+        end
 
-        clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
-      end
+      clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
     end
   end
 
