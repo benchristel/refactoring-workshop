@@ -23,7 +23,7 @@ def autoclop
       "-L/home/#{ENV['USER']}/.cbiscuit/lib"
     end
 
-  invoke_clop(python_version, cfg['opt'] || 'O2', libargs || '')
+  invoke_clop(python_version, cfg['opt'] || 'O2', libargs)
 end
 
 def invoke_clop_default(message_type=nil)

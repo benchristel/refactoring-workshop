@@ -99,4 +99,14 @@ EOF
     autoclop
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -l/foo/weird\ lib.1.0')
   end
+
+  it 'passes no -l or -L flags if you specify an empty library list' do
+    $config = '/tmp/test-file-deleteme'
+    File.write($config, <<-EOF)
+---
+libs: []
+EOF
+    autoclop
+    expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 ')
+  end
 end
