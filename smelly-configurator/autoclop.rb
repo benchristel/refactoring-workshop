@@ -1,13 +1,13 @@
 require 'shellwords'
 require 'yaml'
 def run_autoclop
-  config = ENV['AUTOCLOP_CONFIG']
+  config_path = ENV['AUTOCLOP_CONFIG']
   os = File.read('/etc/issue')
-  autoclop(os, config)
+  autoclop(os, config_path)
 end
 
-def autoclop(os, config)
-  cmd = ClopCommand.new(os, config)
+def autoclop(os, config_path)
+  cmd = ClopCommand.new(os, config_path)
   Kernel.puts cmd.warning
   ok = Kernel.system cmd.to_s
   if !ok
@@ -15,17 +15,17 @@ def autoclop(os, config)
   end
 end
 
-class ClopCommand < Struct.new(:os, :config)
+class ClopCommand < Struct.new(:os, :config_path)
   def warning
-    if config.nil? || config.empty?
+    if config_path.nil? || config_path.empty?
       "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
     elsif cfg.nil?
-      "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+      "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
     end
   end
 
   def to_s
-    if config.nil? || config.empty? || cfg.nil?
+    if config_path.nil? || config_path.empty? || cfg.nil?
       default_command
     else
       libargs =
@@ -61,7 +61,7 @@ class ClopCommand < Struct.new(:os, :config)
   end
 
   def cfg
-    YAML.safe_load(File.read(config))
+    YAML.safe_load(File.read(config_path))
   end
 
   def esc arg
