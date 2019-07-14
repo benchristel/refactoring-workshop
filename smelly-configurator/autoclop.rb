@@ -11,7 +11,6 @@ def autoclop
   cfg = YAML.safe_load(File.read($config))
   return invoke_clop_default :invalid_yaml if cfg.nil?
   python_version = python_version($os, cfg)
-  optimization = cfg['opt'] if cfg['opt']
 
   libargs =
     if cfg['libs']
@@ -24,7 +23,7 @@ def autoclop
       "-L/home/#{ENV['USER']}/.cbiscuit/lib"
     end
 
-  invoke_clop(python_version, optimization || 'O2', libargs || '')
+  invoke_clop(python_version, cfg['opt'] || 'O2', libargs || '')
 end
 
 def invoke_clop_default(message_type=nil)
