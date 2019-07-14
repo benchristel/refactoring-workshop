@@ -6,10 +6,36 @@ def run_autoclop
   autoclop(os, config_path, ENV['USER'])
 end
 
-class Config < Struct.new(:cfg)
-  def self.load(path)
-    new YAML.safe_load(File.read(path))
+class Config < Struct.new(:cfg, :user)
+  def self.load(path, user)
+    new YAML.safe_load(File.read(path)), user
   end
+
+  def libargs
+    if libs
+      libs.map { |l| "-l#{l}" }
+    elsif libdir
+      ["-L#{libdir}"]
+    elsif libdirs
+      libdirs.map { |l| "-L#{l}" }
+    else
+      ["-L/home/#{user}/.cbiscuit/lib"]
+    end
+  end
+
+  def invalid?
+    cfg.nil?
+  end
+
+  def python_version
+    cfg['python-version']
+  end
+
+  def opt
+    cfg['opt']
+  end
+
+  private
 
   def libdir
     cfg['libdir']
@@ -21,18 +47,6 @@ class Config < Struct.new(:cfg)
 
   def libs
     cfg['libs']
-  end
-
-  def opt
-    cfg['opt']
-  end
-
-  def python_version
-    cfg['python-version']
-  end
-
-  def invalid?
-    cfg.nil?
   end
 end
 
@@ -46,26 +60,15 @@ def autoclop(os, config_path, user)
   cmd =
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      clop_command(python_version(os, NullConfig.new), 'O2', "-L/home/#{user}/.cbiscuit/lib")
+      clop_command(python_version(os, NullConfig.new), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
     else
-      cfg = Config.load(config_path)
+      cfg = Config.load(config_path, user)
 
       if cfg.invalid?
         Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
-        clop_command(python_version(os, NullConfig.new), 'O2', "-L/home/#{user}/.cbiscuit/lib")
+        clop_command(python_version(os, NullConfig.new), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
       else
-        libargs =
-          if cfg.libs
-            cfg.libs.map { |l| "-l#{esc l}" }.join(' ')
-          elsif cfg.libdir
-            "-L#{esc cfg.libdir}"
-          elsif cfg.libdirs
-            cfg.libdirs.map { |l| "-L#{esc l}" }.join(' ')
-          else
-            "-L/home/#{user}/.cbiscuit/lib"
-          end
-
-        clop_command(python_version(os, cfg), cfg.opt || 'O2', libargs)
+        clop_command(python_version(os, cfg), cfg.opt || 'O2', cfg.libargs)
       end
     end
 
@@ -76,7 +79,7 @@ def autoclop(os, config_path, user)
 end
 
 def clop_command(python_version, optimization, libargs)
-  "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}"
+  "clop configure --python #{esc python_version} -#{esc optimization} #{libargs.map { |a| esc a }.join(' ')}"
 end
 
 def python_version(os, config)
