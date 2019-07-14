@@ -27,12 +27,8 @@ class Config < Struct.new(:cfg, :user)
     cfg.nil?
   end
 
-  def python_version
-    cfg['python-version']
-  end
-
   def python_version_2(os)
-    python_version || (
+    cfg['python-version'] || (
       # Red Hat has deprecated Python 2
       os =~ /Red Hat 8/ ? 3 : 2
     )
