@@ -27,7 +27,7 @@ class Config < Struct.new(:cfg, :user)
     cfg.nil?
   end
 
-  def python_version_2(os)
+  def python_version(os)
     cfg['python-version'] || (
       # Red Hat has deprecated Python 2
       os =~ /Red Hat 8/ ? 3 : 2
@@ -54,11 +54,7 @@ class Config < Struct.new(:cfg, :user)
 end
 
 class NullConfig
-  def python_version
-    nil
-  end
-
-  def python_version_2(os)
+  def python_version(os)
     os =~ /Red Hat 8/ ? 3 : 2
   end
 end
@@ -68,16 +64,16 @@ def autoclop(os, config_path, user)
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
       cfg = NullConfig.new
-      clop_command(cfg.python_version_2(os), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
+      clop_command(cfg.python_version(os), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
     else
       cfg = Config.load(config_path, user)
 
       if cfg.invalid?
         Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
         cfg = NullConfig.new
-        clop_command(cfg.python_version_2(os), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
+        clop_command(cfg.python_version(os), 'O2', ["-L/home/#{user}/.cbiscuit/lib"])
       else
-        clop_command(cfg.python_version_2(os), cfg.opt || 'O2', cfg.libargs)
+        clop_command(cfg.python_version(os), cfg.opt || 'O2', cfg.libargs)
       end
     end
 
