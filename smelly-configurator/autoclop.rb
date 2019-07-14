@@ -25,9 +25,7 @@ class ClopCommand < Struct.new(:os, :config)
   end
 
   def to_s
-    if config.nil? || config.empty?
-      default_command
-    elsif cfg.nil?
+    if config.nil? || config.empty? || cfg.nil?
       default_command
     else
       libargs =
