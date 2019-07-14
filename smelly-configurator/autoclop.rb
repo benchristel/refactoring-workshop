@@ -11,11 +11,11 @@ class ConfigFactory
     if path.nil? || path.empty?
       [ "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration.",
         DefaultConfig.new(user) ]
-    elsif from_yaml(path, user).invalid?
+    elsif (c = from_yaml(path, user)).invalid?
       [ "WARNING: Invalid YAML in #{path}. Assuming the default configuration.",
         DefaultConfig.new(user) ]
     else
-      ['', from_yaml(path, user)]
+      ['', c]
     end
   end
 
