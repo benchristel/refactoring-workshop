@@ -13,34 +13,32 @@ def autoclop(os, config)
     if !ok
       raise "clop failed. Please inspect the output above to determine what went wrong."
     end
-    return
-  end
+  else
+    cfg = YAML.safe_load(File.read(config))
 
-  cfg = YAML.safe_load(File.read(config))
-
-  if cfg.nil?
-    Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
-    ok = Kernel.system clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
-    if !ok
-      raise "clop failed. Please inspect the output above to determine what went wrong."
-    end
-    return
-  end
-
-  libargs =
-    if cfg['libs']
-      cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
-    elsif cfg['libdir']
-      "-L#{esc cfg['libdir']}"
-    elsif cfg['libdirs']
-      cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
+    if cfg.nil?
+      Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+      ok = Kernel.system clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+      if !ok
+        raise "clop failed. Please inspect the output above to determine what went wrong."
+      end
     else
-      "-L/home/#{ENV['USER']}/.cbiscuit/lib"
-    end
+      libargs =
+        if cfg['libs']
+          cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
+        elsif cfg['libdir']
+          "-L#{esc cfg['libdir']}"
+        elsif cfg['libdirs']
+          cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
+        else
+          "-L/home/#{ENV['USER']}/.cbiscuit/lib"
+        end
 
-  ok = Kernel.system clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
-  if !ok
-    raise "clop failed. Please inspect the output above to determine what went wrong."
+      ok = Kernel.system clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
+      if !ok
+        raise "clop failed. Please inspect the output above to determine what went wrong."
+      end
+    end
   end
 end
 
