@@ -8,6 +8,7 @@ describe 'Configuring `clop`' do
     $os = nil
     FileUtils.rm_f('/tmp/test-file-deleteme')
     allow(Kernel).to receive(:system).and_return true
+    ENV['USER'] = 'Ben'
   end
 
   it 'uses the defaults if you do not provide a config file path' do
