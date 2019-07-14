@@ -6,11 +6,17 @@ def run_autoclop
   autoclop(os, config_path, ENV['USER'])
 end
 
-class Config < Struct.new(:cfg, :user)
-  def self.load(path, user)
-    new YAML.safe_load(File.read(path)), user
+class ConfigFactory
+  def self.build(path, user)
+    from_yaml(path, user)
   end
 
+  def self.from_yaml(path, user)
+    Config.new YAML.safe_load(File.read(path)), user
+  end
+end
+
+class Config < Struct.new(:cfg, :user)
   def libargs
     if libs
       libs.map { |l| "-l#{l}" }
@@ -72,11 +78,11 @@ def autoclop(os, config_path, user)
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
       NullConfig.new(user)
-    elsif Config.load(config_path, user).invalid?
+    elsif ConfigFactory.build(config_path, user).invalid?
       Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
       NullConfig.new(user)
     else
-      Config.load(config_path, user)
+      ConfigFactory.build(config_path, user)
     end
 
   cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
