@@ -18,6 +18,7 @@ describe 'Configuring `clop`' do
     ENV['AUTOCLOP_CONFIG'] = nil
     run_autoclop
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -L/home/Ben/.cbiscuit/lib')
+    expect(Kernel).to have_received(:puts).with(%r{No file specified})
   end
 
   it 'uses the defaults if you provide a file that is not YAML' do
@@ -26,6 +27,7 @@ describe 'Configuring `clop`' do
     ENV['AUTOCLOP_CONFIG'] = file
     run_autoclop
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -L/home/Ben/.cbiscuit/lib')
+    expect(Kernel).to have_received(:puts).with(%r{Invalid YAML in /tmp/test-file-deleteme})
   end
 
   it 'uses python 3 on Red Hat 8' do

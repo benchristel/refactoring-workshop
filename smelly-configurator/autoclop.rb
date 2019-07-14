@@ -7,9 +7,18 @@ def run_autoclop
 end
 
 def autoclop
-  return invoke_clop_default if $config.nil? || $config.empty?
+  if $config.nil? || $config.empty?
+    Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
+    return invoke_clop_default
+  end
+
   cfg = YAML.safe_load(File.read($config))
-  return invoke_clop_default :invalid_yaml if cfg.nil?
+
+  if cfg.nil?
+    Kernel.puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
+    return invoke_clop_default
+  end
+
   python_version = python_version($os, cfg)
 
   libargs =
@@ -26,13 +35,8 @@ def autoclop
   invoke_clop(python_version, cfg['opt'] || 'O2', libargs)
 end
 
-def invoke_clop_default(message_type=nil)
+def invoke_clop_default
   py = python_version($os, {})
-  if message_type == :invalid_yaml
-    Kernel.puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
-  else
-    Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-  end
   invoke_clop(py, 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
 end
 
