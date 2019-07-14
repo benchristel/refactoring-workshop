@@ -72,13 +72,11 @@ def autoclop(os, config_path, user)
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
       NullConfig.new(user)
+    elsif Config.load(config_path, user).invalid?
+      Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
+      NullConfig.new(user)
     else
-      if Config.load(config_path, user).invalid?
-        Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
-        NullConfig.new(user)
-      else
-        Config.load(config_path, user)
-      end
+      Config.load(config_path, user)
     end
 
   cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
