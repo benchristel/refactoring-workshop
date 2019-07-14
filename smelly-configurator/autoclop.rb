@@ -9,13 +9,13 @@ end
 class ConfigFactory
   def self.build(path, user)
     if path.nil? || path.empty?
-      Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      DefaultConfig.new(user)
+      [ "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration.",
+        DefaultConfig.new(user) ]
     elsif from_yaml(path, user).invalid?
-      Kernel.puts "WARNING: Invalid YAML in #{path}. Assuming the default configuration."
-      DefaultConfig.new(user)
+      [ "WARNING: Invalid YAML in #{path}. Assuming the default configuration.",
+        DefaultConfig.new(user) ]
     else
-      from_yaml(path, user)
+      ['', from_yaml(path, user)]
     end
   end
 
@@ -82,7 +82,8 @@ class DefaultConfig < Struct.new(:user)
 end
 
 def autoclop(os, config_path, user)
-  cfg = ConfigFactory.build(config_path, user)
+  warning, cfg = ConfigFactory.build(config_path, user)
+  Kernel.puts warning
   cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
   ok = Kernel.system cmd
   if !ok
