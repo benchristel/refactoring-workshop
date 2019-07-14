@@ -8,6 +8,9 @@ describe 'Configuring `clop`' do
     $os = nil
     FileUtils.rm_f('/tmp/test-file-deleteme')
     allow(Kernel).to receive(:system).and_return true
+    allow(Kernel).to receive(:puts).and_return nil
+    allow(File).to receive(:read).and_call_original
+    allow(File).to receive(:read).with('/etc/issue').and_return ''
     ENV['USER'] = 'Ben'
   end
 

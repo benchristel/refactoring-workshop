@@ -2,7 +2,7 @@ require 'shellwords'
 require 'yaml'
 def run_autoclop
   $config = ENV['AUTOCLOP_CONFIG']
-  $os = `cat /etc/issue`
+  $os = File.read('/etc/issue')
   autoclop
 end
 
