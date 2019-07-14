@@ -12,6 +12,23 @@ months your team has been maintaining it, with no consistent
 architecture or design strategy. New features are becoming
 harder and harder to add. Can you clean up the code smells?
 
+## Warm-up
+
+Run the following in this directory to set up the project
+(assuming you have a recent version of Ruby installed):
+
+```
+bundle install
+```
+
+Then, to run the tests:
+
+```
+bundle exec rspec spec
+```
+
+Are the tests passing? If not, fix them.
+
 ## Active Reading
 
 1. Skim through `autoclop.rb`, aiming to answer the following
