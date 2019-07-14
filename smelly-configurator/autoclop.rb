@@ -48,9 +48,9 @@ def invoke_clop_default(message_type=nil)
   py = 2
   py = 3 if $os =~ /Red Hat 8/ # bugfix
   if message_type == :invalid_yaml
-    puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
+    Kernel.puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
   else
-    puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
+    Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
   end
   invoke_clop(py, 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
 end
