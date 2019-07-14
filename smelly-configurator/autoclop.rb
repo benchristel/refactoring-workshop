@@ -3,20 +3,20 @@ require 'yaml'
 def run_autoclop
   config = ENV['AUTOCLOP_CONFIG']
   os = File.read('/etc/issue')
-  autoclop(os, config)
+  autoclop(os, config, ENV['USER'])
 end
 
-def autoclop(os, config)
+def autoclop(os, config, user)
   cmd =
     if config.nil? || config.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+      clop_command(python_version(os, {}), 'O2', "-L/home/#{user}/.cbiscuit/lib")
     else
       cfg = YAML.safe_load(File.read(config))
 
       if cfg.nil?
         Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
-        clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+        clop_command(python_version(os, {}), 'O2', "-L/home/#{user}/.cbiscuit/lib")
       else
         libargs =
           if cfg['libs']
@@ -26,7 +26,7 @@ def autoclop(os, config)
           elsif cfg['libdirs']
             cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
           else
-            "-L/home/#{ENV['USER']}/.cbiscuit/lib"
+            "-L/home/#{user}/.cbiscuit/lib"
           end
 
         clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
