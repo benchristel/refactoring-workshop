@@ -8,6 +8,7 @@ end
 
 def autoclop(os, config)
   cmd = ClopCommand.new(os, config)
+  Kernel.puts cmd.warning
   ok = Kernel.system cmd.to_s
   if !ok
     raise "clop failed. Please inspect the output above to determine what went wrong."
@@ -15,15 +16,19 @@ def autoclop(os, config)
 end
 
 class ClopCommand < Struct.new(:os, :config)
+  def warning
+    if config.nil? || config.empty?
+      "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
+    elsif cfg.nil?
+      "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+    end
+  end
+
   def to_s
     if config.nil? || config.empty?
-      Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
       default_command
     else
-      cfg = YAML.safe_load(File.read(config))
-
       if cfg.nil?
-        Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
         default_command
       else
         libargs =
@@ -57,6 +62,10 @@ class ClopCommand < Struct.new(:os, :config)
       # Red Hat has deprecated Python 2
       os =~ /Red Hat 8/ ? 3 : 2
     )
+  end
+
+  def cfg
+    YAML.safe_load(File.read(config))
   end
 
   def esc arg
