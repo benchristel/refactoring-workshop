@@ -1,21 +1,21 @@
 require 'shellwords'
 require 'yaml'
 def run_autoclop
-  config = ENV['AUTOCLOP_CONFIG']
+  config_path = ENV['AUTOCLOP_CONFIG']
   os = File.read('/etc/issue')
-  autoclop(os, config, ENV['USER'])
+  autoclop(os, config_path, ENV['USER'])
 end
 
-def autoclop(os, config, user)
+def autoclop(os, config_path, user)
   cmd =
-    if config.nil? || config.empty?
+    if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
       clop_command(python_version(os, {}), 'O2', "-L/home/#{user}/.cbiscuit/lib")
     else
-      cfg = YAML.safe_load(File.read(config))
+      cfg = YAML.safe_load(File.read(config_path))
 
       if cfg.nil?
-        Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+        Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
         clop_command(python_version(os, {}), 'O2', "-L/home/#{user}/.cbiscuit/lib")
       else
         libargs =
