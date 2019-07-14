@@ -26,7 +26,7 @@ class ClopCommand < Struct.new(:os, :config_path)
 
   def to_s
     if config_path.nil? || config_path.empty? || cfg.nil?
-      default_command
+      clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
     else
       libargs =
         if cfg['libs']
@@ -44,10 +44,6 @@ class ClopCommand < Struct.new(:os, :config_path)
   end
 
   private
-
-  def default_command
-    clop_command(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
-  end
 
   def clop_command(python_version, optimization, libargs)
     "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}"
