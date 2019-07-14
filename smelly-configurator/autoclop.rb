@@ -11,8 +11,24 @@ class Config < Struct.new(:cfg)
     new YAML.safe_load(File.read(path))
   end
 
-  def [](k)
-    cfg ? cfg[k] : nil
+  def libdir
+    cfg['libdir']
+  end
+
+  def libdirs
+    cfg['libdirs']
+  end
+
+  def libs
+    cfg['libs']
+  end
+
+  def opt
+    cfg['opt']
+  end
+
+  def python_version
+    cfg['python-version']
   end
 
   def invalid?
@@ -20,30 +36,36 @@ class Config < Struct.new(:cfg)
   end
 end
 
+class NullConfig
+  def python_version
+    nil
+  end
+end
+
 def autoclop(os, config_path, user)
   cmd =
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      clop_command(python_version(os, {}), 'O2', "-L/home/#{user}/.cbiscuit/lib")
+      clop_command(python_version(os, NullConfig.new), 'O2', "-L/home/#{user}/.cbiscuit/lib")
     else
       cfg = Config.load(config_path)
 
       if cfg.invalid?
         Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
-        clop_command(python_version(os, {}), 'O2', "-L/home/#{user}/.cbiscuit/lib")
+        clop_command(python_version(os, NullConfig.new), 'O2', "-L/home/#{user}/.cbiscuit/lib")
       else
         libargs =
-          if cfg['libs']
-            cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
-          elsif cfg['libdir']
-            "-L#{esc cfg['libdir']}"
-          elsif cfg['libdirs']
-            cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
+          if cfg.libs
+            cfg.libs.map { |l| "-l#{esc l}" }.join(' ')
+          elsif cfg.libdir
+            "-L#{esc cfg.libdir}"
+          elsif cfg.libdirs
+            cfg.libdirs.map { |l| "-L#{esc l}" }.join(' ')
           else
             "-L/home/#{user}/.cbiscuit/lib"
           end
 
-        clop_command(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
+        clop_command(python_version(os, cfg), cfg.opt || 'O2', libargs)
       end
     end
 
@@ -58,7 +80,7 @@ def clop_command(python_version, optimization, libargs)
 end
 
 def python_version(os, config)
-  config['python-version'] || (
+  config.python_version || (
     # Red Hat has deprecated Python 2
     os =~ /Red Hat 8/ ? 3 : 2
   )
