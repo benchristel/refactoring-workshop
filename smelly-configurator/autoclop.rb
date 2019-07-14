@@ -38,10 +38,14 @@ def invoke_clop_default(os)
 end
 
 def invoke_clop(python_version, optimization, libargs)
-  ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}"
+  ok = Kernel.system clop_command(python_version, optimization, libargs)
   if !ok
     raise "clop failed. Please inspect the output above to determine what went wrong."
   end
+end
+
+def clop_command(python_version, optimization, libargs)
+  "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}"
 end
 
 def python_version(os, config)
