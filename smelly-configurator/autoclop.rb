@@ -1,9 +1,24 @@
 require 'shellwords'
 require 'yaml'
+
 def run_autoclop
   config_path = ENV['AUTOCLOP_CONFIG']
   os = File.read('/etc/issue')
   autoclop(os, config_path, ENV['USER'])
+end
+
+def autoclop(os, config_path, user)
+  warning, cfg = ConfigFactory.build(config_path, user)
+  Kernel.puts warning
+  cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
+  ok = Kernel.system cmd
+  if !ok
+    raise "clop failed. Please inspect the output above to determine what went wrong."
+  end
+end
+
+def clop_command(python_version, optimization, libargs)
+  "clop configure --python #{esc python_version} -#{esc optimization} #{libargs.map { |a| esc a }.join(' ')}"
 end
 
 class ConfigFactory
@@ -79,20 +94,6 @@ class DefaultConfig < Struct.new(:user)
   def libargs
     ["-L/home/#{user}/.cbiscuit/lib"]
   end
-end
-
-def autoclop(os, config_path, user)
-  warning, cfg = ConfigFactory.build(config_path, user)
-  Kernel.puts warning
-  cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
-  ok = Kernel.system cmd
-  if !ok
-    raise "clop failed. Please inspect the output above to determine what went wrong."
-  end
-end
-
-def clop_command(python_version, optimization, libargs)
-  "clop configure --python #{esc python_version} -#{esc optimization} #{libargs.map { |a| esc a }.join(' ')}"
 end
 
 def esc arg
