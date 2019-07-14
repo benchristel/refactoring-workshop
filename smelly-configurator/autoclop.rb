@@ -10,9 +10,7 @@ end
 def autoclop(os, config_path, user)
   warning, cfg = ConfigFactory.build(config_path, user)
   Kernel.puts warning
-  cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
-  ok = Kernel.system cmd
-  if !ok
+  if !Kernel.system clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
     raise "clop failed. Please inspect the output above to determine what went wrong."
   end
 end
