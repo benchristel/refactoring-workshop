@@ -68,23 +68,20 @@ class NullConfig < Struct.new(:user)
 end
 
 def autoclop(os, config_path, user)
-  cmd =
+  cfg =
     if config_path.nil? || config_path.empty?
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-      cfg = NullConfig.new(user)
-      clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
+      NullConfig.new(user)
     else
-      cfg = Config.load(config_path, user)
-
-      if cfg.invalid?
+      if Config.load(config_path, user).invalid?
         Kernel.puts "WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."
-        cfg = NullConfig.new(user)
-        clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
+        NullConfig.new(user)
       else
-        clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
+        Config.load(config_path, user)
       end
     end
 
+  cmd = clop_command(cfg.python_version(os), cfg.opt, cfg.libargs)
   ok = Kernel.system cmd
   if !ok
     raise "clop failed. Please inspect the output above to determine what went wrong."
