@@ -8,12 +8,9 @@ end
 
 def autoclop
   return invoke_clop_default if $config.nil? || $config.empty?
-  python_version = 2
-  # Red Hat has deprecated Python 2
-  python_version = 3 if $os =~ /Red Hat 8/
   cfg = YAML.safe_load(File.read($config))
   return invoke_clop_default :invalid_yaml if cfg.nil?
-  python_version = cfg['python-version'] if cfg['python-version']
+  python_version = python_version($os, cfg)
   optimization = cfg['opt'] if cfg['opt']
 
   if cfg['libs']
@@ -45,8 +42,7 @@ def autoclop
 end
 
 def invoke_clop_default(message_type=nil)
-  py = 2
-  py = 3 if $os =~ /Red Hat 8/ # bugfix
+  py = python_version($os, {})
   if message_type == :invalid_yaml
     Kernel.puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
   else
@@ -61,6 +57,13 @@ def invoke_clop(python_version, optimization = 'O1', libargs = '')
   if !ok
     raise "clop failed. Please inspect the output above to determine what went wrong."
   end
+end
+
+def python_version(os, config)
+  config['python-version'] || (
+    # Red Hat has deprecated Python 2
+    os =~ /Red Hat 8/ ? 3 : 2
+  )
 end
 
 def esc arg
