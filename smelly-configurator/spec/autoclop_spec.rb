@@ -11,6 +11,8 @@ describe 'Configuring `clop`' do
     allow(File).to receive(:read).with('/etc/issue').and_return ''
   end
 
+  let(:env) { {'USER' => 'Ben'} }
+
   it 'uses the defaults if you do not provide a config file path' do
     ENV['AUTOCLOP_CONFIG'] = nil
     ENV['USER'] = 'Ben'
@@ -31,8 +33,7 @@ describe 'Configuring `clop`' do
 
   it 'uses python 3 on Red Hat 8' do
     os = 'Linux version 2.6.32-71.el6.x86_64 (mockbuild@c6b6.centos.org) (gcc version 4.4.4 20100726 (Red Hat 8.0.0) (GCC) ) #1 SMP Fri May 20 03:51:51 BST 2011  '
-    config = ''
-    autoclop(os, config, 'Ben')
+    autoclop(os, env)
     expect(Kernel).to have_received(:system).with('clop configure --python 3 -O2 -L/home/Ben/.cbiscuit/lib')
   end
 
@@ -42,7 +43,7 @@ describe 'Configuring `clop`' do
 ---
 python-version: 2.7
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2.7 -O2 -L/home/Ben/.cbiscuit/lib')
   end
 
@@ -52,7 +53,7 @@ EOF
 ---
 opt: O0
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O0 -L/home/Ben/.cbiscuit/lib')
   end
 
@@ -62,7 +63,7 @@ EOF
 ---
 libdir: /foo/bar
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -L/foo/bar')
   end
 
@@ -74,7 +75,7 @@ libdirs:
 - /foo/bar
 - /baz/quux
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -L/foo/bar -L/baz/quux')
   end
 
@@ -86,7 +87,7 @@ libs:
 - /foo/liba.1.0
 - /foo/libb.2.0
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -l/foo/liba.1.0 -l/foo/libb.2.0')
   end
 
@@ -97,7 +98,7 @@ EOF
 libs:
 - /foo/weird lib.1.0
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -l/foo/weird\ lib.1.0')
   end
 
@@ -107,7 +108,7 @@ EOF
 ---
 libs: []
 EOF
-    autoclop nil, config, 'Ben'
+    autoclop nil, env.merge('AUTOCLOP_CONFIG' => config)
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 ')
   end
 end
