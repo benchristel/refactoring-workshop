@@ -1,22 +1,22 @@
 require 'shellwords'
 require 'yaml'
 def run_autoclop
-  $config = ENV['AUTOCLOP_CONFIG']
-  $os = File.read('/etc/issue')
-  autoclop
+  config = ENV['AUTOCLOP_CONFIG']
+  os = File.read('/etc/issue')
+  autoclop(os, config)
 end
 
-def autoclop
-  if $config.nil? || $config.empty?
+def autoclop(os, config)
+  if config.nil? || config.empty?
     Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-    return invoke_clop_default
+    return invoke_clop_default os
   end
 
-  cfg = YAML.safe_load(File.read($config))
+  cfg = YAML.safe_load(File.read(config))
 
   if cfg.nil?
-    Kernel.puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
-    return invoke_clop_default
+    Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+    return invoke_clop_default os
   end
 
   libargs =
@@ -30,11 +30,11 @@ def autoclop
       "-L/home/#{ENV['USER']}/.cbiscuit/lib"
     end
 
-  invoke_clop(python_version($os, cfg), cfg['opt'] || 'O2', libargs)
+  invoke_clop(python_version(os, cfg), cfg['opt'] || 'O2', libargs)
 end
 
-def invoke_clop_default
-  invoke_clop(python_version($os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+def invoke_clop_default(os)
+  invoke_clop(python_version(os, {}), 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
 end
 
 def invoke_clop(python_version, optimization, libargs)
