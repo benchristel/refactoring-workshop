@@ -14,27 +14,11 @@ def autoclop
   optimization = cfg['opt'] if cfg['opt']
 
   if cfg['libs']
-    libargs = ''
-    index = 0
-    for lib in cfg['libs']
-      libargs << "-l#{esc lib}"
-      if index < cfg['libs'].length - 1
-        libargs << ' '
-      end
-      index += 1
-    end
+    libargs = cfg['libs'].map { |l| "-l#{esc l}" }.join(' ')
   elsif cfg['libdir']
     libargs = "-L#{esc cfg['libdir']}"
   elsif cfg['libdirs']
-    libargs = ''
-    index = 0
-    for libdir in cfg['libdirs']
-      libargs << "-L#{esc libdir}"
-      if index < cfg['libdirs'].length - 1
-        libargs << ' '
-      end
-      index += 1
-    end
+    libargs = cfg['libdirs'].map { |l| "-L#{esc l}" }.join(' ')
   end
   libargs ||= "-L/home/#{ENV['USER']}/.cbiscuit/lib"
 
