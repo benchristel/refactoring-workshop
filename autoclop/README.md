@@ -57,7 +57,7 @@ bundle exec rspec spec
 
    What do you notice about the shape of the call graph?
 3. Which methods are application-specific and which are
-   application-agnostic (i.e. general-purpose)?
+   application-agnostic (i.e. general-purpose utilities)?
 4. Which methods directly or indirectly make system calls?
    Actions that involve system calls include reading and
    writing files, forking processes, getting the current
