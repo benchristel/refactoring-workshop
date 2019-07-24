@@ -77,22 +77,17 @@ bundle exec rspec spec
 
 I recommend the following process:
 
-1. Wrap the existing code in tests. There are some tests
-   already, but they are not comprehensive. You can manually
-   "mutation test" (i.e. change or comment out some code to
-   see if a test fails) to figure out whether behavior is
-   covered by a test.
-2. Identify one smell in the code that seems particularly
+1. Identify one smell in the code that seems particularly
    bad to you. A partial list of code smells is provided
    below.
-3. Refactor incrementally to remove *just that one smell*,
+2. Refactor incrementally to remove *just that one smell*,
    running the tests at each step. If you feel the need to
    extract code to a new class or function, you can try:
    - TDDing the new code and then wiring it up to the
      existing code; OR
    - Relying on the existing tests to cover your refactoring
      as you extract the new class/function.
-4. When the smell is gone, go to step 2.
+3. When the smell is gone, repeat from step 1.
 
 Throughout the process, be aware of how you feel while
 working on this code. What makes you feel frustrated, angry,
