@@ -15,18 +15,36 @@ describe 'Configuring `clop`' do
 
   let(:user) { ENV['USER'] }
 
-  it 'uses the defaults if you do not provide a config file path' do
-    ENV['AUTOCLOP_CONFIG'] = nil
-    run_autoclop
-    expect(Kernel).to have_received(:system).with("clop configure --python 2 -O2 -L/home/#{user}/.cbiscuit/lib")
+  context 'if you do not provide a config file path' do
+    before(:each) { ENV['AUTOCLOP_CONFIG'] = nil }
+
+    it 'uses the defaults' do
+      run_autoclop
+      expect(Kernel).to have_received(:system).with("clop configure --python 2 -O2 -L/home/#{user}/.cbiscuit/lib")
+    end
+
+    it 'warns' do
+      run_autoclop
+      expect(Kernel).to have_received(:puts).with('WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration.')
+    end
   end
 
-  it 'uses the defaults if you provide a file that is not YAML' do
-    file = '/tmp/test-file-deleteme'
-    FileUtils.touch file
-    ENV['AUTOCLOP_CONFIG'] = file
-    run_autoclop
-    expect(Kernel).to have_received(:system).with("clop configure --python 2 -O2 -L/home/#{user}/.cbiscuit/lib")
+  context 'if you provide a file that is not YAML' do
+    before :each do
+      file = '/tmp/test-file-deleteme'
+      FileUtils.touch file
+      ENV['AUTOCLOP_CONFIG'] = file
+    end
+
+    it 'uses the defaults' do
+      run_autoclop
+      expect(Kernel).to have_received(:system).with("clop configure --python 2 -O2 -L/home/#{user}/.cbiscuit/lib")
+    end
+
+    it 'warns' do
+      run_autoclop
+      expect(Kernel).to have_received(:puts).with('WARNING: Invalid YAML in /tmp/test-file-deleteme. Assuming the default configuration.')
+    end
   end
 
   it 'uses python 3 on Red Hat 8' do
@@ -99,5 +117,34 @@ libs:
 EOF
     autoclop
     expect(Kernel).to have_received(:system).with('clop configure --python 2 -O2 -l/foo/weird\ lib.1.0')
+  end
+
+  it 'blocks shell injection attacks that exploit the optimization level' do
+    $config = '/tmp/test-file-deleteme'
+    File.write($config, <<-EOF)
+---
+opt: '$(echo hacked > /tmp/foo)'
+libs: []
+EOF
+    autoclop
+    expect(Kernel).to have_received(:system).with('clop configure --python 2 -\$\(echo\ hacked\ \>\ /tmp/foo\)')
+  end
+
+  it 'blocks shell injection attacks that exploit the python version' do
+    $config = '/tmp/test-file-deleteme'
+    File.write($config, <<-EOF)
+---
+python-version: '$(echo hacked > /tmp/foo)'
+libs: []
+EOF
+    autoclop
+    expect(Kernel).to have_received(:system).with('clop configure --python \$\(echo\ hacked\ \>\ /tmp/foo\) -O2')
+  end
+
+  it 'raises an error if clop fails' do
+    $config = '/tmp/test-file-deleteme'
+    File.write($config, '{}')
+    allow(Kernel).to receive(:system).and_return(false)
+    expect { autoclop }.to raise_error 'clop failed. Please inspect the output above to determine what went wrong.'
   end
 end
