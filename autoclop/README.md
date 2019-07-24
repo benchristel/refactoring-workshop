@@ -37,8 +37,6 @@ Then, to run the tests:
 bundle exec rspec spec
 ```
 
-Are the tests passing? If not, fix them.
-
 ## Active Reading
 
 1. Skim through `autoclop.rb`, aiming to answer the following
