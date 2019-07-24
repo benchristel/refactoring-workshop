@@ -130,9 +130,3 @@ you find a smell you can remove easily.
 - Nested `context`s
 - Multiple Assertions Per Test
 - Noisy Output
-
-## Meta-meditation
-
-How much simpler does `autoclop` make the process of
-configuring `clop`? If it were up to you, what might you
-change about the functionality of `autoclop`?
