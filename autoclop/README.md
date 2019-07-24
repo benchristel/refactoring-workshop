@@ -1,5 +1,15 @@
 # The Case of the CBiscuit Compiler Configurator
 
+## Purpose
+
+The purpose of this kata is to practice removing code smells
+via small, targeted refactorings, using frequent test runs
+as a safety rail. The emphasis is on the practice of
+refactoring, i.e. **safely changing the design of code without
+changing its observable behavior**.
+
+## Scenario
+
 Your company uses a language called CBiscuit for a lot of
 its internal work. The CBiscuit compiler, called `clop`, is
 very complex and has a lot of configuration options. To
@@ -67,11 +77,7 @@ Are the tests passing? If not, fix them.
 
 ## The Kata
 
-This kata is not about implementing new functionality;
-rather, it's about safely refactoring existing code (that
-is, changing design without changing behavior).
-
-I recommend the following:
+I recommend the following process:
 
 1. Wrap the existing code in tests. There are some tests
    already, but they are not comprehensive. You can manually
