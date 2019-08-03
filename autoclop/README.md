@@ -110,7 +110,7 @@ you find a smell you can remove easily.
 - Deep Hierarchy
 - [Global Variables](http://wiki.c2.com/?GlobalVariablesAreBad)
 - [Null Check](http://wiki.c2.com/?NullConsideredHarmful)
-- Nested Control Flow Statements
+- [Nested Control Flow Statements](http://wiki.c2.com/?ArrowAntiPattern)
 - Imbalanced Abstractions
 - Multiple Responsibilities
 - Duplicated Code
