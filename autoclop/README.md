@@ -104,7 +104,7 @@ you find a smell you can remove easily.
 ## Code Smells
 
 - [Feature Envy](http://wiki.c2.com/?FeatureEnvySmell)
-- Switch on Type
+- [Switch on Type](http://wiki.c2.com/?SwitchStatementsSmell)
 - Casual Mutation
 - Primitive Obsession
 - Deep Hierarchy
