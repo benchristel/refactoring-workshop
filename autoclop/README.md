@@ -94,11 +94,11 @@ working on this code. What makes you feel frustrated, angry,
 or stressed out? Is there anything in this code that makes
 you feel happy, joyful, or at ease?
 
-You may discover, while removing a smell A, that some other
+You might discover, while removing a smell A, that some other
 smell B is in your way, making your refactoring harder. If
 you encounter that situation, stash your changes, make a
 note of A so you remember to come back to it, and fix smell
-B. You may have to do this recursively several times before
+B. You might have to do this recursively several times before
 you find a smell you can remove easily.
 
 ## Code Smells
