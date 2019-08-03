@@ -106,7 +106,7 @@ you find a smell you can remove easily.
 - [Feature Envy](http://wiki.c2.com/?FeatureEnvySmell)
 - [Switch on Type](http://wiki.c2.com/?SwitchStatementsSmell)
 - Casual Mutation
-- Primitive Obsession
+- [Primitive Obsession](http://wiki.c2.com/?PrimitiveObsession). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
 - Deep Hierarchy
 - Global Variables
 - Null Check
