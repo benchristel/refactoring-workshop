@@ -108,7 +108,7 @@ you find a smell you can remove easily.
 - Casual Mutation
 - [Primitive Obsession](http://wiki.c2.com/?PrimitiveObsession). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
 - Deep Hierarchy
-- Global Variables
+- [Global Variables](http://wiki.c2.com/?GlobalVariablesAreBad)
 - Null Check
 - Nested Control Flow Statements
 - Imbalanced Abstractions
