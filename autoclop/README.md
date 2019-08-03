@@ -119,3 +119,5 @@ you find a smell you can remove easily.
 - [Multiple Responsibilities](http://wiki.c2.com/?OneResponsibilityRule). See also [God Class](http://wiki.c2.com/?GodClass).
 - Duplicated Code
 - Dead Code
+- Inconsistent Formatting
+- Run-on Code
