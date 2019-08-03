@@ -103,7 +103,7 @@ you find a smell you can remove easily.
 
 ## Code Smells
 
-- Feature Envy
+- [Feature Envy](http://wiki.c2.com/?FeatureEnvySmell)
 - Switch on Type
 - Casual Mutation
 - Primitive Obsession
