@@ -111,7 +111,7 @@ you find a smell you can remove easily.
 - [Global Variables](http://wiki.c2.com/?GlobalVariablesAreBad)
 - [Null Check](http://wiki.c2.com/?NullConsideredHarmful)
 - [Nested Control Flow Statements](http://wiki.c2.com/?ArrowAntiPattern)
-- Imbalanced Abstractions
+- [Asymmetrical Code](http://wiki.c2.com/?AsymmetricalCode)
 - Multiple Responsibilities
 - Duplicated Code
 - Dead Code
