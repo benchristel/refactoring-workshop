@@ -1,4 +1,8 @@
-# The Case of the CBiscuit Compiler Configurator
+# Following Code Smells
+
+> *When I began working in this style, I had to give up the idea that I had the perfect vision of the system [...]. Instead, I had to accept that **I was only the vehicle for the system expressing its own desire for simplicity**. My vision could shape initial direction, and my attention to the desires of the code could affect how quickly and how well the system found its desired shape, but the system is riding me much more than I am riding the system.*
+>
+> —[Kent Beck](http://wiki.c2.com/?OnceAndOnlyOnce)
 
 ## Purpose
 
@@ -7,6 +11,8 @@ via small, targeted refactorings, using frequent test runs
 as a safety rail. The emphasis is on the practice of
 refactoring, i.e. **safely changing the design of code without
 changing its observable behavior**.
+
+
 
 ## Scenario
 
