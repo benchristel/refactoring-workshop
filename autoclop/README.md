@@ -114,7 +114,7 @@ you find a smell you can remove easily.
 - Deep Hierarchy
 - [Global Variables](http://wiki.c2.com/?GlobalVariablesAreBad)
 - [Null Check](http://wiki.c2.com/?NullConsideredHarmful)
-- [Nested Control Flow Statements](http://wiki.c2.com/?ArrowAntiPattern)
+- [Nested Loops and Conditionals](http://wiki.c2.com/?ArrowAntiPattern)
 - [Asymmetrical Code](http://wiki.c2.com/?AsymmetricalCode)
 - [Multiple Responsibilities](http://wiki.c2.com/?OneResponsibilityRule). See also [God Class](http://wiki.c2.com/?GodClass).
 - Duplicated Code
