@@ -13,12 +13,15 @@ principle. There are many concrete refactorings you have to
 learn before you can remove all types of duplication
 effectively.
 
+However, one of the most valuable de-duplication techniques
+I've learned is the algorithm that Sandi Metz calls
+"the Flocking Rules".
+
 ## The Flocking Rules for Removing Duplication
 
-Sandi Metz has a great algorithm for removing duplication,
-which Katrina Owen describes in [this conference
-talk](https://www.youtube.com/watch?v=-wYLmsizBc0). It goes
-like this.
+Katrina Owen describes the rules in [this conference
+talk](https://www.youtube.com/watch?v=-wYLmsizBc0). They go
+like this:
 
 1. Find the things that are most alike.
 2. Select the smallest difference between them.
@@ -37,6 +40,9 @@ identical and extract them as methods or variables. The
 problem with this approach is that it doesn't actually
 remove duplication; it merely aliases it.
 
+Consider the following example of code that contains
+duplication:
+
 ```ruby
 def greet(message_type, name)
   case message_type
@@ -49,29 +55,26 @@ end
 ```
 
 Since the message is duplicated in this example, it's tempting
-to extract a `greeting` method:
+to extract a `greeting` variable:
 
 ```ruby
 def greet(message_type, name)
+  greeting = "Greetings, #{name}"
   case message_type
   when :email
-    Email.mail greeting name
+    Email.mail greeting
   when :slack
-    Slack.post greeting name
+    Slack.post greeting
   end
-end
-
-def greeting(name)
-  "Greetings, #{name}"
 end
 ```
 
-But that's a distraction. The new code contains more
-indirection, and there's still duplication of the call to
-`greeting`. True, it's now less likely that the email and
-slack messages will get out of sync, but it's harder to know
-what behavior will be affected by changes to `greeting`,
-because of the indirection.
+But that doesn't help the situation much. The new code
+contains more indirection, and there's still duplication of
+the reference to `greeting`. True, it's now less likely that
+the email and slack messages will get out of sync, but it's
+harder to know what behavior will be affected by changes to
+`greeting`, because of the indirection.
 
 Here's a refactoring that *does* completely remove the
 duplication:
@@ -138,9 +141,9 @@ end
 Rather than focusing on the similar parts, we focus on
 the difference: `Email.mail` versus `Slack.post`.
 
-We extract the difference and give it a name, aiming only
-to make the duplicated lines look exactly the same. We don't
-yet remove any duplication.
+We extract the parts that differ, aiming only to make the
+similar lines look *exactly* the same. We don't yet remove
+any duplication.
 
 ```ruby
 def greet(message_type, name)
@@ -230,8 +233,10 @@ def greet(message_type, name)
 end
 ```
 
-Now we once again have duplicated lines inside a conditional,
-so we can move them out:
+Now we once again have duplicated lines inside a conditional
+(the `messenger = ->(msg) { klass.post msg }` lines).
+We can deduplicate them by moving one copy outside the
+conditional.
 
 ```ruby
 class EmailMessenger
@@ -269,9 +274,130 @@ def greet(message_type, name)
 end
 ```
 
+We can also move the duplicated `klass =` outside the
+`case` statement. In Ruby, `case` statements are actually
+expressions that return a value. Unfortunately, there aren't
+really any intermediate steps that can guide us here; this
+is one of those refactorings you just have to know.
+
+I also rename the variable from `klass` to `messenger` in
+this step, because I think having to misspell `class` in
+variable names is awkward.
+
+```ruby
+def greet(message_type, name)
+  messenger = case message_type
+    when :email
+      Email
+    when :slack
+      SlackMessenger
+    end
+  messenger.post "Greetings, #{name}"
+end
+```
+
 Now all the duplication is gone. There are other code
 smells; for instance, the `message_type` is an example of
 primitive obsession, and the `greet` method now clearly has
 multiple responsibilities (choosing a class and `post`ing a
-message). Other refactorings will remove these smells, but
+message). Other refactorings could remove these smells, but
 they are outside the scope of this discussion.
+
+## Preserving and Extending Symmetries
+
+Imagine, for a minute, how the code in the previous section
+might change if we added a new requirement: if `:all` is
+passed as the `message_type` to `greet`, we must send both
+a Slack message and an email.
+
+As a first attempt, we might view this new requirement as
+a special case, and implement it like this:
+
+```ruby
+def greet(message_type, name)
+  message = "Greetings, #{name}"
+  case message_type
+  when :all
+    Email.post message
+    Slack.post message
+    return
+  when :email
+    messenger = Email
+  when :slack
+    messenger = Slack
+  end
+  messenger.post message
+end
+```
+
+But now the code for `:all` looks totally different from the
+code for `:email` and `:slack`. Does `:all` really warrant
+such special handling?
+
+To remove the special casing, we could refactor to this:
+
+```ruby
+def greet(message_type, name)
+  case message_type
+  messengers = when :all
+      [Email, Slack]
+    when :email
+      [Email]
+    when :slack
+      [Slack]
+    end
+  messengers.each { |m| m.post "Greetings, #{name}" }
+end
+```
+
+Or this:
+
+```ruby
+class EmailAndSlackMessenger
+  def post(msg)
+    Email.post msg
+    Slack.post msg
+  end
+end
+
+def greet(message_type, name)
+  messenger = case message_type
+    when :all
+      EmailAndSlackMessenger
+    when :email
+      Email
+    when :slack
+      Slack
+    end
+  messenger.post "Greetings, #{name}"
+end
+```
+
+Personally, I like the second refactoring better in this
+context. It preserves more of the structure of the existing
+code. However, if I didn't know the history of the code, I
+might prefer the first solution.
+
+One result of removing duplication using the Flocking Rules
+is that you end up with very "symmetrical" code. I call code
+symmetrical when it's either totally unique (like the
+`messenger.post "Greetings, #{name}"` line in the example
+above), or a repeated rhythm of lines that are identical in
+structure but different in content (like the `case`
+statement).
+
+As you add more behavior to symmetrical code, it's worth
+making an effort to preserve the symmetry. That is, if you
+add a new branch to the case statement, it should have the
+same syntactic structure as the other branches. The
+consistency of structure helps the next person who has to
+read your code focus on the differences that matter, without
+getting distracted by extraneous syntactic variation.
+
+I'll leave you to ponder this quote (from architect
+Christopher Alexander), which I think applies equally well to
+architecture and code.
+
+> Complexity (in the bad sense) consists of distinctions which unnecessarily complicate a structure. To get simplicity, on the other hand, we need a process which questions every distinction. Any distinction which is not necessary is removed. To remove a distinction we replace it by a symmetry.
+>
+> —Christopher Alexander, _The Process of Creating Life_, p. 469
