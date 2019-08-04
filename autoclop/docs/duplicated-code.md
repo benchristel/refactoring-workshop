@@ -306,6 +306,18 @@ multiple responsibilities (choosing a class and `post`ing a
 message). Other refactorings could remove these smells, but
 they are outside the scope of this discussion.
 
+## Should You Do This In Real Life?
+
+You might react to the above refactoring example by saying
+that it's overkill. There isn't a very compelling reason to
+remove such small, local bits of duplication using the
+flocking rules, especially when there are only two
+duplicated copies.
+
+However, it's still worth *practicing* these refactorings on
+small, simple examples, so that when you see complicated
+code at work, you know what to do.
+
 ## Preserving and Extending Symmetries
 
 Imagine, for a minute, how the code in the previous section
@@ -353,11 +365,12 @@ def greet(message_type, name)
 end
 ```
 
-Or this:
+Or we could have written this right off the bat, with no
+refactoring required:
 
 ```ruby
 class EmailAndSlackMessenger
-  def post(msg)
+  def self.post(msg)
     Email.post msg
     Slack.post msg
   end
@@ -376,10 +389,32 @@ def greet(message_type, name)
 end
 ```
 
-Personally, I like the second refactoring better in this
+Or, combining the two approaches:
+
+```ruby
+class MultiMessenger < Struct.new(:messengers)
+  def post(msg)
+    messengers.each { |m| m.post msg }
+  end
+end
+
+def greet(message_type, name)
+  messenger = case message_type
+    when :all
+      MultiMessenger.new([Email, Slack])
+    when :email
+      Email
+    when :slack
+      Slack
+    end
+  messenger.post "Greetings, #{name}"
+end
+```
+
+Personally, I like the second design best in this
 context. It preserves more of the structure of the existing
 code. However, if I didn't know the history of the code, I
-might prefer the first solution.
+might prefer the first or third solution.
 
 One result of removing duplication using the Flocking Rules
 is that you end up with very "symmetrical" code. I call code
