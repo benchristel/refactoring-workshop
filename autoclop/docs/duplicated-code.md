@@ -23,9 +23,9 @@ Katrina Owen describes the rules in [this conference
 talk](https://www.youtube.com/watch?v=-wYLmsizBc0). They go
 like this:
 
-1. Find the things that are most alike.
-2. Select the smallest difference between them.
-3. Make the smallest change that will remove that difference.
+> 1. Find the things that are most alike.
+> 2. Select the smallest difference between them.
+> 3. Make the smallest change that will remove that difference.
 
 Sandi Metz calls these "flocking rules" because, like the
 simple algorithms that birds and fish use to move as a group
@@ -73,8 +73,10 @@ But that doesn't help the situation much. The new code
 contains more indirection, and there's still duplication of
 the reference to `greeting`. True, it's now less likely that
 the email and slack messages will get out of sync, but it's
-harder to know what behavior will be affected by changes to
-`greeting`, because of the indirection.
+harder to see what behavior will be affected by changes to
+the message string, because of the indirection.
+
+## Applying the Flocking Rules
 
 Here's a refactoring that *does* completely remove the
 duplication:
@@ -121,7 +123,8 @@ class MessengerFactory
 end
 ```
 
-How can we arrive at this code, using the flocking rules?
+How can we refactor toward this code, using the flocking
+rules?
 
 Going back to the original code: we first identify the
 most similar chunks. These are the lines that create the
