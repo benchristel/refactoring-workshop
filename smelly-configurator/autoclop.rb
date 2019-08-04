@@ -39,16 +39,24 @@ class ConfigFactory
 end
 
 class Config < Struct.new(:cfg, :user)
-  def libargs
-    if libs
-      libs.map { |l| "-l#{l}" }
-    elsif libdir
-      ["-L#{libdir}"]
-    elsif libdirs
-      libdirs.map { |l| "-L#{l}" }
-    else
-      ["-L/home/#{user}/.cbiscuit/lib"]
+  class RepeatedFlag < Struct.new(:flag, :list)
+    def to_a
+      list.map { |l| flag + l }
     end
+  end
+
+  def libargs
+    args = case
+      when libs
+        ['-l', libs]
+      when libdir
+        ['-L', [libdir]]
+      when libdirs
+        ['-L', libdirs]
+      else
+        ['-L', ["/home/#{user}/.cbiscuit/lib"]]
+      end
+    RepeatedFlag.new(*args).to_a
   end
 
   def invalid?
