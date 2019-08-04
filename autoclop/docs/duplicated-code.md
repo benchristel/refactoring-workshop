@@ -40,7 +40,7 @@ remove duplication; it merely aliases it.
 ```ruby
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     Email.mail "Greetings, #{name}"
   when :slack
     Slack.post "Greetings, #{name}"
@@ -54,7 +54,7 @@ to extract a `greeting` method:
 ```ruby
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     Email.mail greeting name
   when :slack
     Slack.post greeting name
@@ -83,7 +83,7 @@ end
 
 def messenger(type)
   case type
-  when :html_email
+  when :email
     ->(msg) { Email.mail msg }
   when :slack
     ->(msg) { Slack.post msg }
@@ -109,7 +109,7 @@ end
 class MessengerFactory
   def self.build(type)
     case type
-    when :html_email
+    when :email
       Email
     when :slack
       Slack
@@ -127,7 +127,7 @@ most similar chunks. These are the lines that create the
 ```ruby
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     Email.mail "Greetings, #{name}"
   when :slack
     Slack.post "Greetings, #{name}"
@@ -145,7 +145,7 @@ yet remove any duplication.
 ```ruby
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     messenger = ->(msg) { Email.mail msg }
     messenger.call "Greetings, #{name}"
   when :slack
@@ -162,7 +162,7 @@ remove the duplication by moving that line outside the
 ```ruby
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     messenger = ->(msg) { Email.mail msg }
   when :slack
     messenger = ->(msg) { Slack.post msg }
@@ -195,7 +195,7 @@ end
 
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     messenger = ->(msg) { EmailMessenger.post msg }
   when :slack
     messenger = ->(msg) { Slack.post msg }
@@ -219,7 +219,7 @@ end
 
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     klass = EmailMessenger
     messenger = ->(msg) { klass.post msg }
   when :slack
@@ -240,7 +240,7 @@ end
 
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     klass = EmailMessenger
   when :slack
     klass = Slack
@@ -260,7 +260,7 @@ end
 
 def greet(message_type, name)
   case message_type
-  when :html_email
+  when :email
     klass = Email
   when :slack
     klass = SlackMessenger
