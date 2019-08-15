@@ -262,16 +262,16 @@ And now the `->(msg)` lambda is pointless indirection. So let's
 get rid of it:
 
 ```ruby
-class SlackMessenger
+class EmailMessenger
   # ...
 end
 
 def greet(message_type, name)
   case message_type
   when :email
-    klass = Email
+    klass = EmailMessenger
   when :slack
-    klass = SlackMessenger
+    klass = Slack
   end
   klass.post "Greetings, #{name}"
 end
@@ -291,9 +291,9 @@ variable names is awkward.
 def greet(message_type, name)
   messenger = case message_type
     when :email
-      Email
+      EmailMessenger
     when :slack
-      SlackMessenger
+      Slack
     end
   messenger.post "Greetings, #{name}"
 end
