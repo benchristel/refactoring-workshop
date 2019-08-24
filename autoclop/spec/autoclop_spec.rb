@@ -3,17 +3,18 @@ require 'fileutils'
 require_relative '../autoclop'
 
 describe 'Configuring `clop`' do
+  let(:user) { 'testuser' }
+
   before :each do
     $config = nil
     $os = nil
+    ENV['USER'] = user
     FileUtils.rm_f('/tmp/test-file-deleteme')
     allow(Kernel).to receive(:system).and_return true
     allow(Kernel).to receive(:puts)
     allow(File).to receive(:read).and_call_original
     allow(File).to receive(:read).with('/etc/issue').and_return('linux')
   end
-
-  let(:user) { ENV['USER'] }
 
   context 'if you do not provide a config file path' do
     before(:each) { ENV['AUTOCLOP_CONFIG'] = nil }
@@ -139,6 +140,23 @@ libs: []
 EOF
     autoclop
     expect(Kernel).to have_received(:system).with('clop configure --python \$\(echo\ hacked\ \>\ /tmp/foo\) -O2')
+  end
+
+  it 'blocks shell injection attacks that exploit the USER env variable' do
+    ENV['USER'] = '$(echo hacked > /tmp/foo)'
+    autoclop
+    expect(Kernel).to have_received(:system).with(include('\$\(echo\ hacked\ \>\ /tmp/foo\)'))
+  end
+
+  it 'blocks shell injection attacks that exploit the USER env variable, when a config file is given' do
+    $config = '/tmp/test-file-deleteme'
+    File.write($config, <<-EOF)
+---
+python-version: 2
+EOF
+    ENV['USER'] = '$(echo hacked > /tmp/foo)'
+    autoclop
+    expect(Kernel).to have_received(:system).with(include('\$\(echo\ hacked\ \>\ /tmp/foo\)'))
   end
 
   it 'raises an error if clop fails' do

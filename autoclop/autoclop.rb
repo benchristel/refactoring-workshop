@@ -39,7 +39,7 @@ def autoclop
       index += 1
     end
   end
-  libargs ||= "-L/home/#{ENV['USER']}/.cbiscuit/lib"
+  libargs ||= "-L/home/#{esc ENV['USER']}/.cbiscuit/lib"
 
   invoke_clop(python_version, optimization || 'O2', libargs || '')
 end
@@ -52,7 +52,7 @@ def invoke_clop_default(message_type=nil)
   else
     Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
   end
-  invoke_clop(py, 'O2', "-L/home/#{ENV['USER']}/.cbiscuit/lib")
+  invoke_clop(py, 'O2', "-L/home/#{esc ENV['USER']}/.cbiscuit/lib")
 end
 
 def invoke_clop(python_version, optimization = 'O1', libargs = '')
