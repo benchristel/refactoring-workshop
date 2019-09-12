@@ -12,6 +12,34 @@ design of code without changing its observable behavior**.
 
 See [Why Incremental Refactoring?](docs/why-incremental-refactoring.md)
 
+## Facilitator Guide
+
+### Resources
+
+- Use these slides TODO: LINK
+- Handout: glossary of smells/refactorings/patterns (LINK?)
+
+### Procedure
+
+- Show slides 1-N
+   - Anti-goals: we want a picture of where are going before we start
+- Last slide contains an image of the IDE with the code
+- Ask, "Please write down as many specific structural problems with this code as you can in N minutes, in the Zoom chat. We'll discuss them as a group when everyone is done. Don't worry about translating them into code smells; we'll do that as a group."
+- Open the file with the prepared TODO comments in the IDE. Monitor the Zoom chat window. If anyone identifies a problem that isn't already annotated, add it as a comment.
+- Remind people when time is almost up. "You have one minute" "finish the thought you're on". If you miss one or two issues in the Zoom chat, that's okay.
+- Share your IDE. "I'm going to pick the smallest problem; one that we can fix right now."
+- "For the purposes of this exercise, I trust that the tests are complete and will fail if I make a mistake."
+- For loop (for each comment; break when there's X minutes left)
+   - Match the problem to a code smell. Show the slide for that smell.
+   - Refactor the smell away.
+   - Show the slide with caveats for that smell. Explain when you wouldn't want to refactor the smell away.
+- Show a finished product
+- Show the final slides
+- Discussion
+   - Do you have a favorite pattern not discussed today?
+   - How can your team use this? any obstacles?
+
+
 ## Scenario
 
 Your company uses a language called CBiscuit for a lot of
