@@ -75,6 +75,12 @@ cover:
   which are supposed to be complete. The facilitator should
   communicate to participants that he/she trusts the tests
   and will not need to add more.
+- **Refactoring test code.**  If the group ends up
+  looking at the test code for any reason, the facilitator
+  should mention that the tests are *not exemplary*, but
+  that refactoring them is out of scope. Refactoring
+  tests presents its own set of pitfalls, and we'd rather
+  not address them in this workshop.
 - **Fixing bugs.** The participants might find bugs in the
   code, or behaviors they think should be changed. The
   facilitator should remind them that the goal of
