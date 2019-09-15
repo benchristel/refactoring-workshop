@@ -1,16 +1,102 @@
-# Following Code Smells
+# Refactoring Code Smells
 
-## Goal
+This is an interactive, remote-friendly workshop that
+teaches refactoring.
 
-The goal of this kata is to practice removing code smells
-via small, targeted refactorings, using frequent test runs
-as a safety rail. The emphasis is on the practice of
+The overall flow of the workshop goes like this:
+
+- (10 minutes) Facilitator gives a presentation defining
+  refactoring and code smells.
+- (15 minutes) Participants individually identify specific
+  structural problems in a 70-line Ruby file, posting their
+  observations in a chatroom.
+- (2 hours) Participants mob-program to fix one problem at a
+  time, with the facilitator typing code and promoting
+  discussion.
+- (30 minutes) The group debriefs with another presentation
+  and time for questions and discussion.
+
+## Prerequisites and Limitations
+
+- You'll need a facilitator with strong refactoring skills.
+- You'll need some way of video conferencing and collecting
+  participant suggestions in a chat log. I've used Zoom for
+  this.
+- In theory, the workshop should scale up to many
+  participants (dozens? hundreds?) but I have not tried it
+  on large groups yet.
+- I recommend you use IntelliJ or RubyMine as your editor.
+  You'll need a paid license, or the program will quit every
+  30 minutes. Other editors will work, but you'll have to
+  split your screen between tests and code, and the
+  automated refactoring support may not be as good.
+
+## Goals
+
+The goal of this workshop is to practice removing code
+smells via small, targeted refactorings, using frequent test
+runs as a safety rail. The emphasis is on the practice of
 refactoring, i.e. **safely and incrementally changing the
 design of code without changing its observable behavior**.
 
-## Philosophy
+A breakdown of the goals:
 
-See [Why Incremental Refactoring?](docs/why-incremental-refactoring.md)
+- **Persuade** participants that...
+  - refactoring is a mutually beneficial activity,
+    furthering the goals of individual programmers, the
+    team, the company, its customers, and the users of the
+    product.
+  - you don't need to have the perfect design in mind
+    before starting to refactor.
+  - you *do* need tests before you can refactor safely.
+- Give participants time to **practice**...
+  - identifying code smells.
+  - focusing on one refactoring at a time.
+  - incrementally improving a codebase, avoiding big-bang
+    rewrites.
+  - using the language of code smells to discuss design
+    tradeoffs.
+  - communicating the motivation for a change in Git commit
+    messages.
+  - making backwards-compatible changes to an interface
+    (e.g. creating a class to hold formerly global methods,
+    leaving the existing global methods as middlemen).
+- **Demonstrate**...
+  - getting fast feedback by running all the tests after
+    every change.
+
+## Anti-Goals
+
+This workshop can't do everything—after all, we only have
+three hours. Some things we're intentionally *not* going to
+cover:
+
+- **Writing tests.** The example code comes with tests,
+  which are supposed to be complete. The facilitator should
+  communicate to participants that he/she trusts the tests
+  and will not need to add more.
+- **Fixing bugs.** The participants might find bugs in the
+  code, or behaviors they think should be changed. The
+  facilitator should remind them that the goal of
+  refactoring is to hold behavior constant while changing
+  structure. By making the bugfix or feature change later,
+  in a separate commit, we'll more clearly communicate our
+  intent to programmers who work on this code in the future.
+
+## Definitions
+
+- **Code Smell:** "a surface indication that usually
+  corresponds to a deeper problem in the system". Source:
+  [martinfowler.com](https://www.martinfowler.com/bliki/CodeSmell.html)
+- **Refactoring:** (noun) "a change made to the internal
+  structure of software to make it easier to understand and
+  cheaper to modify without changing its observable
+  behavior". Source:
+  [refactoring.com](https://refactoring.com/)
+- **Refactoring:** (verb) "to restructure software by
+  applying a series of refactorings without changing its
+  observable behavior". Source:
+  [refactoring.com](https://refactoring.com/)
 
 ## Facilitator Guide
 
@@ -19,7 +105,17 @@ See [Why Incremental Refactoring?](docs/why-incremental-refactoring.md)
 - Use these slides TODO: LINK
 - Handout: glossary of smells/refactorings/patterns (LINK?)
 
-### Procedure
+### Before the Workshop
+
+- Practice the presentation. If you like, you can read off
+  the speaker notes.
+- `git clone` this repository.
+- Run `bundle install` to get the dependencies.
+- Run `bundle exec rspec spec` to run the tests.
+- Open this repository in your IDE.
+- TODO: how to configure IntelliJ/RubyMine to run the tests?
+
+### During the Workshop
 
 - Show slides 1-N
    - Anti-goals: we want a picture of where are going before we start
@@ -38,100 +134,6 @@ See [Why Incremental Refactoring?](docs/why-incremental-refactoring.md)
 - Discussion
    - Do you have a favorite pattern not discussed today?
    - How can your team use this? any obstacles?
-
-
-## Scenario
-
-Your company uses a language called CBiscuit for a lot of
-its internal work. The CBiscuit compiler, called `clop`, is
-very complex and has a lot of configuration options. To
-enable developers to compile code in a consistent way, your
-team has developed a tool, `autoclop`, to automatically
-configure `clop`.
-
-Unfortunately, `autoclop` has grown chaotically over the
-months your team has been maintaining it, with no consistent
-architecture or design strategy. New features are becoming
-harder and harder to add. Can you clean up the code smells?
-
-## Warm-up
-
-Run the following in this directory to set up the project
-(assuming you have a recent version of Ruby installed):
-
-```
-bundle install
-```
-
-Then, to run the tests:
-
-```
-bundle exec rspec spec
-```
-
-## Active Reading
-
-1. Skim through `autoclop.rb`, aiming to answer the following
-   questions:
-   - What does the code do, in general terms?
-   - What is the interface to this code? What are the
-     inputs, outputs, and public methods?
-   - Which methods looks like they are intended to be
-     private?
-   - What concepts does the code know about?
-2. Draw a directed graph representing the call graph of the
-   methods. That is, if method A directly calls method
-   B, draw this:
-
-   ```
-   A --> B
-   ```
-
-   What do you notice about the shape of the call graph?
-3. Which methods are application-specific and which are
-   application-agnostic (i.e. general-purpose utilities)?
-4. Which methods directly or indirectly make system calls?
-   Actions that involve system calls include reading and
-   writing files, forking processes, getting the current
-   time, talking to other computers on the network, and
-   generating random numbers.
-5. Look back at your call graph drawing. What is the length
-   of the longest path between a public method and a
-   system call?
-5. Which methods directly or indirectly depend on global
-   state?
-6. Which methods modify global state?
-7. Which methods are are *pure functions*? A pure function
-   is one whose only inputs are its arguments and whose only
-   output is its return value.
-
-## The Kata
-
-I recommend the following process:
-
-1. Identify one smell in the code that seems particularly
-   bad to you. A partial list of code smells is provided
-   below.
-2. Refactor incrementally to remove *just that one smell*,
-   running the tests at each step. If you feel the need to
-   extract code to a new class or function, you can try:
-   - TDDing the new code and then wiring it up to the
-     existing code; OR
-   - Relying on the existing tests to cover your refactoring
-     as you extract the new class/function.
-3. When the smell is gone, repeat from step 1.
-
-Throughout the process, be aware of how you feel while
-working on this code. What makes you feel frustrated, angry,
-or stressed out? Is there anything in this code that makes
-you feel happy, joyful, or at ease?
-
-You might discover, while removing a smell A, that some other
-smell B is in your way, making your refactoring harder. If
-you encounter that situation, stash your changes, make a
-note of A so you remember to come back to it, and fix smell
-B. You might have to do this recursively several times before
-you find a smell you can remove easily.
 
 ## Code Smells
 
