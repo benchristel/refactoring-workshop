@@ -34,7 +34,7 @@ These are ordered roughly from easiest to spot and fix to hardest.
 - [**Feature Envy.**](http://wiki.c2.com/?FeatureEnvySmell) Fix with [Move Method](), possibly preceded by [Extract Method]().
 - [**Switch on Type.**](http://wiki.c2.com/?SwitchStatementsSmell) Fix using [Replace Conditional with Polymorphism]().
 - [**Primitive Obsession.**](http://wiki.c2.com/?PrimitiveObsession) Fix using [Replace Primitive with Object](). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
-- [**Alternative Classes with Different Interfaces.**](https://blog.codinghorror.com/code-smells/). Fix using [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
+- [**Alternative Classes with Different Interfaces.**](https://blog.codinghorror.com/code-smells/) Fix using [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
 - [**Duplicated Code.**]() Fix by applying the [Flocking Rules [Sandi Metz and Katrina Owen]]().
 - [**Asymmetrical Code.**](http://wiki.c2.com/?AsymmetricalCode) TODO: how to fix? Perhaps the smell isn't specific enough.
 - [**Multiple Responsibilities.**](http://wiki.c2.com/?OneResponsibilityRule) See also [God Class](http://wiki.c2.com/?GodClass). TODO: how to fix?
