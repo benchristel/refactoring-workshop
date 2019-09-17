@@ -20,9 +20,10 @@ These are ordered roughly from easiest to spot and fix to hardest.
 - [**Doc Comment.**]() Fix using [Remove Comment [BC]]().
 - [**Inconsistent Formatting.**]() Fix using [Rearrange
   Whitespace [BC]]().
-- [**Bad Name.**]() Fix using [Rename
+- [**Unclear Name.**]() Fix using [Rename
   Variable](https://refactoring.com/catalog/renameVariable.html),
   [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
+- [**Idea Fragment [Katrina Owen].**](https://www.sitepoint.com/whats-in-a-name-anti-patterns-to-a-hard-problem/) Fix using [Inline Method]().
 - [**Dead Code.**]() Fix using [Remove Dead Code](https://refactoring.com/catalog/removeDeadCode.html).
 - [**Long Method.**]() Fix with [Replace Inline Code with Function Call](https://refactoring.com/catalog/replaceInlineCodeWithFunctionCall.html) or [Extract Method](https://refactoring.com/catalog/extractFunction.html).
 - [**Nested Loops and Conditionals.**](http://wiki.c2.com/?ArrowAntiPattern) Fix with [Replace Inline Code with Function Call](https://refactoring.com/catalog/replaceInlineCodeWithFunctionCall.html), [Replace Loop with Pipeline](https://refactoring.com/catalog/replaceLoopWithPipeline.html), or [Extract Method](https://refactoring.com/catalog/extractFunction.html).
