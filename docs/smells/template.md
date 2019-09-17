@@ -8,7 +8,7 @@ TODO
 
 TODO
 
-## Example Refactoring
+## How To Fix It
 
 TODO
 
