@@ -6,7 +6,8 @@
 bit of code was written.
 
 ```ruby
-# Handle the case when the path is a windows path
+# Support windows paths; customer X has servers running
+# Windows for application Y.
 if path.include? "\\"
   components = path.split("\\")
 else
