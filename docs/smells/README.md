@@ -15,7 +15,7 @@ These are ordered roughly from easiest to spot and fix to hardest.
 
 - [**Explanatory Comment.**]() Fix using [Extract Method]() or [Remove Comment [BC]]().
 - [**Commented-out Code.**]() Fix using [Remove Comment [BC]]().
-- [**Telic Comment in Code.**]() Fix using [Move Telic Comment To Test
+- [**Telic Comment in Code.**](telic-comment-in-code.md) Fix using [Move Telic Comment To Test
   [BC]]().
 - [**Doc Comment.**]() Fix using [Remove Comment [BC]]().
 - [**Inconsistent Formatting.**](inconsistent-formatting.md) Fix using [Rearrange
