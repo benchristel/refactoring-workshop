@@ -10,7 +10,8 @@ code was written.
 
 ```ruby
 def path_components
-  # Handle the case when the path is a windows path
+  # Support windows paths; customer X has servers running
+  # Windows for application Y.
   if path.include? "\\"
     path.split("\\")
   else
@@ -34,13 +35,12 @@ end
 
 describe "path_components" do
   it "handles windows paths" do
+    # Important because customer X has servers running Windows for application Y.
     expect(path_components("\\foo\\bar\\baz.txt")).to eq ["foo", "bar", "baz.txt"]
   end
 
   it "handles unix paths" do
-    expect(likely_separator("/foo/bar/baz.txt")).to eq ["foo", "bar", "baz.txt"]
+    expect(path_components("/foo/bar/baz.txt")).to eq ["foo", "bar", "baz.txt"]
   end
-
-  # ...
 end
 ```
