@@ -18,8 +18,8 @@ These are ordered roughly from easiest to spot and fix to hardest.
 - [**Telic Comment in Code.**]() Fix using [Move Telic Comment To Test
   [BC]]().
 - [**Doc Comment.**]() Fix using [Remove Comment [BC]]().
-- [**Inconsistent Formatting.**]() Fix using [Rearrange
-  Whitespace [BC]]().
+- [**Inconsistent Formatting.**](inconsistent-formatting.md) Fix using [Rearrange
+  Whitespace [BC]](../refactorings/rearrange-whitespace.md).
 - [**Unclear Name.**]() Fix using [Rename
   Variable](https://refactoring.com/catalog/renameVariable.html),
   [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
