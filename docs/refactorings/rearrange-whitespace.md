@@ -1,5 +1,8 @@
 # Rearrange Whitespace
 
+*Rearrange Whitespace* adds and removes non-significant
+tokens (e.g. space, parentheses).
+
 ## Example
 
 ### Before
