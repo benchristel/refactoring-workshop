@@ -13,11 +13,11 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 
 These are ordered roughly from easiest to spot and fix to hardest.
 
-- [**Explanatory Comment.**]() Fix using [Extract Method]() or [Remove Comment [BC]]().
-- [**Commented-out Code.**]() Fix using [Remove Comment [BC]]().
+- [**Explanatory Comment.**]() Fix using [Extract Method]() or [Remove Comment [BC]](../refactorings/remove-comment.md).
+- [**Commented-out Code.**]() Fix using [Remove Comment [BC]](../refactorings/remove-comment.md).
 - [**Telic Comment in Code.**](telic-comment-in-code.md) Fix using [Move Telic Comment To Test
   [BC]]().
-- [**Doc Comment.**]() Fix using [Remove Comment [BC]]().
+- [**Doc Comment.**](doc-commment.md) Fix using [Remove Comment [BC]](../refactorings/remove-comment.md).
 - [**Inconsistent Formatting.**](inconsistent-formatting.md) Fix using [Rearrange
   Whitespace [BC]](../refactorings/rearrange-whitespace.md).
 - [**Unclear Name.**]() Fix using [Rename
