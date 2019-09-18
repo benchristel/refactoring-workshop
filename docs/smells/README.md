@@ -14,7 +14,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 ## Comments
 
 - [**Explanatory Comment.**](explanatory-comment.md) Fix using [Extract Method]() or [Remove Comment [BC]](../refactorings/remove-comment.md).
-- [**Commented-out Code.**]() Fix using [Remove Comment [BC]](../refactorings/remove-comment.md).
+- [**Commented-out Code.**](commented-out-code.md) Fix using [Remove Comment [BC]](../refactorings/remove-comment.md).
 - [**Telic Comment in Code.**](telic-comment-in-code.md) Fix using [Move Telic Comment To Test
   [BC]]().
 - [**Doc Comment.**](doc-commment.md) Fix using [Remove Comment [BC]](../refactorings/remove-comment.md).
