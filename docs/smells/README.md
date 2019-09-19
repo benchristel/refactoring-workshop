@@ -23,7 +23,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 
 - [**Inconsistent Formatting.**](inconsistent-formatting.md) Fix using [Rearrange
   Whitespace [BC]](../refactorings/rearrange-whitespace.md).
-- [**Missing Affordance [BC].**]() Often fixed by [Rearrange Whitespace [BC]]().
+- [**Missing Editing Affordance [BC].**](missing-editing-affordance.md) Often fixed by [Rearrange Whitespace [BC]](../refactorings/rearrange-whitespace.md).
 
 ## Interfaces
 
