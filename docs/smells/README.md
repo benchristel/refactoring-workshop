@@ -27,7 +27,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 
 ## Interfaces
 
-- [**Unclear Name.**]() Fix using [Rename
+- [**Unclear Name.**](unclear-name.md) Fix using [Rename
   Variable](https://refactoring.com/catalog/renameVariable.html),
   [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
 - [**Idea Fragment [Katrina Owen].**](https://www.sitepoint.com/whats-in-a-name-anti-patterns-to-a-hard-problem/) Fix using [Inline Method]().
