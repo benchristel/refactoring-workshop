@@ -28,11 +28,11 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 ## Interfaces
 
 - [**Unclear Name.**](unclear-name.md) Fix using [Rename
-  Variable](https://refactoring.com/catalog/renameVariable.html),
-  [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
+  Variable](../refactorings/rename-variable.md),
+  [Rename Method](../refactorings/rename-method.md).
 - [**Idea Fragment [Katrina Owen].**](https://www.sitepoint.com/whats-in-a-name-anti-patterns-to-a-hard-problem/) Fix using [Inline Method]().
 - [**Data Clump.**]() Fix using [Preserve Whole Object](https://refactoring.com/catalog/preserveWholeObject.html) or [Introduce Parameter Object](https://refactoring.com/catalog/introduceParameterObject.html).
-- [**Alternative Classes with Different Interfaces.**](https://blog.codinghorror.com/code-smells/) Fix using [Rename Method](https://refactoring.com/catalog/changeFunctionDeclaration.html).
+- [**Alternative Classes with Different Interfaces.**](https://blog.codinghorror.com/code-smells/) Fix using [Rename Method](../refactorings/rename-method.md).
 
 ## Imperative Code
 
