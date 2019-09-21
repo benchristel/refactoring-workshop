@@ -141,6 +141,13 @@ cover:
    - Do you have a favorite pattern not discussed today?
    - How can your team use this? any obstacles?
 
-## References
+### After the Workshop
 
+Send participants the following list of resources referenced
+by this workshop:
+
+- Martin Fowler's site [Refactoring.com](https://refactoring.com) and its [catalog of refactorings](https://refactoring.com/catalog/)
+- The [CodeSmell](http://wiki.c2.com/?CodeSmell) page on [C2Wiki](http://wiki.c2.com)
 - [RefactorLowHangingFruit on C2Wiki](http://wiki.c2.com/?RefactorLowHangingFruit)
+- [Refactoring.guru](https://refactoring.guru/)
+- [_99 Bottles of OOP_](https://www.sandimetz.com/99bottles) by Sandi Metz and Katrina Owen.
