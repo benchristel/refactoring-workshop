@@ -157,3 +157,7 @@ cover:
 - Dead Code
 - Inconsistent Formatting
 - Run-on Code
+
+## References
+
+- [RefactorLowHangingFruit on C2Wiki](http://wiki.c2.com/?RefactorLowHangingFruit)
