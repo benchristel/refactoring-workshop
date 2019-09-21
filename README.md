@@ -151,3 +151,4 @@ by this workshop:
 - [RefactorLowHangingFruit on C2Wiki](http://wiki.c2.com/?RefactorLowHangingFruit)
 - [Refactoring.guru](https://refactoring.guru/)
 - [_99 Bottles of OOP_](https://www.sandimetz.com/99bottles) by Sandi Metz and Katrina Owen.
+- [SourceMaking.com's list of smells](https://sourcemaking.com/refactoring/smells)
