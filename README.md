@@ -152,3 +152,4 @@ by this workshop:
 - [Refactoring.guru](https://refactoring.guru/)
 - [_99 Bottles of OOP_](https://www.sandimetz.com/99bottles) by Sandi Metz and Katrina Owen.
 - [SourceMaking.com's list of smells](https://sourcemaking.com/refactoring/smells)
+- [The repository for the workshop](https://github.com/benchristel/refactoring-workshop)!
