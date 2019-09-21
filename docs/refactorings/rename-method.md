@@ -6,7 +6,7 @@
 
 ```ruby
 def foo(a, b)
-  (a + b) / 2
+  (a + b) / 2.0
 end
 
 foo(37, 99)
@@ -16,7 +16,7 @@ foo(37, 99)
 
 ```ruby
 def average(a, b)
-  (a + b) / 2
+  (a + b) / 2.0
 end
 
 average(37, 99)
