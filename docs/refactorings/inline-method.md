@@ -1,6 +1,6 @@
 # Inline Method
 
-Remove a method declaration by moving the code in the
+Remove a method declaration, copying the code in the
 method's body to its callsites.
 
 ## Example
@@ -8,21 +8,17 @@ method's body to its callsites.
 ### Before
 
 ```ruby
-def fraction_of_total(a, b)
-  a / (a + b)
+def greeting(name)
+  "Hello, " + name
 end
 
-def foo
-  puts fraction_of_total(5, 10)
-end
+puts greeting "World"
 ```
 
 ### After
 
 ```ruby
-def foo
-  puts 5 / (5 + 10)
-end
+puts "Hello, " + "World"
 ```
 
 ### Next Steps
