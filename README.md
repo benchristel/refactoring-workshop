@@ -141,23 +141,6 @@ cover:
    - Do you have a favorite pattern not discussed today?
    - How can your team use this? any obstacles?
 
-## Code Smells
-
-- [Feature Envy](http://wiki.c2.com/?FeatureEnvySmell)
-- [Switch on Type](http://wiki.c2.com/?SwitchStatementsSmell)
-- Casual Mutation
-- [Primitive Obsession](http://wiki.c2.com/?PrimitiveObsession). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
-- Deep Hierarchy
-- [Global Variables](http://wiki.c2.com/?GlobalVariablesAreBad)
-- [Null Check](http://wiki.c2.com/?NullConsideredHarmful)
-- [Nested Loops and Conditionals](http://wiki.c2.com/?ArrowAntiPattern)
-- [Asymmetrical Code](http://wiki.c2.com/?AsymmetricalCode)
-- [Multiple Responsibilities](http://wiki.c2.com/?OneResponsibilityRule). See also [God Class](http://wiki.c2.com/?GodClass).
-- Duplicated Code
-- Dead Code
-- Inconsistent Formatting
-- Run-on Code
-
 ## References
 
 - [RefactorLowHangingFruit on C2Wiki](http://wiki.c2.com/?RefactorLowHangingFruit)
