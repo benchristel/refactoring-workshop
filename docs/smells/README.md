@@ -30,13 +30,13 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 - [**Unclear Name.**](unclear-name.md) Fix using [Rename
   Variable](../refactorings/rename-variable.md),
   [Rename Method](../refactorings/rename-method.md).
-- [**Idea Fragment [Katrina Owen].**](https://www.sitepoint.com/whats-in-a-name-anti-patterns-to-a-hard-problem/) Fix using [Inline Method]().
-- [**Data Clump.**]() Fix using [Preserve Whole Object](https://refactoring.com/catalog/preserveWholeObject.html) or [Introduce Parameter Object](https://refactoring.com/catalog/introduceParameterObject.html).
+- [**Idea Fragment [Katrina Owen].**](idea-fragment.md) Fix using [Inline Method](../refactorings/inline-method.md).
+- [**Data Clump.**](data-clump.md) Fix using [Preserve Whole Object](../refactorings/preserve-whole-object.md) or [Introduce Parameter Object](../refactorings/introduce-parameter-object.md).
 - [**Alternative Classes with Different Interfaces.**](https://blog.codinghorror.com/code-smells/) Fix using [Rename Method](../refactorings/rename-method.md).
 
 ## Imperative Code
 
-- [**Dead Code.**]() Fix using [Remove Dead Code](https://refactoring.com/catalog/removeDeadCode.html).
+- [**Dead Code.**](dead-code.md) Fix using [Remove Dead Code](../refactorings/remove-dead-code.md).
 - [**Long Method.**]() Fix with [Replace Inline Code with Function Call](https://refactoring.com/catalog/replaceInlineCodeWithFunctionCall.html) or [Extract Method](../refactorings/extract-method.md).
 - [**Nested Loops and Conditionals.**](http://wiki.c2.com/?ArrowAntiPattern) Fix with [Replace Inline Code with Function Call](https://refactoring.com/catalog/replaceInlineCodeWithFunctionCall.html), [Replace Loop with Pipeline](https://refactoring.com/catalog/replaceLoopWithPipeline.html), or [Extract Method](../refactorings/extract-method.md).
 - [**Global Variable Access**](http://wiki.c2.com/?GlobalVariablesAreBad). Fix using [Inject Global [BC]](). If code is setting global variables, use [Return Modified Value](https://refactoring.com/catalog/returnModifiedValue.html).
