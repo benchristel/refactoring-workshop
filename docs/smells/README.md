@@ -34,7 +34,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 - [**Data Clump.**](data-clump.md) Fix using [Preserve Whole Object](../refactorings/preserve-whole-object.md) or [Introduce Parameter Object](../refactorings/introduce-parameter-object.md).
 - [**Alternative Classes with Different Interfaces.**](https://blog.codinghorror.com/code-smells/) Fix using [Rename Method](../refactorings/rename-method.md).
 
-## Imperative Code
+## Procedural Code
 
 - [**Dead Code.**](dead-code.md) Fix using [Remove Dead Code](../refactorings/remove-dead-code.md).
 - [**Long Method.**]() Fix with [Replace Inline Code with Function Call](https://refactoring.com/catalog/replaceInlineCodeWithFunctionCall.html) or [Extract Method](../refactorings/extract-method.md).
