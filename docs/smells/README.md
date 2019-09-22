@@ -38,7 +38,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 
 - [**Dead Code.**](dead-code.md) Fix using [Remove Dead Code](../refactorings/remove-dead-code.md).
 - [**Long Method.**](long-method.md) Fix with [Replace Inline Code with Function Call](../refactorings/replace-inline-code-with-function-call.md) or [Extract Method](../refactorings/extract-method.md).
-- [**Nested Loops and Conditionals.**](http://wiki.c2.com/?ArrowAntiPattern) Fix with [Replace Inline Code with Function Call](https://refactoring.com/catalog/replaceInlineCodeWithFunctionCall.html), [Replace Loop with Pipeline](https://refactoring.com/catalog/replaceLoopWithPipeline.html), or [Extract Method](../refactorings/extract-method.md).
+- [**Nested Loops and Conditionals.**](nested-loops-and-conditionals.md) Fix with [Replace Inline Code with Function Call](../refactorings/replace-inline-code-with-function-call.md), [Replace Loop with Pipeline](../refactorings/replace-loop-with-pipeline.md), or [Extract Method](../refactorings/extract-method.md).
 - [**Global Variable Access**](http://wiki.c2.com/?GlobalVariablesAreBad). Fix using [Inject Global [BC]](). If code is setting global variables, use [Return Modified Value](https://refactoring.com/catalog/returnModifiedValue.html).
 - [**Casual Mutation [BC].**]() In straight-line code, fix with [Split Variable](https://refactoring.com/catalog/splitVariable.html). In looping code, use [Replace Loop with Pipeline](https://refactoring.com/catalog/replaceLoopWithPipeline.html).
 - [**Asymmetrical Code.**](http://wiki.c2.com/?AsymmetricalCode) TODO: how to fix? Perhaps the smell isn't specific enough.
