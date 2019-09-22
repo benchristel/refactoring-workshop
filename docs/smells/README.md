@@ -41,7 +41,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 - [**Nested Loops and Conditionals.**](nested-loops-and-conditionals.md) Fix with [Replace Inline Code with Function Call](../refactorings/replace-inline-code-with-function-call.md), [Replace Loop with Pipeline](../refactorings/replace-loop-with-pipeline.md), or [Extract Method](../refactorings/extract-method.md).
 - [**Global State**](global-state.md). Fix using [Inject Global State [BC]](../refactorings/inject-global-state.md). If code is writing to global state, use [Return Modified Value](../refactorings/return-modified-value.md).
 - [**Casual Mutation [BC].**](casual-mutation.md) In straight-line code, fix with [Split Variable](../refactorings/split-variable.md). In looping code, use [Replace Loop with Pipeline](../refactorings/replace-loop-with-pipeline.md).
-- [**Asymmetrical Code.**](http://wiki.c2.com/?AsymmetricalCode) TODO: how to fix? Perhaps the smell isn't specific enough.
+- [**Asymmetrical Code.**](asymmetrical-code.md) Fix with [Extract Method](../refactorings/extract-method.md), [Inline Method](../refactorings/inline-method.md), or [Rename Method](../refactorings/rename-method.md).
 - [**Duplicated Code.**]() Fix by applying the [Flocking Rules [Sandi Metz and Katrina Owen]]().
 
 ## Objects and Messages
