@@ -47,10 +47,10 @@ downloader.download(url)
 Asymmetrical code obscures similarities. By making things
 that are essentially similar appear different, we cast doubt
 on whether they are truly similar. For example: is there a
-reason there's no `ftp_url?` method in the code above?
-Someone reading the code might spend time figuring it out,
-only to realize in the end that there is no reason, except
-an accident of history.
+reason there's no `ftp_url?` method in the first example
+above? Someone reading the code might spend time figuring it
+out, only to realize in the end that there is no reason,
+except an accident of history.
 
 When we obscure similarity, we also obscure important
 differences. When similar things appear different, the
@@ -62,10 +62,17 @@ special care to handle an edge case.
 
 ## How To Fix It
 
-Balance abstractions using [Extract Method](../refactorings/extract-method.md), or perhaps
+Balance abstractions using [Extract
+Method](../refactorings/extract-method.md), or perhaps
 [Inline Method](../refactorings/inline-method.md). Bring
 divergent interfaces into alignment with [Rename
 Method](../refactorings/rename-method.md).
+
+Asymmetrical code is often a form of duplication. When code
+appears asymmetrical, its pieces duplicate some underlying
+idea, but obscure the duplication behind divergent surface
+forms. We can remove duplication by following the [Flocking
+Rules](../refactorings/flocking-rules.md).
 
 ## References
 
