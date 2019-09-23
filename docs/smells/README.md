@@ -54,3 +54,5 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 - [**Middleman.**]() Fix using [Inline Method](https://refactoring.com/catalog/inlineFunction.html).
 - [**Deep Hierarchy [BC].**]() Flatten deep call trees using [Inline Method](https://refactoring.com/catalog/inlineFunction.html) and [Inline Class](https://refactoring.com/catalog/inlineClass.html). Then create shallower trees using [Extract Method](../refactorings/extract-method.md).
 - [**Message Chain.**]() A.K.A. "Train Wreck" or "Law of Demeter Violation". Fix using [Replace Query with Parameter](https://refactoring.com/catalog/replaceQueryWithParameter.html) or [Extract Method](../refactorings/extract-method.md) and [Move Method](https://refactoring.com/catalog/moveFunction.html).
+- [**Option Parameter [BC].**](option-parameter.md) Fix with
+  [Move Statements To Caller]().
