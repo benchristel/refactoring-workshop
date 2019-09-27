@@ -5,7 +5,7 @@ doesn't act on it. Instead, it passes the information to
 some other method via an Option Parameter, and demands that
 the *other* method act on it.
 
-When a method takes an Option Parameter, it's a sure sign
+When a method takes an Option Parameter, it's a good sign
 that the method has [Multiple
 Responsibilities](multiple-responsibilities.md) that should
 be separated.
@@ -41,7 +41,7 @@ end
 
 ## Why It Hurts
 
-In the example above, the `how_many` method has been
+In the example above, the `container` method has been
 assigned too many responsibilities. The capitalization logic
 should properly live in `line_of_song`, which knows when the
 strings should be capitalized.
