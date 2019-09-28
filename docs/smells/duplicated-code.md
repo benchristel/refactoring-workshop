@@ -60,3 +60,30 @@ especially if it's within one class or method. Writing more
 abstract code to remove the duplication can actually make
 code harder to understand when you haven't accurately
 identified the concept underlying the duplicated code.
+
+When de-duplicating code, adhere to [Preserve Whole
+Object](../refactorings/preserve-whole-object.md). Keeping
+objects and values whole takes priority over removing all
+duplication.
+
+Here's an example where whole values weren't preserved:
+
+```ruby
+button_text = "Sign " +
+  if current_user.nil?
+    "In"
+  else
+    "Out"
+  end
+```
+
+How much clearer is this?
+
+```ruby
+button_text =
+  if current_user.nil?
+    "Sign In"
+  else
+    "Sign Out"
+  end
+```
