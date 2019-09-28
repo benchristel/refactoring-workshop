@@ -50,7 +50,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 - [**Feature Envy.**](feature-envy.md) Fix with [Move Method](../refactorings/move-method.md), possibly preceded by [Extract Method](../refactorings/extract-method.md).
 - [**Primitive Obsession.**](primitive-obsession.md) Fix using [Replace Primitive with Object](../refactorings/replace-primitive-with-object.md). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
 - [**Switch on Type.**](switch-on-type.md) Fix using [Replace Conditional with Polymorphism](../refactorings/replace-conditional-with-polymorphism.md).
-- [**Middleman.**]() Fix using [Inline Method](https://refactoring.com/catalog/inlineFunction.html).
+- [**Middleman.**](middleman.md) Fix using [Inline Method](../refactorings/inline-method.md).
 - [**Deep Hierarchy [BC].**]() Flatten deep call trees using [Inline Method](https://refactoring.com/catalog/inlineFunction.html) and [Inline Class](https://refactoring.com/catalog/inlineClass.html). Then create shallower trees using [Extract Method](../refactorings/extract-method.md).
 - [**Message Chain.**]() A.K.A. "Train Wreck" or "Law of Demeter Violation". Fix using [Replace Query with Parameter](https://refactoring.com/catalog/replaceQueryWithParameter.html) or [Extract Method](../refactorings/extract-method.md) and [Move Method](https://refactoring.com/catalog/moveFunction.html).
 - [**Option Parameter [BC].**](option-parameter.md) Fix with
