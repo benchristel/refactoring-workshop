@@ -48,8 +48,9 @@ end
 
 Here, we've replaced the message string with the variable
 `greeting`. This doesn't remove the duplication; it merely
-creates an alias for it. In the process, we introduced
-indirection, which makes the code harder to understand.
+creates an alias for part of it. In the process, we
+introduced indirection, which makes the code harder to
+understand.
 
 ## Caveats
 
