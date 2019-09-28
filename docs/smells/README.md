@@ -49,7 +49,6 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 - [**Null Check**](null-check.md). Fix with [Introduce Null Object](../refactorings/introduce-null-object.md) or [Introduce Continuation [BC]](../refactorings/introduce-continuation.md).
 - [**Feature Envy.**](feature-envy.md) Fix with [Move Method](../refactorings/move-method.md), possibly preceded by [Extract Method](../refactorings/extract-method.md).
 - [**Primitive Obsession.**](primitive-obsession.md) Fix using [Replace Primitive with Object](../refactorings/replace-primitive-with-object.md). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
-- [**Multiple Responsibilities.**](http://wiki.c2.com/?OneResponsibilityRule) See also [God Class](http://wiki.c2.com/?GodClass). TODO: how to fix?
 - [**Switch on Type.**](http://wiki.c2.com/?SwitchStatementsSmell) Fix using [Replace Conditional with Polymorphism]().
 - [**Middleman.**]() Fix using [Inline Method](https://refactoring.com/catalog/inlineFunction.html).
 - [**Deep Hierarchy [BC].**]() Flatten deep call trees using [Inline Method](https://refactoring.com/catalog/inlineFunction.html) and [Inline Class](https://refactoring.com/catalog/inlineClass.html). Then create shallower trees using [Extract Method](../refactorings/extract-method.md).
