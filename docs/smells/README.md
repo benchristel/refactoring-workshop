@@ -47,7 +47,7 @@ Fowler's book, _Refactoring: Improving the Design of Existing Code_.
 ## Objects and Messages
 
 - [**Null Check**](null-check.md). Fix with [Introduce Null Object](../refactorings/introduce-null-object.md) or [Introduce Continuation [BC]](../refactorings/introduce-continuation.md).
-- [**Feature Envy.**](http://wiki.c2.com/?FeatureEnvySmell) Fix with [Move Method](), possibly preceded by [Extract Method](../refactorings/extract-method.md).
+- [**Feature Envy.**](feature-envy.md) Fix with [Move Method](../refactorings/move-method.md), possibly preceded by [Extract Method](../refactorings/extract-method.md).
 - [**Primitive Obsession.**](http://wiki.c2.com/?PrimitiveObsession) Fix using [Replace Primitive with Object](). See also [Avoid Hashy Syntax In Ruby](http://wiki.c2.com/?AvoidHashySyntaxInRuby) for a language-specific refactoring technique.
 - [**Multiple Responsibilities.**](http://wiki.c2.com/?OneResponsibilityRule) See also [God Class](http://wiki.c2.com/?GodClass). TODO: how to fix?
 - [**Switch on Type.**](http://wiki.c2.com/?SwitchStatementsSmell) Fix using [Replace Conditional with Polymorphism]().
