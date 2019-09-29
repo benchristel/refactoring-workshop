@@ -7,7 +7,7 @@ its own.
 
 ```ruby
 def shipment_delivered?
-  shipment.delivery_date.to_s.strip.empty?
+  !shipment.delivery_date.to_s.strip.empty?
 end
 ```
 
