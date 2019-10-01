@@ -153,3 +153,7 @@ by this workshop:
 - [_99 Bottles of OOP_](https://www.sandimetz.com/99bottles) by Sandi Metz and Katrina Owen.
 - [SourceMaking.com's list of smells](https://sourcemaking.com/refactoring/smells)
 - [The repository for the workshop](https://github.com/benchristel/refactoring-workshop)!
+
+If you think you might facilitate the workshop again, ask
+participants for feedback. What would they change about the
+workshop? What did they find useful?
