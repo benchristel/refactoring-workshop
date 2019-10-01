@@ -64,9 +64,14 @@
         padding: 1em;
       }
 
-      li, p {
+      li {
         margin-top: 0.5em;
         margin-bottom: 0.5em;
+      }
+
+      p {
+        margin-top: 1em;
+        margin-bottom: 1em;
       }
     </style>
   </head>
@@ -89,7 +94,7 @@ class: center, middle, emphasis
 
 ---
 
-# Today's Agenda
+## Today's Agenda
 
 1. I'll talk a bit about refactoring and its relationship to
    code smells (15 minutes)
@@ -132,7 +137,7 @@ class: center, middle
 
 ---
 
-# How?
+## How?
 
 - Work in small steps.
 - Run the tests after every change.
@@ -159,7 +164,7 @@ class: center, middle, emphasis
 
 ---
 
-# What's a Code Smell?
+## What's a Code Smell?
 
 - A feature of a program's **structure**, which...
   - is **objectively** present or absent
@@ -187,11 +192,33 @@ class: center, middle, emphasis
 
 ---
 
-# I'm going to show you some code
+## I'm going to show you some code
 
 - It's gross. Feel free to criticize it. That's the point.
 - The problem the code is solving is made-up, but it's based
   on real problems and real code structures.
+
+---
+
+## The Problem
+
+Your company uses a language called CBiscuit for a lot of
+its internal work. The CBiscuit compiler, called `clop`, is
+very complex and has a lot of configuration options.
+
+To enable developers to compile code in a consistent way, your
+team has developed a tool, `autoclop`, to automatically
+configure `clop`.
+
+Unfortunately, `autoclop` has grown
+chaotically over the months your team has been maintaining
+it, with no consistent architecture or design strategy. New
+features are becoming harder and harder to add. Can you
+clean up the code smells?
+
+---
+
+![autoclop.rb in an editor](placeholder.png)
 
     </textarea>
     <script src="./remark.js" type="text/javascript">
