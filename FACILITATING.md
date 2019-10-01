@@ -28,18 +28,46 @@ The presentation slides are written in Markdown using
 
 ## During the Workshop
 
-- Show the slides in [slides/presentation.html]
-   - Anti-goals: we want a picture of where are going before we start
-- Last slide contains an image of the IDE with the code
-- Ask, "Please write down as many specific structural problems with this code as you can in N minutes, in the Zoom chat. We'll discuss them as a group when everyone is done. Don't worry about translating them into code smells; we'll do that as a group."
-- Open the file with the prepared TODO comments in the IDE. Monitor the Zoom chat window. If anyone identifies a problem that isn't already annotated, add it as a comment.
-- Remind people when time is almost up. "You have one minute" "finish the thought you're on". If you miss one or two issues in the Zoom chat, that's okay.
-- Share your IDE. "I'm going to pick the smallest problem; one that we can fix right now."
-- "For the purposes of this exercise, I trust that the tests are complete and will fail if I make a mistake."
-- For loop (for each comment; break when there's X minutes left)
-   - Match the problem to a code smell. Show the slide for that smell.
-   - Refactor the smell away.
-   - Show the slide with caveats for that smell. Explain when you wouldn't want to refactor the smell away.
+- Show the slides in [slides/presentation.html]. The last
+  slide shows autoclop.rb open in the RubyMine IDE.
+- Say, "Please find as many specific structural
+  problems with this code as you can in 15 minutes. Post
+  them in the Zoom chat. We'll discuss them as a group when
+  everyone is done. Don't worry about translating them to
+  code smells yet; we'll do that as a group."
+- Hand out printed copies of [autoclop.rb] to local
+  participants.
+- Send everyone a link to [autoclop.rb on Github](https://github.com/benchristel/refactoring-workshop/blob/master/autoclop.rb).
+- `cp solutions/annotated_autoclop.rb autoclop.rb`
+- Open [autoclop.rb](autoclop.rb) but do not show it to
+  participants. Since you copied it from
+  annotated_autoclop.rb, you'll see TODO comments for
+  specific problems.
+- Monitor the Zoom chat. Add TODO comments for any
+  problems people find that aren't yet annotated.
+- Remind participants when time is almost up. "You have one
+  minute" "finish the thought you're on". If you miss one or
+  two issues in the Zoom chat, that's okay.
+- Screen-share your IDE.
+- Introduce mob-programming. "We're going to fix this code
+  together. I'll be typing but basically just taking
+  dictation; the ideas will come from all of you."
+- For the next hour, repeat the following steps:
+  - Ask, "What's the lowest hanging fruit here? What problem
+    could we fix easily, right now?"
+  - Someone will pick out one of the TODO comments. Name the
+    corresponding code smell.
+  - Show the slide for that smell.
+  - Ask, "How would we refactor to remove this smell?"
+  - Once you've gotten answers, show the slide for the
+    refactoring.
+  - Provide typing-as-a-service for participants to refactor
+    the code.
+  - Go over the caveats for the smell you just removed.
+    Discuss situations when you wouldn't want to remove the
+    smell.
+- Take a 15-minute break.
+- For 45 minutes, continue mob-refactoring.
 - Show a finished product
 - Show the final slides
 - Discussion
