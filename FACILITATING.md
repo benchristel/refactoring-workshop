@@ -2,8 +2,8 @@
 
 ## Resources
 
-- Use these slides TODO: LINK
-- Handout: glossary of smells/refactorings/patterns (LINK?)
+- Slides: see the [slides](slides) folder of this repo.
+- Handout: [Summary of Smells and Refactorings](docs/smells/README.md).
 
 ## Before the Workshop
 
