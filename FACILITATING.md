@@ -5,6 +5,17 @@
 - Slides: see the [slides](slides) folder of this repo.
 - Handout: [Summary of Smells and Refactorings](docs/smells/README.md).
 
+## About the Slides
+
+The presentation slides are written in Markdown using
+[Remark](https://remarkjs.com/#1). Some tips for using them:
+
+- To show presenter notes and slides on different monitors,
+  press `[C]` in the presentation to clone the window, and
+  then press `[P]` to switch to presenter mode in one of the
+  windows. The clones will stay in sync as you click through
+  the slides.
+
 ## Before the Workshop
 
 - Practice the presentation. If you like, you can read off
@@ -17,7 +28,7 @@
 
 ## During the Workshop
 
-- Show slides 1-N
+- Show the slides in [slides/presentation.html]
    - Anti-goals: we want a picture of where are going before we start
 - Last slide contains an image of the IDE with the code
 - Ask, "Please write down as many specific structural problems with this code as you can in N minutes, in the Zoom chat. We'll discuss them as a group when everyone is done. Don't worry about translating them into code smells; we'll do that as a group."
