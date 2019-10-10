@@ -27,9 +27,9 @@ The overall flow of the workshop goes like this:
   on large groups yet.
 - I recommend you use IntelliJ or RubyMine as your editor.
   You'll need a paid license, or the program will quit every
-  30 minutes. Other editors will work, but you'll have to
-  split your screen between tests and code, and the
-  automated refactoring support may not be as good.
+  30 minutes. Other editors will work, but I haven't used
+  one with better support for refactoring and tests than
+  RubyMine.
 
 ## Goals
 
