@@ -24,7 +24,7 @@ The presentation slides are written in Markdown using
 - Run `bundle install` to get the dependencies.
 - Run `bundle exec rspec spec` to run the tests.
 - Open this repository in your IDE.
-- TODO: how to configure IntelliJ/RubyMine to run the tests?
+- To configure RubyMine to run the tests, make a new Run Configuration that looks like this: ![spec runner configuration in rspec](images/rubymine-rspec-config.png)
 
 ## During the Workshop
 
