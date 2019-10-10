@@ -80,7 +80,10 @@ cover:
   should mention that the tests are *not exemplary*, but
   that refactoring them is out of scope. Refactoring
   tests presents its own set of pitfalls, and we'd rather
-  not address them in this workshop.
+  not address them in this workshop. It might be worth
+  pointing out to participants that the tests *do not have
+  to be pretty* for refactoring to work. They just have to
+  fail when the code has a bug.
 - **Fixing bugs.** The participants might find bugs in the
   code, or behaviors they think should be changed. The
   facilitator should remind them that the goal of
