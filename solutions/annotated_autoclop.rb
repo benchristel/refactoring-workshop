@@ -1,4 +1,4 @@
-require 'shellwords'                          # TODO: inconsistent use of single vs. double quotes
+require 'shellwords'
 require 'yaml'                                # TODO: no blank line after requires
 def run_autoclop                              # TODO: several methods with similar names; TODO: global methods
   $config = ENV['AUTOCLOP_CONFIG']            # TODO: global variables $config and ENV
@@ -9,7 +9,7 @@ end
 def autoclop
   return invoke_clop_default if $config.nil? || $config.empty? # TODO: early return; TODO: anonymous boolean logic; TODO: nil check; TODO: order-dependence (we have to check nil? before empty?)
   python_version = 2
-  # Red Hat has deprecated Python 2           # TODO: "why" comment in code
+  # Red Hat has deprecated Python 2
   python_version = 3 if $os =~ /Red Hat 8/    # TODO: python_version reassigned; TODO: magic regex
   cfg = YAML.safe_load(File.read($config))    # TODO: coupling to both format (yaml) and data source (file); TODO: variable name cfg
   return invoke_clop_default :invalid_yaml if cfg.nil? # TODO: early return; TODO: nil check
