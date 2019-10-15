@@ -1,18 +1,22 @@
 require 'shellwords'
 require 'yaml'
 def run_autoclop
-  $config = ENV['AUTOCLOP_CONFIG']
-  $os = File.read('/etc/issue')
-  Autoclop.new.autoclop
+  os = File.read('/etc/issue')
+  Autoclop.new(os, ENV).autoclop
 end
 
 class Autoclop
+  def initialize(os, env)
+    @os = os
+    @env = env
+  end
+
   def autoclop
-    return invoke_clop_default if $config.nil? || $config.empty?
+    return invoke_clop_default if config.nil? || config.empty?
     python_version = 2
     # Red Hat has deprecated Python 2
-    python_version = 3 if $os =~ /Red Hat 8/
-    cfg = YAML.safe_load(File.read($config))
+    python_version = 3 if @os =~ /Red Hat 8/
+    cfg = YAML.safe_load(File.read(config))
     return invoke_clop_default :invalid_yaml if cfg.nil?
     python_version = cfg['python-version'] if cfg['python-version']
     optimization = cfg['opt'] if cfg['opt']
@@ -40,20 +44,20 @@ class Autoclop
         index += 1
       end
     end
-    libargs ||= "-L/home/#{esc ENV['USER']}/.cbiscuit/lib"
+    libargs ||= "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
 
     invoke_clop(python_version, optimization || 'O2', libargs || '')
   end
 
   def invoke_clop_default(message_type=nil)
     py = 2
-    py = 3 if $os =~ /Red Hat 8/ # bugfix
+    py = 3 if @os =~ /Red Hat 8/ # bugfix
     if message_type == :invalid_yaml
-      Kernel.puts "WARNING: Invalid YAML in #{$config}. Assuming the default configuration."
+      Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
     else
       Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
     end
-    invoke_clop(py, 'O2', "-L/home/#{esc ENV['USER']}/.cbiscuit/lib")
+    invoke_clop(py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib")
   end
 
   def invoke_clop(python_version, optimization = 'O1', libargs = '')
@@ -66,5 +70,11 @@ class Autoclop
 
   def esc arg
     Shellwords.escape arg
+  end
+
+  private
+
+  def config
+    @env['AUTOCLOP_CONFIG']
   end
 end
