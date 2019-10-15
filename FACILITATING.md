@@ -18,6 +18,9 @@ The presentation slides are written in Markdown using
 
 ## Before the Workshop
 
+- Study the code smells and refactorings in the in docs/
+  folder. Identify the code smell corresponding to each
+  TODO comment in `solutions/annotated_autoclop.rb`.
 - Practice the presentation. If you like, you can read off
   the speaker notes.
 - `git clone` this repository.
