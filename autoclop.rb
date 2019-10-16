@@ -12,12 +12,25 @@ class Autoclop
   end
 
   def autoclop
-    return invoke_clop_default if config.nil? || config.empty?
+    if config.nil? || config.empty?
+      Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
+      py = 2
+      py = 3 if @os =~ /Red Hat 8/ # bugfix
+      return invoke_clop(py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib")
+    end
+
     python_version = 2
     # Red Hat has deprecated Python 2
     python_version = 3 if @os =~ /Red Hat 8/
     cfg = YAML.safe_load(File.read(config))
-    return invoke_clop_default :invalid_yaml if cfg.nil?
+
+    if cfg.nil?
+      Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+      py = 2
+      py = 3 if @os =~ /Red Hat 8/ # bugfix
+      return invoke_clop(py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib")
+    end
+
     python_version = cfg['python-version'] if cfg['python-version']
     optimization = cfg['opt'] if cfg['opt']
 
@@ -47,17 +60,6 @@ class Autoclop
     libargs ||= "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
 
     invoke_clop(python_version, optimization || 'O2', libargs || '')
-  end
-
-  def invoke_clop_default(message_type=nil)
-    py = 2
-    py = 3 if @os =~ /Red Hat 8/ # bugfix
-    if message_type == :invalid_yaml
-      Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
-    else
-      Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
-    end
-    invoke_clop(py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib")
   end
 
   def invoke_clop(python_version, optimization = 'O1', libargs = '')
