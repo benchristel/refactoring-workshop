@@ -20,7 +20,7 @@ class Autoclop
       clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     else
       python_version = cfg['python-version'] || default_python_version
-      optimization = cfg['opt'] if cfg['opt']
+      optimization = cfg['opt'] || 'O2'
 
       if cfg['libs']
         libargs = ''
@@ -44,11 +44,12 @@ class Autoclop
           end
           index += 1
         end
+      else
+        libargs = "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
       end
-      libargs ||= "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
 
       warnings = []
-      clop_args = [python_version, optimization || 'O2', libargs || '']
+      clop_args = [python_version, optimization, libargs]
     end
 
     warnings.each { |warning| Kernel.puts warning }
