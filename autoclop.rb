@@ -17,13 +17,11 @@ class Autoclop
       py = 2
       py = 3 if @os =~ /Red Hat 8/ # bugfix
       clop_args = [py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
-      invoke_clop(*clop_args)
     elsif cfg.nil?
       Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
       py = 2
       py = 3 if @os =~ /Red Hat 8/ # bugfix
       clop_args = [py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
-      invoke_clop(*clop_args)
     else
       python_version = 2
       # Red Hat has deprecated Python 2
@@ -57,8 +55,8 @@ class Autoclop
       libargs ||= "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
 
       clop_args = [python_version, optimization || 'O2', libargs || '']
-      invoke_clop(*clop_args)
     end
+    invoke_clop(*clop_args)
   end
 
   def invoke_clop(python_version, optimization = 'O1', libargs = '')
