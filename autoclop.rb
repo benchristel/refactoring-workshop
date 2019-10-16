@@ -24,13 +24,17 @@ class Autoclop
 
       libargs =
         if cfg['libs']
-          cfg['libs'].map { |arg| "-l#{esc arg}" }.join(' ')
+          flag = "-l"
+          cfg['libs'].map { |arg| "#{flag}#{esc arg}" }.join(' ')
         elsif cfg['libdir']
-          [cfg['libdir']].map { |arg| "-L#{esc arg}" }.join(' ')
+          flag = "-L"
+          [cfg['libdir']].map { |arg| "#{flag}#{esc arg}" }.join(' ')
         elsif cfg['libdirs']
-          cfg['libdirs'].map { |arg| "-L#{esc arg}" }.join(' ')
+          flag = "-L"
+          cfg['libdirs'].map { |arg| "#{flag}#{esc arg}" }.join(' ')
         else
-          ["/home/#{@env['USER']}/.cbiscuit/lib"].map { |arg| "-L#{esc arg}" }.join(' ')
+          flag = "-L"
+          ["/home/#{@env['USER']}/.cbiscuit/lib"].map { |arg| "#{flag}#{esc arg}" }.join(' ')
         end
 
       warnings = []
