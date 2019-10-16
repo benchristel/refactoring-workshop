@@ -22,15 +22,16 @@ class Autoclop
       python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] || 'O2'
 
-      if cfg['libs']
-        libargs = cfg['libs'].map { |lib| "-l#{esc lib}" }.join(' ')
-      elsif cfg['libdir']
-        libargs = "-L#{esc cfg['libdir']}"
-      elsif cfg['libdirs']
-        libargs = cfg['libdirs'].map { |libdir| "-L#{esc libdir}" }.join(' ')
-      else
-        libargs = "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
-      end
+      libargs =
+        if cfg['libs']
+          cfg['libs'].map { |lib| "-l#{esc lib}" }.join(' ')
+        elsif cfg['libdir']
+          "-L#{esc cfg['libdir']}"
+        elsif cfg['libdirs']
+          cfg['libdirs'].map { |libdir| "-L#{esc libdir}" }.join(' ')
+        else
+          "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
+        end
 
       warnings = []
       clop_args = [python_version, optimization, libargs]
