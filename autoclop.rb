@@ -12,7 +12,7 @@ class Autoclop
   end
 
   def autoclop
-    if config_path.nil? || config_path.empty?
+    if config_path.to_s.empty?
       warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
       clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     elsif cfg.nil?
