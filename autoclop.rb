@@ -13,12 +13,14 @@ class Autoclop
 
   def autoclop
     if config.nil? || config.empty?
-      Kernel.puts "WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."
+      warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
+      warnings.each { |warning| Kernel.puts warning }
       py = 2
       py = 3 if @os =~ /Red Hat 8/ # bugfix
       clop_args = [py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     elsif cfg.nil?
-      Kernel.puts "WARNING: Invalid YAML in #{config}. Assuming the default configuration."
+      warnings = ["WARNING: Invalid YAML in #{config}. Assuming the default configuration."]
+      warnings.each { |warning| Kernel.puts warning }
       py = 2
       py = 3 if @os =~ /Red Hat 8/ # bugfix
       clop_args = [py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
@@ -54,6 +56,8 @@ class Autoclop
       end
       libargs ||= "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
 
+      warnings = []
+      warnings.each { |warning| Kernel.puts warning }
       clop_args = [python_version, optimization || 'O2', libargs || '']
     end
 
