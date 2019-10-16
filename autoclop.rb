@@ -56,10 +56,8 @@ class Autoclop
 
       clop_args = [python_version, optimization || 'O2', libargs || '']
     end
-    invoke_clop(*clop_args)
-  end
 
-  def invoke_clop(python_version, optimization, libargs)
+    python_version, optimization, libargs = clop_args
     libargs = ' ' + libargs unless libargs.empty?
     ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization}#{libargs}"
     if !ok
