@@ -14,19 +14,18 @@ class Autoclop
   def autoclop
     if config.nil? || config.empty?
       warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
-      py = 2
-      py = 3 if @os =~ /Red Hat 8/ # bugfix
-      clop_args = [py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
+      default_python_version = 2
+      default_python_version = 3 if @os =~ /Red Hat 8/ # Red Hat has deprecated Python 2
+      clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     elsif cfg.nil?
       warnings = ["WARNING: Invalid YAML in #{config}. Assuming the default configuration."]
-      py = 2
-      py = 3 if @os =~ /Red Hat 8/ # bugfix
-      clop_args = [py, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
+      default_python_version = 2
+      default_python_version = 3 if @os =~ /Red Hat 8/ # Red Hat has deprecated Python 2
+      clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     else
-      python_version = 2
-      # Red Hat has deprecated Python 2
-      python_version = 3 if @os =~ /Red Hat 8/
-      python_version = cfg['python-version'] if cfg['python-version']
+      default_python_version = 2
+      default_python_version = 3 if @os =~ /Red Hat 8/ # Red Hat has deprecated Python 2
+      python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] if cfg['opt']
 
       if cfg['libs']
