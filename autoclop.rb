@@ -12,11 +12,11 @@ class Autoclop
   end
 
   def autoclop
-    if config.nil? || config.empty?
+    if config_path.nil? || config_path.empty?
       warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
       clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     elsif cfg.nil?
-      warnings = ["WARNING: Invalid YAML in #{config}. Assuming the default configuration."]
+      warnings = ["WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."]
       clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     else
       python_version = cfg['python-version'] || default_python_version
@@ -61,7 +61,7 @@ class Autoclop
   end
 
   def cfg
-    YAML.safe_load(File.read(config))
+    YAML.safe_load(File.read(config_path))
   end
 
   def esc arg
@@ -74,7 +74,7 @@ class Autoclop
     @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
   end
 
-  def config
+  def config_path
     @env['AUTOCLOP_CONFIG']
   end
 end
