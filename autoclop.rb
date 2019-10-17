@@ -13,7 +13,8 @@ class Autoclop
   end
 
   def autoclop
-    clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
+    clop_args = [default_python_version, 'O2', ["-L/home/#{@env['USER']}/.cbiscuit/lib"]]
+
     if config_path.to_s.empty?
       warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
     elsif cfg.nil?
@@ -34,13 +35,13 @@ class Autoclop
         end
 
       warnings = []
-      clop_args = [python_version, optimization, libargs.map { |arg| "#{flag}#{esc arg}" }.join(' ')]
+      clop_args = [python_version, optimization, libargs.map { |arg| "#{flag}#{arg}" }]
     end
 
     warnings.each { |warning| Kernel.puts warning }
     python_version, optimization, libargs = clop_args
-    libargs = ' ' + libargs unless libargs.empty?
-    ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization}#{libargs}"
+    # libargs = ' ' + libargs unless libargs.empty?
+    ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization} #{libargs.map { |a| esc a }.join(' ')}".strip
     if !ok
       raise "clop failed. Please inspect the output above to determine what went wrong."
     end
