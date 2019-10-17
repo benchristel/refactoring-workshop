@@ -27,16 +27,16 @@ class Autoclop
       python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] || 'O2'
 
-      library_flag, library_args =
-        if cfg['libs']
-          ["-l", cfg['libs']]
-        elsif cfg['libdir']
-          ["-L", [cfg['libdir']]]
-        elsif cfg['libdirs']
-          ["-L", cfg['libdirs']]
-        else
-          ["-L", ["/home/#{@env['USER']}/.cbiscuit/lib"]]
-        end
+      if cfg['libs']
+        library_flag = "-l"
+        library_args = cfg['libs']
+      elsif cfg['libdir']
+        library_flag = "-L"
+        library_args = [cfg['libdir']]
+      elsif cfg['libdirs']
+        library_flag = "-L"
+        library_args = cfg['libdirs']
+      end
     end
 
     warnings.each { |warning| Kernel.puts warning }
