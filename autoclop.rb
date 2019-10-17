@@ -22,23 +22,19 @@ class Autoclop
       python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] || 'O2'
 
-      libargs =
+      flag, libargs =
         if cfg['libs']
-          flag = "-l"
-          cfg['libs'].map { |arg| "#{flag}#{esc arg}" }.join(' ')
+          ["-l", cfg['libs']]
         elsif cfg['libdir']
-          flag = "-L"
-          [cfg['libdir']].map { |arg| "#{flag}#{esc arg}" }.join(' ')
+          ["-L", [cfg['libdir']]]
         elsif cfg['libdirs']
-          flag = "-L"
-          cfg['libdirs'].map { |arg| "#{flag}#{esc arg}" }.join(' ')
+          ["-L", cfg['libdirs']]
         else
-          flag = "-L"
-          ["/home/#{@env['USER']}/.cbiscuit/lib"].map { |arg| "#{flag}#{esc arg}" }.join(' ')
+          ["-L", ["/home/#{@env['USER']}/.cbiscuit/lib"]]
         end
 
       warnings = []
-      clop_args = [python_version, optimization, libargs]
+      clop_args = [python_version, optimization, libargs.map { |arg| "#{flag}#{esc arg}" }.join(' ')]
     end
 
     warnings.each { |warning| Kernel.puts warning }
