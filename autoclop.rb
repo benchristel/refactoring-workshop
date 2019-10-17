@@ -15,8 +15,8 @@ class Autoclop
   def autoclop
     python_version = default_python_version
     optimization = 'O2'
-    flag = "-L"
-    libargs = ["/home/#{@env['USER']}/.cbiscuit/lib"]
+    library_flag = "-L"
+    library_args = ["/home/#{@env['USER']}/.cbiscuit/lib"]
 
     if config_path.to_s.empty?
       warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
@@ -26,7 +26,7 @@ class Autoclop
       python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] || 'O2'
 
-      flag, libargs =
+      library_flag, library_args =
         if cfg['libs']
           ["-l", cfg['libs']]
         elsif cfg['libdir']
@@ -41,7 +41,7 @@ class Autoclop
     end
 
     warnings.each { |warning| Kernel.puts warning }
-    ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization} #{libargs.map { |a| esc "#{flag}#{a}" }.join(' ')}".strip
+    ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization} #{library_args.map { |a| esc "#{library_flag}#{a}" }.join(' ')}".strip
     if !ok
       raise "clop failed. Please inspect the output above to determine what went wrong."
     end
