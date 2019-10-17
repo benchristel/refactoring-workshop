@@ -55,15 +55,32 @@ class Autoclop
     end
   end
 
+  class InvalidYamlConfig < Config
+    def initialize(os, env)
+      @os = os
+      @env = env
+      @config_path = @env['AUTOCLOP_CONFIG']
+    end
+
+    def warnings
+      ["WARNING: Invalid YAML in #{@config_path}. Assuming the default configuration."]
+    end
+
+    def clop_args
+      [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
+    end
+
+    def default_python_version
+      @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
+    end
+  end
+
   def autoclop
     config =
       if config_path.to_s.empty?
         NoFileGivenConfig.new(@os, @env)
       elsif cfg.nil?
-        Config.new(
-          ["WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."],
-          [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
-        )
+        InvalidYamlConfig.new(@os, @env)
       else
         python_version = cfg['python-version'] || default_python_version
         optimization = cfg['opt'] || 'O2'
