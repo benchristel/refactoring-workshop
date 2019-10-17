@@ -12,7 +12,7 @@ class Autoclop
     @env = env
   end
 
-  class Config
+  class DefaultConfig
     def initialize(os, env)
       @os = os
       @env = env
@@ -23,7 +23,7 @@ class Autoclop
     end
 
     def python_version
-      default_python_version
+      @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
     end
 
     def optimization
@@ -39,25 +39,21 @@ class Autoclop
     def esc arg
       Shellwords.escape arg
     end
-
-    def default_python_version
-      @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
-    end
   end
 
-  class NoFileGivenConfig < Config
+  class NoFileGivenConfig < DefaultConfig
     def warnings
       ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
     end
   end
 
-  class InvalidYamlConfig < Config
+  class InvalidYamlConfig < DefaultConfig
     def warnings
       ["WARNING: Invalid YAML in #{@env['AUTOCLOP_CONFIG']}. Assuming the default configuration."]
     end
   end
 
-  class ValidConfig < Config
+  class ValidConfig < DefaultConfig
     def initialize(os, env, cfg)
       @os = os
       @env = env
@@ -65,11 +61,11 @@ class Autoclop
     end
 
     def python_version
-      cfg['python-version'] || default_python_version
+      cfg['python-version'] || super
     end
 
     def optimization
-      cfg['opt'] || 'O2'
+      cfg['opt'] || super
     end
 
     def libargs
