@@ -36,15 +36,13 @@ class Autoclop
     end
   end
 
-  class NoFileGivenConfig < Config
+  class DefaultConfig < Config
     def initialize(os, env)
       @os = os
       @env = env
     end
 
-    def warnings
-      ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
-    end
+    private
 
     def clop_args
       [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
@@ -55,23 +53,15 @@ class Autoclop
     end
   end
 
-  class InvalidYamlConfig < Config
-    def initialize(os, env)
-      @os = os
-      @env = env
-      @config_path = @env['AUTOCLOP_CONFIG']
-    end
-
+  class NoFileGivenConfig < DefaultConfig
     def warnings
-      ["WARNING: Invalid YAML in #{@config_path}. Assuming the default configuration."]
+      ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
     end
+  end
 
-    def clop_args
-      [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
-    end
-
-    def default_python_version
-      @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
+  class InvalidYamlConfig < DefaultConfig
+    def warnings
+      ["WARNING: Invalid YAML in #{@env['AUTOCLOP_CONFIG']}. Assuming the default configuration."]
     end
   end
 
