@@ -13,12 +13,11 @@ class Autoclop
   end
 
   def autoclop
+    clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     if config_path.to_s.empty?
       warnings = ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
-      clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     elsif cfg.nil?
       warnings = ["WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."]
-      clop_args = [default_python_version, 'O2', "-L/home/#{esc @env['USER']}/.cbiscuit/lib"]
     else
       python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] || 'O2'
