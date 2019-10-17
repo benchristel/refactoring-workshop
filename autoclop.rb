@@ -13,6 +13,27 @@ class Autoclop
   end
 
   class Config < Struct.new(:warnings, :clop_args)
+    def clop_command
+      "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}".strip
+    end
+
+    private
+
+    def python_version
+      clop_args[0]
+    end
+
+    def optimization
+      clop_args[1]
+    end
+
+    def libargs
+      clop_args[2]
+    end
+
+    def esc arg
+      Shellwords.escape arg
+    end
   end
 
   def autoclop
@@ -49,9 +70,7 @@ class Autoclop
       end
 
     config.warnings.each { |warning| Kernel.puts warning }
-    python_version, optimization, libargs = config.clop_args
-    libargs = ' ' + libargs unless libargs.empty?
-    ok = Kernel.system "clop configure --python #{esc python_version} -#{esc optimization}#{libargs}"
+    ok = Kernel.system config.clop_command
     if !ok
       raise "clop failed. Please inspect the output above to determine what went wrong."
     end
