@@ -13,10 +13,6 @@ class Autoclop
   end
 
   class Config
-    def clop_command
-      "clop configure --python #{esc python_version} -#{esc optimization} #{libargs}".strip
-    end
-
     def warnings
       []
     end
@@ -37,8 +33,6 @@ class Autoclop
       @os = os
       @env = env
     end
-
-    private
 
     def python_version
       default_python_version
@@ -72,8 +66,6 @@ class Autoclop
       @cfg = cfg
     end
 
-    private
-
     def python_version
       cfg['python-version'] || default_python_version
     end
@@ -97,6 +89,8 @@ class Autoclop
       libargs.map { |arg| "#{flag}#{esc arg}" }.join(' ')
     end
 
+    private
+
     def cfg
       @cfg
     end
@@ -113,7 +107,7 @@ class Autoclop
       end
 
     config.warnings.each { |warning| Kernel.puts warning }
-    ok = Kernel.system config.clop_command
+    ok = Kernel.system "clop configure --python #{esc config.python_version} -#{esc config.optimization} #{config.libargs}".strip
     if !ok
       raise "clop failed. Please inspect the output above to determine what went wrong."
     end
@@ -127,5 +121,9 @@ class Autoclop
 
   def config_path
     @env['AUTOCLOP_CONFIG']
+  end
+
+  def esc arg
+    Shellwords.escape arg
   end
 end
