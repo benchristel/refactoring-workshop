@@ -13,25 +13,13 @@ class Autoclop
   end
 
   class Config
-    def warnings
-      []
-    end
-
-    private
-
-    def esc arg
-      Shellwords.escape arg
-    end
-
-    def default_python_version
-      @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
-    end
-  end
-
-  class DefaultConfig < Config
     def initialize(os, env)
       @os = os
       @env = env
+    end
+
+    def warnings
+      []
     end
 
     def python_version
@@ -45,15 +33,25 @@ class Autoclop
     def libargs
       "-L/home/#{esc @env['USER']}/.cbiscuit/lib"
     end
+
+    private
+
+    def esc arg
+      Shellwords.escape arg
+    end
+
+    def default_python_version
+      @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
+    end
   end
 
-  class NoFileGivenConfig < DefaultConfig
+  class NoFileGivenConfig < Config
     def warnings
       ["WARNING: No file specified in $AUTOCLOP_CONFIG. Assuming the default configuration."]
     end
   end
 
-  class InvalidYamlConfig < DefaultConfig
+  class InvalidYamlConfig < Config
     def warnings
       ["WARNING: Invalid YAML in #{@env['AUTOCLOP_CONFIG']}. Assuming the default configuration."]
     end
