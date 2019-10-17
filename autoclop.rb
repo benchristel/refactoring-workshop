@@ -23,6 +23,7 @@ class Autoclop
     elsif cfg.nil?
       warnings = ["WARNING: Invalid YAML in #{config_path}. Assuming the default configuration."]
     else
+      warnings = []
       python_version = cfg['python-version'] || default_python_version
       optimization = cfg['opt'] || 'O2'
 
@@ -36,8 +37,6 @@ class Autoclop
         else
           ["-L", ["/home/#{@env['USER']}/.cbiscuit/lib"]]
         end
-
-      warnings = []
     end
 
     warnings.each { |warning| Kernel.puts warning }
