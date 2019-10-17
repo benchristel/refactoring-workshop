@@ -1,5 +1,6 @@
 require 'shellwords'
 require 'yaml'
+
 def run_autoclop
   os = File.read('/etc/issue')
   Autoclop.new(os, ENV).autoclop
