@@ -119,18 +119,10 @@ class Autoclop
     end
   end
 
-  def cfg
-    YAML.safe_load(File.read(config_path))
-  end
-
-  def esc arg
-    Shellwords.escape arg
-  end
-
   private
 
-  def default_python_version
-    @os =~ /Red Hat 8/ ? 3 : 2 # Red Hat has deprecated Python 2
+  def cfg
+    YAML.safe_load(File.read(config_path))
   end
 
   def config_path
