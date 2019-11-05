@@ -94,13 +94,19 @@ class: center, middle
   # Refactoring Code Smells
 ]
 
-???
-
 ---
 
 class: center, middle, emphasis
 
 # What do you hope to get out of this workshop?
+
+???
+
+I appreciate you all taking time out of your schedules to be here. Before we
+start, I'd like to get a sense of what people are hoping to get from this
+workshop. What inspired you all to sign up for this?
+
+(go around the room and collect verbal answers to the prompt)
 
 ---
 
@@ -111,11 +117,30 @@ class: center, middle, emphasis
 1. Mob programming lab (2 hours, with a break in the middle)
 1. Debrief (30 minutes)
 
+???
+
+First, I'll talk a bit about refactoring in general and how refactoring relates
+to the concept of code smells.
+
+Then we'll spend a couple hours mob-programming to refactor some Ruby code. I'll
+be at the keyboard, taking dictation from you all.
+
+We'll take a 15 minute break in the middle of the programming session.
+
+And we'll have half an hour at the end to talk about the experience and discuss
+any questions you might have.
+
 ---
 
 class: center, middle, emphasis
 
 # Refactoring + Code Smells
+
+???
+
+This workshop is about two concepts: refactoring and code smells.
+
+When I say "refactoring" I mean something very specific.
 
 ---
 
@@ -124,6 +149,12 @@ class: center, middle
 # _Refactoring: Changing the Design of Existing Code_
 
 Martin Fowler and Kent Beck
+
+???
+
+The definition of refactoring comes from Martin Fowler and Kent
+Beck, and it's the definition used in their book _Refactoring: Changing the
+Design of Existing Code_.
 
 ---
 
@@ -135,6 +166,12 @@ class: center, middle
 
 # Changing the structure of code without changing its behavior
 
+???
+
+Refactoring means changing the structure of code without changing its behavior.
+
+And crucially, it means changing the structure of code...
+
 ---
 
 class: center, middle
@@ -145,6 +182,41 @@ class: center, middle
 
 # Changing the structure of code .highlight[without changing its behavior]
 
+???
+
+_without_ changing its behavior.
+
+---
+
+class: center, middle
+
+![schematic of a black box that transforms an input histogram to an output line graph](blackbox.png)
+
+(https://en.wikipedia.org/wiki/Black_box)
+
+???
+
+When I say behavior I'm talking about the observable interactions the code has
+with other systems. This definition assumes we've drawn a boundary around some
+part of our code and can consider everything inside that boundary to be a black
+box.
+
+Refactoring changes what's inside the black box, but the inputs and outputs stay
+the same.
+
+---
+
+class: center, middle
+
+# Tests Formalize the Boundary
+
+???
+
+An important consequence of this definition is that formalized tests (preferably
+automated tests) are a precondition for refactoring. Tests both define the
+boundary of your black box and check that its behavior is unchanged by your
+refactoring.
+
 ---
 
 ## How?
@@ -154,23 +226,74 @@ class: center, middle
 - Separate behavior changes from structural changes
   (separate commits).
 
+???
+
+The requirement to not change behavior is also supported by several techniques
+we can apply minute-to-minute as we refactor.
+
+Working in small steps helps us verify by inspecting the code that each change
+preserves behavior.
+
+Running the tests after every change likewise keeps us safe, by providing
+fast, frequent feedback.
+
+And by separating behavioral changes like features and bugfixes from
+refactorings, we can more easily communicate to future readers of the code why
+particular changes were made, and give them greater confidence that our
+refactorings didn't change behavior.
+
+We'll employ all of these techniques today during our mob-programming session.
+
 ---
 
-class: center, middle, emphasis
+class: center, middle
+
+# Refactoring
+
+???
+
+So Fowler gives us this verb, Refactoring, that refers to a particular way of
+changing code, but he also uses Refactoring as a noun.
+
+He talks about Refactorings, these little, atomic transformations you apply to
+code.
+
+---
+
+class: center, middle
 
 # 66 Refactorings
 
+???
+
+And in fact, his book lists 66 different Refactorings you can apply to your
+code,
+
+with names like "extract method" and "rename variable", and "introduce parameter
+object".
+
 ---
 
 class: center, middle, emphasis
 
-# 66 small, behavior-preserving changes
+# How do you know which one to use?
+
+???
+
+The question of course, is: with 66 of these Refactorings, how do you know which
+one to use at any given point? This is something that in the past I've really
+struggled with.
 
 ---
 
 class: center, middle, emphasis
 
 # Code Smells
+
+???
+
+And that brings us to the topic of Code Smells. Code smells help us answer the
+question of which refactoring to apply.
 
 ---
 
@@ -181,6 +304,18 @@ class: center, middle, emphasis
   - may be more or less **harmful** depending on the
     situation
   - is **specific** enough to be **actionable**
+  - has an agreed-on **name**
+
+???
+
+## What's a Code Smell?
+
+- A feature of a program's **structure**, which...
+  - is **objectively** present or absent
+  - may be more or less **harmful** depending on the
+    situation
+  - is **specific** enough to be **actionable**
+  - has an agreed-on name
 
 ---
 
@@ -188,11 +323,24 @@ class: center, middle, emphasis
 
 # What code smells do you all know already?
 
+???
+
+I want to get a sense of what code smells people know already. Can anyone name
+a code smell?
+
+(Collect code smells from the room. Ask anyone who names a code smell to
+define/explain it to the group.)
+
 ---
 
 class: center, middle
 
 # Code smells give us a language to talk about .highlight[what's worth fixing].
+
+???
+
+Code smells are important because they give us a language to talk about which
+structural problems in our code are worth fixing with refactorings.
 
 ---
 
