@@ -226,13 +226,23 @@ refactoring.
 - Separate behavior changes from structural changes
   (separate commits).
 
+---
+
+## How?
+
+- Work in small steps.
+  - If things break, make the steps smaller.
+- Run the tests after every change.
+- Separate behavior changes from structural changes
+  (separate commits).
+
 ???
 
 The requirement to not change behavior is also supported by several techniques
 we can apply minute-to-minute as we refactor.
 
 Working in small steps helps us verify by inspecting the code that each change
-preserves behavior.
+preserves behavior. If things break, make the steps smaller
 
 Running the tests after every change likewise keeps us safe, by providing
 fast, frequent feedback.
@@ -369,19 +379,18 @@ refactoring lab, does anyone have questions?
 
 ## The Problem
 
-Your company uses a language called CBiscuit for a lot of
+Your company uses a language called CBiscuit for
 its internal work. The CBiscuit compiler, called `clop`, is
 very complex and has a lot of configuration options.
 
-To enable developers to compile code in a consistent way, your
-team has developed a tool, `autoclop`, to automatically
-configure `clop`.
+Your team maintains `autoclop`, which automatically
+configures `clop`.
 
-Unfortunately, `autoclop` has grown
-chaotically over the months your team has been maintaining
-it, with no consistent architecture or design strategy. New
-features are becoming harder and harder to add. Can you
-clean up the code smells?
+Unfortunately, `autoclop` has grown chaotically,
+with no consistent architecture or design strategy. New
+features are becoming harder and harder to add.
+
+Can you clean up the code smells?
 
 ???
 

@@ -5,7 +5,7 @@ Christel's) original research. In other words, don't expect
 to find much if you Google them. I've included them here
 because I think they're relevant for fixing the types of
 problems represented in `autoclop.rb`. Other smells are
-drawn from the C2 Wiki and elsewhere; it's hard to determine
+drawn from the C2 Wiki and elsewhere; it's often hard to determine
 whom to credit.
 
 Unless otherwise noted, all refactorings are from Martin
