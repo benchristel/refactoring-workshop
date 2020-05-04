@@ -24,8 +24,9 @@ structure of the data, making it harder to test and reason
 about.
 - You have to think about error cases more often. For
   example, when using a string to represent a URL, you have
-  to think about the case where the string is not a
-  well-formed URL every time you do something with it.
+  to think about the case where the string is *not* a
+  well-formed URL every time you do something with it. For
+  more on this idea, see Alexis King's post ["Parse, Don't Validate"](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/).
 
 ## How To Fix It
 
