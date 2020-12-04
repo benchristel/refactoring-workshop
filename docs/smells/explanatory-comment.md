@@ -22,7 +22,7 @@ to read the code to determine if the comment is correct.
 ## How To Fix It
 
 Use [Remove Comment](../refactorings/remove-comment.md)
-combined with [Extract Method]() or
-[Replace Inline Code with Function Call]().
+combined with [Extract Method](../refactorings/extract-method.md) or
+[Replace Inline Code with Function Call](../refactorings/replace-inline-code-with-function-call.md).
 
 ## Caveats
