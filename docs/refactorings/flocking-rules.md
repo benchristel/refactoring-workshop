@@ -66,7 +66,7 @@ Applying the Flocking Rules leads us to a different solution:
       end
     end
     ```
-    In this case, the lines `Email.mail greeting` and `Slack.post greeting` are
+    In this case, the lines `Email.mail "Greetings, #{name}"` and `Slack.post "Greetings, #{name}"` are
     the most alike.
 
 1. **Select the smallest difference between them.**
