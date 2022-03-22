@@ -10,7 +10,7 @@ The overall flow of the workshop goes like this:
 - (15 minutes) Participants individually identify specific
   structural problems in a 70-line Ruby file, posting their
   observations in a chatroom.
-- (2 hours) Participants mob-program to fix one problem at a
+- (2 hours) Participants ensemble-program to fix one problem at a
   time, with the facilitator typing code and promoting
   discussion.
 - (30 minutes) The group debriefs with another presentation
